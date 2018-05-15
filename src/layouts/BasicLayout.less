@@ -1,0 +1,156 @@
+/**
+ *创建时间:  2017/11/4
+ *  作  者：Jimck_Zhang
+ *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
+ *  功  能:
+ */
+
+@import "~antd/lib/style/themes/default.less";
+
+.basic-layout {
+  height: 100vh;
+  .basic-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    height: 80px;
+    line-height: 80px;
+    width: 100%;
+    z-index: 10;
+    padding: 0;
+    .header-home-link {
+      display: inline-block;
+      height: 80px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      color: #059be7;
+      font-size: 32px;
+      font-weight: 700;
+      font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+      line-height: 80px;
+      &:focus {
+        text-decoration: none;
+      }
+    }
+    .header-right {
+      float: right;
+      line-height: 80px;
+      height: 80px;
+      display: block;
+      z-index: 2;
+      background: #fff;
+      color: #fff;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+      .user-name {
+        width: 200px;
+        padding: 0 10px;
+        text-align: center;
+        color: #004dbd;
+      }
+      .avatar {
+        background: rgba(255, 255, 255, .85);
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+    }
+  }
+  .basic-sider {
+    min-height: 100vh;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+    flex: 0 0 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
+    width: 180px !important;
+    margin-top: 50px;
+    overflow: hidden;
+    :global {
+      .ant-layout-sider-trigger {
+        width: 180px !important;
+      }
+    }
+    &.collapsed {
+      flex: 0 0 80px !important;
+      max-width: 80px !important;
+      min-width: 80px !important;
+      width: 80px !important;
+      :global {
+        .ant-layout-sider-trigger {
+          width: 80px !important;
+        }
+      }
+    }
+    .basic-menu {
+      padding-bottom: 80px;
+      width: 200px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      &.collapsed {
+        width: 100px;
+        :global {
+          .ant-menu-submenu {
+            width: 100px;
+          }
+        }
+      }
+      .basic-menu-item {
+        padding-left: 68px !important;
+      }
+      :global {
+        .ant-menu-submenu {
+          width: 200px;
+        }
+      }
+    }
+  }
+  .basic-content {
+    width: 100%;
+    margin-top: 50px;
+    padding: 12px 20px 40px 20px;
+    overflow-y: scroll;
+    min-height: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  }
+  .basic-footer {
+    position: fixed;
+    height: 30px;
+    left: 0;
+    line-height: 30px;
+    padding: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+:global {
+  .ant-menu-dark {
+    .ant-menu-sub {
+      margin-left: -20px;
+    }
+  }
+  .ant-menu-submenu-arrow {
+    margin-right: 20px;
+  }
+  .ant-layout-sider-children {
+    //width: 200px;
+    overflow-y: scroll;
+  }
+  .ant-dropdown {
+    .anticon {
+      margin-right: 5px;
+    }
+  }
+}

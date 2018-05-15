@@ -1,0 +1,28 @@
+{
+  "entry": "src/app.js",
+  "publicPath": "/",
+  "extraBabelPlugins": [
+    "transform-decorators-legacy",
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
+  ],
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr"
+      ]
+    }
+  },
+  "browserslist": [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9" // React doesn't support IE8 anyway
+  ],
+  "externals": {},
+  "ignoreMomentLocale": true,
+  "theme": "./src/components/theme.js",
+  "html": {
+    "template": "./src/index.ejs"
+  },
+  "hash": true
+}
