@@ -4,7 +4,7 @@
  *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
  *  功  能:
  */
-
+import { routerRedux } from 'dva/router';
 import { messageError, messageSuccess, messageWarning } from '../utils/utils';
 
 export default {
@@ -12,11 +12,12 @@ export default {
 
   state: { // 初始值，优先级低于传给 dva() 的 opts.initialState。
     collapsed: false,
-    siderWidth: 200,
-    siderImgWidth: 64,
+    siderWidth: 100,
+    siderImgWidth: 25,
     messageStatus: false,
+    tabActiveKey: '/dashboard/KdMainControl',
+    menuList: [{ imgUrl: '../assets/basiclayout/sale.png', menuTitle: '首页', path: '/dashboard/KdMainControl', siderImgWidth: 25, key: '/dashboard/KdMainControl', closable: false }],
   },
-
   /**
    * 以 key/value 格式定义 effect。用于处理异步操作和业务逻辑，不直接修改 state。由 action 触发，
    * 可以触发 action，可以和服务器交互，可以获取全局 state 的数据等等。
@@ -28,6 +29,32 @@ export default {
    *  watcher
    */
   effects: {
+    *watchAndPop(_, { put }) {
+      const payload = { // 恢复初始值
+        collapsed: false,
+        siderWidth: 100,
+        siderImgWidth: 25,
+        messageStatus: false,
+        tabActiveKey: '/dashboard/KdMainControl',
+        menuList: [{ imgUrl: '../assets/basiclayout/sale.png', menuTitle: '首页', path: '/dashboard/KdMainControl', siderImgWidth: 25, key: '/dashboard/KdMainControl', closable: false }],
+      };
+      console.log('watchAndPop', payload);
+      yield put({
+        type: 'goBackDefaultState',
+        payload,
+      });
+    },
+    *watchAndRefreshList(_, { put }) {
+      yield put(routerRedux.push('/'));
+    },
+    *enter({ payload }, { put, select }) {
+      const menu = yield select(state => state.global.menuList);
+      yield put({
+        type: 'changeMenuList',
+        payload,
+        menu,
+      });
+    },
     *changeErrorMessage({ payload }, { call, put }) {
       yield put({
         type: 'changeMessageStatus',
@@ -61,6 +88,12 @@ export default {
         payload: response,
       });
     },
+    *changetabActiveKey({ payload }, { put }) {
+      yield put({
+        type: 'changetabActiveKeyState',
+        payload,
+      });
+    },
   },
 
   /**
@@ -68,6 +101,12 @@ export default {
    * 格式为 (state, action) => newState 或 [(state, action) => newState, enhancer]。
    */
   reducers: {
+    changetabActiveKeyState(state, { payload }) {
+      return {
+        ...state,
+        tabActiveKey: payload,
+      };
+    },
     changeLayoutCollapsed(state, { payload }) {
       return {
         ...state,
@@ -88,6 +127,34 @@ export default {
         messageStatus: payload,
       };
     },
+    changeMenuList(state, { payload, menu }) {
+      for (const m of menu) {
+        if (m.menuTitle === payload.menuTitle) {
+          return {
+            ...state,
+            tabActiveKey: payload.key,
+            menuList: menu,
+          };
+        }
+      }
+      menu.push(payload);
+      return {
+        ...state,
+        tabActiveKey: payload.key,
+        menuList: [...menu],
+      };
+    },
+    goBackDefaultState(state, { payload }) {
+      return {
+        ...state,
+        collapsed: payload.collapsed,
+        siderWidth: payload.siderWidth,
+        siderImgWidth: payload.siderImgWidth,
+        messageStatus: payload.messageStatus,
+        menuList: payload.menuList,
+        tabActiveKey: payload.tabActiveKey,
+      };
+    },
   },
 
   /**
@@ -98,12 +165,27 @@ export default {
    * 注意：如果要使用 app.unmodel()，subscription 必须返回 unlisten 方法，用于取消数据订阅。
    */
   subscriptions: {
-    setup({ history }) {
+    setup({ history, dispatch }) {
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
       return history.listen(({ pathname, search }) => {
+        console.log('history', history);
         if (typeof window.ga !== 'undefined') {
           window.ga('send', 'pageview', pathname + search);
         }
+        if (history.action === 'POP') {
+          console.log('history.action', history.action);
+          dispatch({
+            type: 'watchAndPop',
+          });
+          dispatch({
+            type: 'watchAndRefreshList',
+          });
+        }
+      });
+    },
+    watchAndRefreshList({ dispatch }) {
+      dispatch({
+        type: 'watchAndRefreshList',
       });
     },
   },

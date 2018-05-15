@@ -1,0 +1,128 @@
+{
+  "columns": [
+    {
+      "filters": [
+        {
+          "text": "billno",
+          "value": "12"
+        }
+      ],
+      "dataIndex": "billno",
+      "expanded": "",
+      "id": 1,
+      "rendered": "a",
+      "sorter": true,
+      "title": "编码",
+      "width": "10%"
+    },
+    {
+      "filters": [
+        {
+          "text": "measureunitsid",
+          "value": "14"
+        }
+      ],
+      "dataIndex": "name",
+      "expanded": "",
+      "id": 2,
+      "rendered": "a",
+      "sorter": true,
+      "title": "名称",
+      "width": "15%"
+    },
+    {
+      "filters": [
+        {
+          "text": "billno",
+          "value": "12"
+        }
+      ],
+      "dataIndex": "measureunitsid",
+      "expanded": "/f7/aa",
+      "id": 3,
+      "rendered": "",
+      "sorter": true,
+      "title": "计量单位",
+      "width": "15%"
+    },
+    {
+      "filters": [
+        {
+          "text": "measureunitsid",
+          "value": "14"
+        }
+      ],
+      "dataIndex": "aProp",
+      "expanded": "",
+      "id": 4,
+      "rendered": "",
+      "sorter": true,
+      "title": "辅助属性",
+      "width": "35%"
+    },
+    {
+      "filters": [
+        {
+          "text": "billno",
+          "value": "12"
+        }
+      ],
+      "dataIndex": "amount",
+      "expanded": "",
+      "id": 5,
+      "rendered": "",
+      "sorter": true,
+      "title": "数量",
+      "width": "15%"
+    },
+    {
+      "filters": [
+        {
+          "text": "measureunitsid",
+          "value": "14"
+        }
+      ],
+      "dataIndex": "date",
+      "expanded": "",
+      "id": 6,
+      "rendered": "",
+      "sorter": true,
+      "title": "交货时间",
+      "width": "10%"
+    }
+  ],
+  "info": {
+    "page": 1,
+    "results": 1,
+    "seed": "0e504e79add1a004",
+    "version": "1.1"
+  },
+  "results": [
+    {
+      "aProp": "辅助属性5",
+      "amount": "77",
+      "billno": "16",
+      "className": "not-check-row___fsy_t",
+      "date": "2011-01-05",
+      "id": {
+        "name": "SSN",
+        "value": "070-06-3234"
+      },
+      "name": "K/3WEB化测试4",
+      "measureunitsid": "厘米"
+    },
+    {
+      "aProp": "辅助属性4",
+      "amount": "27",
+      "billno": "22",
+      "className": "not-completed-deliver-row___3pIuT",
+      "date": "1979-04-16",
+      "id": {
+        "name": "SSN",
+        "value": "070-06-3234"
+      },
+      "name": "K/3WEB化测试2",
+      "measureunitsid": "米"
+    }
+  ]
+}

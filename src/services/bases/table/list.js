@@ -6,11 +6,18 @@
  */
 import { stringify } from 'qs';
 import request from '../../../utils/request';
-
+import { store } from '../../../common/local.storage';
+import Config from '../../../common/config';
 // 序时簿列表加载
 export async function getBaseTableList(path, params) {
-  return request(`${path}?${stringify(params)}`, {
+  // return request(`${path}?${stringify(params)}`, {
+  //   method: 'POST',
+  //   body: params,
+  // });
+  const p = params;
+  p.acctid = store.get(Config.defaultProps.ACCT_ID);
+  p.SessionKey = store.get(Config.defaultProps.SESSION_KEY);
+  return request(`${path}?${stringify(p).replace('?', '')}`, {
     method: 'POST',
-    body: params,
-  });
+  }, true);
 }

@@ -7,20 +7,23 @@
 
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'dva/router';
-import { LocaleProvider, Spin } from 'antd';
+import { LocaleProvider } from 'antd';
+import MediaQuery from 'react-responsive';
+
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
 import cloneDeep from 'lodash/cloneDeep';
 import Store from 'store';
+import LoadingBar from './components/Bases/LoadingBar';
 import { getNavData } from './common/nav';
 import { getPlainNode } from './utils/utils';
 
-import styles from './index.less';
+// import styles from './index.less';
 import Config from './common/config';
 
 // 设置默认的加载组件
 dynamic.setDefaultLoadingComponent(() => {
-  return <Spin tip="加载中..." size="large" className={styles.globalSpin} />;
+  return <LoadingBar speed={10} step={70} />;
 });
 
 function getRouteData(navData, path) {
@@ -50,7 +53,7 @@ function getLayout(navData, path) {
 // 登录验证
 function requireAuth(Layout, props, passProps) {
   // 模拟token失效时间
-  const token = Store.get(Config.USER_TOKEN);
+  const token = Store.get(Config.defaultProps.USER_TOKEN);
   const current = (new Date()).getTime();
   if (token && current - token < 7200000) {
     return <Layout {...props} {...passProps} />;
@@ -60,6 +63,7 @@ function requireAuth(Layout, props, passProps) {
 }
 
 function RouterConfig({ history, app }) {
+  console.log('app详细信息', app);
   const navData = getNavData(app);
   const UserLayout = getLayout(navData, 'UserLayout').component;
   const BasicLayout = getLayout(navData, 'BasicLayout').component;
@@ -74,13 +78,15 @@ function RouterConfig({ history, app }) {
   };
   return (
     <LocaleProvider locale={zhCN}>
-      <Router history={history}>
-        <Switch>
-          <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
-          <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
-          <Redirect exact from="/" to="/dashboard/analysis" />
-        </Switch>
-      </Router>
+      <MediaQuery query="(min-device-width:1224px)">
+        <Router history={history}>
+          <Switch>
+            <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
+            <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
+            <Redirect exact from="/" to="/dashboard/KdMainControl" />
+          </Switch>
+        </Router>
+      </MediaQuery>
     </LocaleProvider>
   );
 }

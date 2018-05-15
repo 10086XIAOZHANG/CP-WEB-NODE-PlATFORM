@@ -10,7 +10,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { fromJS } from 'immutable';
-import { Form, Input, Select, Button, Checkbox, Icon, Layout, Row, Col, Radio, Dropdown, Menu } from 'antd';
+import { Form, Input, Select, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
 import Config from '../../common/config';
 import { store } from '../../common/local.storage';
 import styles from './Login.less';
@@ -18,13 +18,11 @@ import styles from './Login.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { Header, Footer } = Layout;
-const RadioGroup = Radio.Group;
 @connect(state => ({
   login: state.login,
   messageStatus: state.global.messageStatus,
 }))
 @Form.create()
-
 export default class Login extends PureComponent {
   constructor(props) {
     super(props);
@@ -32,16 +30,29 @@ export default class Login extends PureComponent {
       type: fromJS({
         type: 'account',
       }),
+      DBAccounts: [],
+      DBAddress: '',
     };
+  }
+  componentDidMount() {
+
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.login.data) {
+      this.setState({
+        DBAccounts: nextProps.login.data.Data,
+      });
+    }
     // 登录成功
     if (nextProps.login.status === 'ok') {
       const userInfo = nextProps.login.info;
       // 模拟登录成功用户Token，2个小时超时哦
-      store.set(Config.USER_TOKEN, (new Date()).getTime());
-      store.set(Config.USER_ID, userInfo[0].id); // 存储登录信息
+      store.set(Config.defaultProps.K3_DB_ADDRESS, this.state.DBAddress.input.value);
+      store.set(Config.defaultProps.SESSION_KEY, userInfo.Data.SessionKey);
+      store.set(Config.defaultProps.ACCT_ID, userInfo.Data.LogonUser.AcctId);
+      store.set(Config.defaultProps.USER_TOKEN, (new Date()).getTime());
+      store.set(Config.defaultProps.USER_ID, userInfo.Data.LogonUser); // 存储登录信息
       this.props.dispatch(routerRedux.push('/'));
     }
 
@@ -53,22 +64,44 @@ export default class Login extends PureComponent {
       });
     }
   }
-
+  onBlur=() => {
+    // 可以使用this.props.form替代ref
+    if (!this.isNull(this.state.DBAddress.input.value)) {
+      this.props.dispatch({
+        type: 'login/getAcctList',
+        payload: this.state.DBAddress.input.value,
+      });
+    }
+  };
+  selectItem=() => {
+    const row = [];
+    this.state.DBAccounts.forEach((DBAccount) => {
+      row.push(<Option value={DBAccount.AcctId}>{DBAccount.AcctName}</Option>);
+    });
+    return row;
+  };
+  isNull= (str) => {
+    if (str === '') return true;
+    const regu = '^[ ]+$';
+    const re = new RegExp(regu);
+    return re.test(str);
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.props.messageStatus) return; // 弹窗未完全关闭禁止再次提交
     const { type } = this.state;
     this.props.form.validateFields({ force: true },
       (err, values) => {
+        const url = `${this.state.DBAddress.input.value}/WMSapi/api/Account/Login?userName=${values.username}&password=${values.password ? values.password : ''}&acctId=${values.acctId}&deviceType=1&clientId=&isResetLogin=false`;
         if (!err) {
           this.props.dispatch({
             type: `login/${type.get('type')}Submit`,
-            payload: values,
+            payload: url,
           });
         }
       }
     );
-  }
+  };
 
   render() {
     const { form, login } = this.props;
@@ -90,40 +123,16 @@ export default class Login extends PureComponent {
     return (
       <Layout className={styles['login-layout']}>
         <Header className={styles['login-header-layout']}>
-          <Row>
-            <Col xs={20} sm={16} md={12} lg={8} xl={8} >K/3 WISE 供应链云平台</Col>
+          <Row type="flex" justify="start">
+            <Col span={10}><img alt="" src={require('../../assets/bases/logo.png')} /></Col>
           </Row>
         </Header>
-        <Layout className={styles['login-center-layout']}>
-          <Row>
-            <Col span={14} />
-            <Col offset={16} xs={20} sm={16} md={12} lg={8} xl={6} >
+        <Layout className={styles['login-center-layout']} >
+          <Row type="flex" justify="start" className={styles['login-center-content']} >
+            <Col span={13} className={styles['login-conter-img']} />
+            <Col xs={20} sm={16} md={11} lg={8} xl={6} className={styles['login-form-container']}>
               <div className={styles['login-form']}>
-                <Form horizontal="true" >
-                  <FormItem
-                    label=""
-                    wrapperCol={{ offset: 1 }}
-                  >
-                    {getFieldDecorator('radio-group')(
-                      <RadioGroup >
-                        <Radio value="a">命名用户身份</Radio>
-                        <Radio value="b">单点用户</Radio>
-                        <Radio value="c">域用户</Radio>
-                      </RadioGroup>
-                    )}
-                  </FormItem>
-                  <FormItem
-                    label="账套"
-                    hasFeedback
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 18 }}
-                  >
-                    <Select placeholder="请选择账套" style={{ width: '100%' }}>
-                      <Option value="china">蓝海柴油机公司</Option>
-                      <Option value="use">蓝海账号2</Option>
-                      <Option value="japan">蓝海账号3</Option>
-                    </Select>
-                  </FormItem>
+                <Form onSubmit={this.handleSubmit} horizontal="true" style={{ marginBottom: '10px' }} >
                   <FormItem
                     label="用户"
                     hasFeedback
@@ -131,15 +140,15 @@ export default class Login extends PureComponent {
                     wrapperCol={{ span: 18 }}
                   >
                     {getFieldDecorator('username', {
-                    rules: [{
-                      required: type.get('type') === 'account', message: '请输入用户名！',
-                    }],
-                  })(
-                    <Input
-                      prefix={<Icon type="user" className={styles.prefixIcon} />}
-                      placeholder="请输入用户名"
-                    />
-                  )}
+                      rules: [{
+                        required: type.get('type') === 'account', message: '请输入用户名！',
+                      }],
+                    })(
+                      <Input
+                        prefix={<Icon type="user" className={styles.prefixIcon} />}
+                        placeholder="请输入用户名"
+                      />
+                    )}
                   </FormItem>
                   <FormItem
                     label="密码"
@@ -147,11 +156,9 @@ export default class Login extends PureComponent {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 18 }}
                   >
-                    {getFieldDecorator('password', {
-                    rules: [{ required: true, pattern: /^[0-9a-zA-Z._$%&*!@~?<>,]{6,32}$/, message: '请输入你的密码!' }],
-                  })(
-                    <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
-                  )}
+                    {getFieldDecorator('password')(
+                      <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
+                    )}
                   </FormItem>
                   <Row gutter={2}>
                     <Col span={12}>
@@ -165,26 +172,17 @@ export default class Login extends PureComponent {
                       </FormItem>
                     </Col>
                     <Col span={12}>
-                      <img alt="" src="http://images2015.cnblogs.com/blog/875028/201605/875028-20160513234811280-1452474757.png" style={{ height: '34px', width: '120px', display: 'inline-block' }} />
+                      <img alt="" src={`${Config.defaultProps.resource_server}//acct//acct.png`} style={{ height: '34px', width: '120px', display: 'inline-block' }} />
                     </Col>
                   </Row>
                   <Row gutter={2}>
-                    <Col span={6} />
+                    <Col span={4} />
                     <Col span={18}>
                       <Row gutter={2}>
-                        <Col span={12} >  <Button type="primary" loading={login.submitting} htmlType="submit" onClick={this.handleSubmit}>确定</Button></Col>
-                        <Col span={12} > <Button type="ghost" onClick={this.handleReset}>取消</Button></Col>
+                        <Col span={22} >  <Button type="primary" style={{ width: '100%' }} loading={login.submitting} size="large" htmlType="submit">确定</Button></Col>
                       </Row>
                     </Col>
                   </Row>
-                  <FormItem
-                    hasFeedback
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 18 }}
-                    label={<span />}
-                  >
-                    <Checkbox className={styles['color-write']} >记住登录状态</Checkbox>
-                  </FormItem>
                 </Form>
               </div>
             </Col>
@@ -198,14 +196,14 @@ export default class Login extends PureComponent {
                 <span className={styles['text-center']}>建议浏览器：Chrome/IE11|建议分辨率：1290*1024|<a>清除本地缓存</a>|</span>
                 <Dropdown overlay={menu}>
                   <a className="ant-dropdown-link" href="#">
-                  语言 <Icon type="down" />
+                    语言 <Icon type="down" />
                   </a>
                 </Dropdown>
               </div>
             </Col>
           </Row>
           <Row>
-            <Col span={10} offset={9} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 kingdee.  All rights reserved</span></div></Col>
+            <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 kingdee.  All rights reserved</span></div></Col>
           </Row>
         </Footer>
       </Layout>

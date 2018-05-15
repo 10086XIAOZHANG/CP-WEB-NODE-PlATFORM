@@ -6,18 +6,30 @@
  */
 
 import React from 'react';
+import { connect } from 'dva';
 import FilterModel from '../../../k3boscomponents/InitialValues/FilterModel/index';
 
+@connect(state => ({
+  kdBaseTable: state.kdBaseTable,
+}))
 class KdFilter extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      kdTableInfo: this.props.kdBaseTable.info,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      kdTableInfo: nextProps.kdBaseTable.info,
+    });
+  }
+
   render() {
     return (
       <div>
-        <FilterModel />
+        <FilterModel tableInfo={this.state.kdTableInfo} />
       </div>
     );
   }

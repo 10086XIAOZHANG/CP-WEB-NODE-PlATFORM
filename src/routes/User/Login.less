@@ -6,50 +6,64 @@
  */
 
 @import "~antd/lib/style/themes/default.less";
-@bg-color: #fff;
+@bg-color: #f2f5f4;
+@color: #333;
 .login-layout {
-  background: url('../../assets/login/login-bg.jpg') no-repeat 50%;
+  background: url('../../assets/login/bg/bg1.jpg') no-repeat;
   width: 100%;
   height: 100%;
   color: @bg-color;
   background-size: cover;
   .login-footer-layout {
-    background: none;
+    text-align: center;
+    align-content: center;
+    color: @color;
+    background-color: #eff4f8;
     a {
       display: inline-block;
     }
   }
 }
 .login-header-layout {
-  font-size: 32px;
-  font-weight: 700;
-  font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
-  color: @bg-color;
+  img {
+    height: 56px;
+  }
   background: none;
+  color: #949494;
+  font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
 }
 .login-center-layout {
-  margin: 50px 100px 220px 0;
+  height: 100%;
+  //padding: 10px 0 220px 0;
   background: none;
-  .login-center-sider {
-    background-color: rgba(255, 255, 255, 0.35);
-  }
   span {
-    color: @bg-color !important;
+    color: @color !important;
   }
   label {
-    color: @bg-color !important;
+    color: @color !important;
+  }
+  .login-conter-img {
+    text-align: center;
   }
 }
+.login-center-content {
+  height: 100%;
+}
+.login-form-container {
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .login-form {
-  margin-top: 40px;
   color: @bg-color !important;
-  padding: 40px 10px 10px 10px;
-  background: rgba(0, 0, 0, .5);
+  padding: 40px 10px 40px 10px;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
 }
 .color-write {
-  color: @bg-color !important;
-}
-.text-center {
-  text-align: center;
-  align-content: center;
+  color: @color !important;
 }

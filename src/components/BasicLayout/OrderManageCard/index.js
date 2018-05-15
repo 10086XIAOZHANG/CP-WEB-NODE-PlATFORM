@@ -19,7 +19,7 @@ class OrderManageCard extends React.PureComponent {
   }
   render() {
     return (
-      <div>
+      <div className={styles['order-manage-card']}>
         <Card style={{ width: 124, background: 'none' }} bodyStyle={{ padding: 10 }}>
           <a onClick={this.props.enterWorkspace}>
             <div className={styles['order-image']}>

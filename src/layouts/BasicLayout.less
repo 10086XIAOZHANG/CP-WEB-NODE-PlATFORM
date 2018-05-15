@@ -24,13 +24,26 @@
       height: 80px;
       box-sizing: border-box;
       padding: 0 20px;
-      color: #059be7;
-      font-size: 32px;
-      font-weight: 700;
+      color: #949494;
       font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
       line-height: 80px;
       &:focus {
         text-decoration: none;
+      }
+      .header-home-title {
+        padding-left: 16px;
+      }
+    }
+    .header-input-search {
+      width: 200px;
+      margin: auto 0;
+      margin-right: 40px;
+      top: -5px;
+      height: 30px;
+      input {
+        background-color: #65c6fb;
       }
     }
     .header-right {
@@ -46,8 +59,12 @@
       white-space: nowrap;
       overflow: hidden;
       cursor: pointer;
-      .user-name {
-        width: 200px;
+      .user-org {
+        color: #333;
+        display: inline-table;
+      }
+      .user-inf {
+        width: 100px;
         padding: 0 10px;
         text-align: center;
         color: #004dbd;
@@ -66,7 +83,7 @@
     max-width: 180px !important;
     min-width: 180px !important;
     width: 180px !important;
-    margin-top: 50px;
+    margin-top: 40px;
     overflow: hidden;
     :global {
       .ant-layout-sider-trigger {
@@ -109,7 +126,7 @@
   }
   .basic-content {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 40px;
     padding: 12px 20px 40px 20px;
     overflow-y: scroll;
     min-height: 100%;
@@ -133,8 +150,25 @@
     width: 100%;
     text-align: center;
   }
+  .tab-content {
+    padding-left: 100px;
+    background-color: #23aefa;
+    .ant-tabs-bar {
+      border-bottom: none;
+      margin-bottom: 1px;
+    }
+  }
 }
-
+.platform-help {
+  color: #333;
+  display: inline-table;
+  margin-right: 60px;
+}
+.split-line {
+  display: inline-table;
+  margin: auto 14px;
+  color: #9c9999;
+}
 :global {
   .ant-menu-dark {
     .ant-menu-sub {
@@ -146,7 +180,7 @@
   }
   .ant-layout-sider-children {
     //width: 200px;
-    overflow-y: scroll;
+    //overflow-y: scroll;
   }
   .ant-dropdown {
     .anticon {

@@ -74,6 +74,8 @@
     "lint-staged": "^6.0.0",
     "mockjs": "^1.0.1-beta3",
     "pro-download": "^1.0.1",
+    "react-responsive": "^4.1.0",
+    "react-svg": "^3.0.1",
     "react-test-renderer": "^16.2.0",
     "redbox-react": "^1.5.0",
     "roadhog": "^2.0.5",

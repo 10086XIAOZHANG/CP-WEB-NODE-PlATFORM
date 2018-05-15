@@ -6,8 +6,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
+import { Layout, Menu, Icon, Dropdown, Avatar, Tabs, Input } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
 import { Link, Route, Redirect, Switch } from 'dva/router';
@@ -15,72 +14,56 @@ import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import Debounce from 'lodash-decorators/debounce';
 import Store from 'store';
-import LeftMenus from '../containers/BasicLayout/LeftMenus';
+import SubLeftMenus from '../containers/BasicLayout/SubLeftMenus';
 import Config from '../common/config';
 import styles from './BasicLayout.less';
+import FooterCell from '../components/BasicLayout/Footer';
 
 const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
-
-const query = {
-  'screen-xs': {
-    maxWidth: 575,
-  },
-  'screen-sm': {
-    minWidth: 576,
-    maxWidth: 767,
-  },
-  'screen-md': {
-    minWidth: 768,
-    maxWidth: 991,
-  },
-  'screen-lg': {
-    minWidth: 992,
-    maxWidth: 1199,
-  },
-  'screen-xl': {
-    minWidth: 1200,
-  },
-};
+const { Header, Content, Sider } = Layout;
 
 class BasicLayout extends React.PureComponent {
-  static childContextTypes = {
-    location: PropTypes.object,
-    breadcrumbNameMap: PropTypes.object,
-  }
   constructor(props) {
     super(props);
+    this.activeKey = '';
     this.state = {
       siderWidth: this.props.siderWidth,
       siderImgWidth: this.props.siderImgWidth,
       collapsed: this.props.collapsed,
+      menus: this.props.menus,
+      activeKey: this.props.tabActiveKey,
+      panes: this.props.menuList,
+      searchText: '',
     };
-  }
-  getChildContext() {
-    const { location, navData, getRouteData } = this.props;
-    const routeData = getRouteData('BasicLayout');
-    const firstMenuData = navData.reduce((arr, current) => arr.concat(current.children), []);
-    const menuData = this.getMenuData(firstMenuData, '');
-    const breadcrumbNameMap = {};
-
-    routeData.concat(menuData).forEach((item) => {
-      breadcrumbNameMap[item.path] = item.name;
-    });
-    return { location, breadcrumbNameMap };
+    this.operations = (<Input.Search
+      placeholder=" "
+      onChange={(value) => { this.changeSearchEvent(value); }}
+      searchText={this.state.searchText}
+      className={styles['header-input-search']}
+    />);
   }
   componentDidMount() {
     // 获取用户信息
     this.props.dispatch({
       type: 'user/fetchCurrent',
-      payload: { id: Store.get(Config.USER_ID) },
+      payload: { id: Store.get(Config.defaultProps.USER_ID) },
     });
   }
   componentWillReceiveProps(nextProps) {
+    const locationChanged = nextProps.location !== this.props.location;
     this.setState({
       siderWidth: nextProps.siderWidth,
       siderImgWidth: nextProps.siderImgWidth,
       collapsed: nextProps.collapsed,
+      menus: nextProps.menu,
+      activeKey: nextProps.tabActiveKey,
     });
+    if (!locationChanged) {
+      this.setState({
+        panes: nextProps.menuList,
+      });
+    }
+    console.log('进入componentWillReceiveProps');
   }
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
@@ -92,11 +75,30 @@ class BasicLayout extends React.PureComponent {
       });
       this.props.dispatch({
         type: 'global/changeLayoutSiderState',
-        siderwidth: 200,
-        siderimgwidth: 62,
+        siderwidth: 100,
+        siderimgwidth: 25,
         collapsed: false,
       });
     }
+  }
+  onTabItemClick=(tabItemKey) => {
+    const { history } = this.props;
+    this.setState({ activeKey: tabItemKey, collapsed: !this.state.collapsed });
+    history.replace(tabItemKey, this.state);
+    this.props.dispatch({
+      type: 'global/changeLayoutSiderState',
+      siderwidth: 100,
+      siderimgwidth: 25,
+      collapsed: false,
+      menuList: this.state.panes,
+    });
+    this.props.dispatch({
+      type: 'global/changetabActiveKey',
+      payload: tabItemKey,
+    });
+  }
+  onTabChange = (activeKey) => {
+    this.setState({ activeKey });
   }
   getMenuData = (data, parentPath) => {
     let arr = [];
@@ -164,7 +166,7 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() { // 获取页面标题
     const { location, getRouteData } = this.props;
     const { pathname } = location;
-    let title = 'React Antd Dva';
+    let title = '金蝶K/3 WISE 供应链云平台';
     getRouteData('BasicLayout').forEach((item) => {
       if (item.path === pathname) {
         title = `${item.name} - 金蝶K/3 WISE 供应链云平台`;
@@ -172,8 +174,34 @@ class BasicLayout extends React.PureComponent {
     });
     return title;
   }
-  getDefaultCollapsedSubMenus() {
-    return <LeftMenus leftMenu={this.defaultLeftMenu} />;
+  removeTab = (targetKey) => {
+    const { history } = this.props;
+    // const { pathname } = location;
+    this.activeKey = this.state.activeKey;
+    let lastIndex = -1;
+    this.state.panes.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+    if (lastIndex >= 0 && this.activeKey === targetKey) {
+      this.activeKey = panes[lastIndex].key;
+    }
+    this.setState({ panes, activeKey: this.activeKey, collapsed: !this.state.collapsed });
+    history.replace('/dashboard/KdMainControl', this.state);
+    this.props.dispatch({
+      type: 'global/changeLayoutSiderState',
+      siderwidth: 100,
+      siderimgwidth: 25,
+      collapsed: false,
+      menuList: this.state.panes,
+    });
+  }
+  changeSearchEvent = (e) => {
+    this.setState({
+      searchText: e.target.value,
+    });
   }
   @Debounce(600)
   triggerResizeEvent() { // eslint-disable-line
@@ -182,71 +210,9 @@ class BasicLayout extends React.PureComponent {
     window.dispatchEvent(event);
   }
   render() {
-    const activeLeftMenu = [{
-      menuTitle: '订单管理',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '合同管理',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '发货管理',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '发票管理',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '网上业务',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '报表管理',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '库存查询',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    ];
-    const defaultLeftMenu = [{
-      menuTitle: '销售云',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '采购云',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '仓存云',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '委外云',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    {
-      menuTitle: '核算云',
-      imgUrl: require('../assets/basiclayout/sale.png'),
-      siderImgWidth: this.state.siderImgWidth,
-    },
-    ];
     const { getRouteData, currentUser } = this.props;
     const menu = (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
+      <Menu theme="dark" className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
         <Menu.Item disabled key="user"><Icon type="user" />个人中心</Menu.Item>
         <Menu.Item disabled key="setting"><Icon type="setting" />设置</Menu.Item>
         <Menu.Divider />
@@ -258,69 +224,75 @@ class BasicLayout extends React.PureComponent {
         <Header className={styles['basic-header']}>
           <div className={styles['header-home']} />
           <div className={styles['header-home-link']}>
-            <span>金蝶K/3 WISE 供应链云平台</span>
+            <img alt="" src={require('../assets/bases/logo.png')} /><span className={styles['header-home-title']}>K/3 WISE 供应链云平台</span>
           </div>
+          <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']}>|</span>帮助</span></div>
           <Dropdown overlay={menu} placement="bottomCenter">
             <div className={styles['header-right']}>
-              <div className={styles['user-name']}>
-                <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
-                {currentUser.user_name}
+              <div className={styles['user-inf']}>
+                <Avatar size="large" className={styles.avatar} src={currentUser.avatar} />
+                {currentUser.name}
               </div>
             </div>
           </Dropdown>
-          <Menu
-            mode="horizontal"
+          <div className={styles['header-right']}><span className={styles['user-org']}>{currentUser.org}<span className={styles['split-line']}>|</span></span></div>
+          <Tabs
+            hideAdd
+            onChange={this.onTabChange}
+            activeKey={this.state.activeKey}
+            type="editable-card"
+            defaultActiveKey="/dashboard/KdMainControl"
+            onEdit={this.removeTab}
+            onTabClick={this.onTabItemClick}
+            tabPosition="bottom"
+            className={styles['tab-content']}
+            tabBarExtraContent={this.operations}
           >
-            <Menu.Item key="empty1">
-              <Icon type="empty" />
-            </Menu.Item>
-            <Menu.Item key="empty2">
-              <Icon type="empty" />
-            </Menu.Item>
-            <Menu.Item key="empty3">
-              <Icon type="empty" />
-            </Menu.Item>
-            <Menu.Item key="mail">
-              <Icon type="home" />首页
-            </Menu.Item>
-          </Menu>
+            {this.state.panes.map(pane => (
+              <Tabs.TabPane
+                tab={pane.menuTitle}
+                key={pane.key}
+                closable={pane.closable}
+              />))}
+          </Tabs>
         </Header>
         <Layout>
           <Sider
             width={this.state.siderWidth}
-            style={{ background: '#fff', marginTop: 135, marginBottom: 20 }}
+            style={{ background: '#333', marginTop: 135, marginBottom: 20 }}
           >
-            {!this.state.collapsed && <LeftMenus leftMenu={defaultLeftMenu} />}
-            {this.state.collapsed && <LeftMenus leftMenu={activeLeftMenu} />}
+            <SubLeftMenus
+              siderImgWidth={this.state.siderImgWidth}
+              collapsed={this.state.collapsed}
+              menus={this.state.menus}
+            />
           </Sider>
           <Content style={{ marginTop: 135 }} className={styles['basic-content']}>
             <div style={{ minHeight: 'calc(100vh - 260px)' }}>
               <Switch>
                 {
-               getRouteData('BasicLayout').map(item =>
-               (
-                 <Route
-                   exact={item.exact}
-                   key={item.path}
-                   path={item.path}
-                   component={item.component}
-                 />
-               )
-               )
-               }
+                  getRouteData('BasicLayout').map(item =>
+                    (
+                      <Route
+                        exact={item.exact}
+                        key={item.path}
+                        path={item.path}
+                        component={item.component}
+                      />
+                    )
+                  )
+                }
                 <Redirect exact from="/" to="/dashboard/KdMainControl" />
               </Switch>
             </div>
-            <Footer className={styles['basic-footer']}>
-              © 2018 kingdee.  All rights reserved
-            </Footer>
+            <FooterCell />
           </Content>
         </Layout>
       </Layout>
     );
     return (
       <DocumentTitle title={this.getPageTitle()}>
-        <ContainerQuery query={query}>
+        <ContainerQuery query={Config.screenConfig.SCREEN_QUERY}>
           {params => <div className={classNames(params)}>{layout}</div>}
         </ContainerQuery>
       </DocumentTitle>
@@ -335,4 +307,7 @@ export default connect(state => ({
   collapsed: state.global.collapsed,
   fetchingNotices: state.global.fetchingNotices,
   notices: state.global.notices,
+  menuList: state.global.menuList,
+  tabActiveKey: state.global.tabActiveKey,
+  menu: state.menu,
 }))(BasicLayout);

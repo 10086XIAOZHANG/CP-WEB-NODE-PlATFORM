@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { Input, Button, Switch, Table, Select } from 'antd';
+import _ from 'lodash';
 import styles from './style.less';
 
 class ColumnsCell extends React.PureComponent {
@@ -16,7 +17,14 @@ class ColumnsCell extends React.PureComponent {
       filterDropdownVisible: false,
       searchText: '',
       selectedRowKeys: [],
+      tableInfo: this.props.tableInfo,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      tableInfo: nextProps.tableInfo,
+    });
   }
   onChange=(checked, index) => {
     console.log(`switch to ${checked}${index}`);
@@ -30,133 +38,51 @@ class ColumnsCell extends React.PureComponent {
     return false;
   }
   render() {
-    const columnsTitle = [{
-      title: '序号',
-      dataIndex: 'id',
-      sorter: true,
-      width: '10%',
-    }, {
-      title: '列名',
-      dataIndex: 'title',
-      filterDropdown: (
-        <div className={styles['custom-filter-dropdown']}>
-          <Input
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSearch}
-          />
-          <Button type="primary" onClick={this.onSearch}>搜索</Button>
-        </div>
-      ),
-      filterDropdownVisible: this.state.filterDropdownVisible,
-      onFilterDropdownVisibleChange: visible => this.setState({ filterDropdownVisible: visible }),
-      width: '20%',
-    }, {
-      title: '列宽',
-      dataIndex: 'width',
-      filterDropdown: (
-        <div className={styles['custom-filter-dropdown']}>
-          <Input
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSearch}
-          />
-          <Button type="primary" onClick={this.onSearch}>搜索</Button>
-        </div>
-      ),
-      filterDropdownVisible: this.state.filterDropdownVisible,
-      onFilterDropdownVisibleChange: visible => this.setState({ filterDropdownVisible: visible }),
-      width: '20%',
-    }, {
-      title: '对齐方式',
-      dataIndex: 'columnAlign',
-      render: () => (
-        <Select defaultValue="默认" style={{ width: '100%' }} onSelect={() => { return false; }} onChange={this.handleChange}>
-          <Select.Option value="默认">默认</Select.Option>
-          <Select.Option value="左对齐">左对齐</Select.Option>
-          <Select.Option value="右对齐">右对齐</Select.Option>
-        </Select>
-      ),
-      filterDropdown: (
-        <div className={styles['custom-filter-dropdown']}>
-          <Input
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSearch}
-          />
-          <Button type="primary" onClick={this.onSearch}>搜索</Button>
-        </div>
-      ),
-      filterDropdownVisible: this.state.filterDropdownVisible,
-      onFilterDropdownVisibleChange: visible => this.setState({ filterDropdownVisible: visible }),
-      width: '20%',
-    }, {
-      title: '隐藏列',
-      dataIndex: 'checked',
-      render: (text, record, index) => (
-        <Switch defaultChecked={false} onChange={() => { this.onChange(index); }} />
-      ),
-      filterDropdown: (
-        <div className={styles['custom-filter-dropdown']}>
-          <Input
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSearch}
-          />
-          <Button type="primary" onClick={this.onSearch}>搜索</Button>
-        </div>
-      ),
-      filterDropdownVisible: this.state.filterDropdownVisible,
-      onFilterDropdownVisibleChange: visible => this.setState({ filterDropdownVisible: visible }),
-      width: '20%',
-    }];
-    const columnsData = [
-      {
-        id: 1,
-        filters: [
-          {
-            text: 'billno', value: '12',
-          },
-        ],
-        dataIndex: 'billno',
-        expanded: '',
-        rendered: 'a',
-        sorter: true,
-        title: '编码',
-        width: '45%',
-        checked: '',
-      },
-      {
-        id: 2,
-        filters: [
-          {
-            text: 'measureunitsid', value: '14',
-          },
-        ],
-        dataIndex: 'name',
-        expanded: '',
-        rendered: 'a',
-        sorter: true,
-        title: '名称',
-        width: '35%',
-        checked: '',
-      },
-      {
-        id: 3,
-        filters: [
-          {
-            text: 'billno', value: '12',
-          },
-        ],
-        dataIndex: 'measureunitsid',
-        expanded: '/f7/aa',
-        rendered: '',
-        sorter: true,
-        title: '计量数量',
-        width: '15%',
-        checked: '',
-      },
-    ];
+    console.log(this.state.filterDropdownVisible + this.state.tableInfo);
+    _.forEach(this.state.tableInfo.columnsInfo, (item, key) => {
+      console.log('this.state.tableInfo.columnsInfo', item);
+      console.log('key', key);
+      if (item.filterDropdown && item.filterDropdown !== '') {
+        this.state.tableInfo.columnsInfo[key].filterDropdown = (
+          <div className={styles['custom-filter-dropdown']}>
+            <Input
+              value={this.state.searchText}
+              onChange={this.onInputChange}
+              onPressEnter={this.onSearch}
+            />
+            <Button type="primary" onClick={this.onSearch}>搜索</Button>
+          </div>
+        );
+        this.state.tableInfo.columnsInfo[key].filterDropdownVisible =
+          this.state.filterDropdownVisible;
+        this.state.tableInfo.columnsInfo[key].onFilterDropdownVisibleChange
+          = visible => this.setState({ filterDropdownVisible: visible });
+      }
+      if (item.render && item.render !== '') {
+        console.log('item.dataIndex', item.dataIndex);
+        switch (item.dataIndex) {
+          case 'columnAlign':
+            this.state.tableInfo.columnsInfo[key].render = () => (
+              <Select defaultValue="默认" style={{ width: '100%' }} onSelect={() => { return false; }} onChange={this.handleChange}>
+                <Select.Option value="默认">默认</Select.Option>
+                <Select.Option value="左对齐">左对齐</Select.Option>
+                <Select.Option value="右对齐">右对齐</Select.Option>
+              </Select>
+            );
+            break;
+          case 'checked':
+            this.state.tableInfo.columnsInfo[key].render = () => (
+              <Switch defaultChecked={false} onChange={() => { this.onChange(); }} />
+            );
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    const columnsTitle = this.state.tableInfo.columnsInfo;
+    console.log(columnsTitle);
+    const columnsData = this.state.tableInfo.columns;
     const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,

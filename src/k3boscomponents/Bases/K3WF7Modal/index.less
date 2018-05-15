@@ -1,0 +1,24 @@
+.vertical-center-modal {
+  text-align: center;
+  white-space: nowrap;
+  :global {
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+}
+
+.vertical-center-modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  width: 0;
+}
+
+.vertical-center-modal .ant-modal {
+  display: inline-block;
+  vertical-align: middle;
+  top: 0;
+  text-align: left;
+}

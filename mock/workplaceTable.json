@@ -432,5 +432,44 @@
         { "text": "Male", "value": "male" },
         { "text": "Female", "value": "female" }
       ]
-    }]
+    }],
+  "columnsInfo": [{
+    "title": "序号",
+    "dataIndex": "id",
+    "render": "",
+    "sorter": true,
+    "width": "10%"
+  }, {
+    "title": "列名",
+    "dataIndex": "title",
+    "render": "",
+    "filterDropdownProp":"data" ,
+    "filterDropdownVisible": false,
+    "onFilterDropdownVisibleChange": true,
+    "width": "20%"
+  }, {
+    "title": "列宽",
+    "dataIndex": "width",
+    "render": "",
+    "filterDropdownProp":"data" ,
+    "filterDropdownVisible": false,
+    "onFilterDropdownVisibleChange": true,
+    "width": "20%"
+  }, {
+    "title": "对齐方式",
+    "dataIndex": "columnAlign",
+    "render": "a",
+    "filterDropdownProp":"data" ,
+    "filterDropdownVisible": false,
+    "onFilterDropdownVisibleChange": true,
+    "width": "20%"
+  }, {
+    "title": "隐藏列",
+    "dataIndex": "checked",
+    "render": "a",
+    "filterDropdownProp":"data" ,
+    "filterDropdownVisible": false,
+    "onFilterDropdownVisibleChange": true,
+    "width": "20%"
+  }]
 }

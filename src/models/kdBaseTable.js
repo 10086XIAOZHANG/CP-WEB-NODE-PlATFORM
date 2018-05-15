@@ -12,12 +12,22 @@ export default {
   state: {},
 
   effects: {
+    *setBaseTableColumns({ payload }, { put }) {
+      yield put({
+        type: 'setBaseTableColumnsSuccess',
+        payload,
+      });
+    },
     *getBaseTableList({ payload, path }, { call, put }) {
       const response = yield call(getBaseTableList, path, payload);
       yield put({
         type: 'changeBaseTableList',
         payload: response,
       });
+      // yield put({
+      //   type: 'setBaseTableSettingColumns',
+      //   payload: response.info.columnsInfo,
+      // });
     },
   },
 
@@ -28,6 +38,13 @@ export default {
         status: payload !== null ? 'ok' : 'error',
         type: payload.type,
         info: payload,
+      };
+    },
+    setBaseTableSettingColumns(state, { payload }) {
+      return {
+        ...state,
+        status: payload !== null ? 'ok' : 'error',
+        tableColumnsInfo: payload,
       };
     },
   },

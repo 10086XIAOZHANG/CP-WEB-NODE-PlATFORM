@@ -7,10 +7,15 @@
 
 import React from 'react';
 import { connect } from 'dva';
+import { Card } from 'antd';
 import KdTable from '../../Bases/KdTable';
+import KdTableFilterPlan from '../../Bases/KdTableFilterPlan';
+import { store } from '../../../common/local.storage';
+import Config from '../../../common/config';
 
 @connect(state => ({
   kdOrderSaleList: state.kdOrderSaleList,
+  global: state.global,
 }))
 class OrderDetailsList extends React.PureComponent {
   constructor(props) {
@@ -21,9 +26,16 @@ class OrderDetailsList extends React.PureComponent {
   componentDidMount() {
   }
   render() {
+    const tablePath = `${store.get(Config.defaultProps.K3_DB_ADDRESS)}/WMSApi/api/WebList/GetListData`;
     return (
       <div>
-        <KdTable path="/order/getSaleList" />
+        <Card style={{ width: '100%' }}>
+          <KdTableFilterPlan />
+          <div style={{ marginBottom: 20 }} />
+          {/* <KdTable path="/order/getSaleList" /> */}
+          <KdTable path={tablePath} />
+          <div style={{ marginBottom: 20 }} />
+        </Card>
       </div>
     );
   }

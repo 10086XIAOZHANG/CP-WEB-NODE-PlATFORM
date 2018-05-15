@@ -7,18 +7,79 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Button, Card } from 'antd';
+import { Row, Col, Card, Spin } from 'antd';
+import styles from './KdMainControl.less';
+// import Config from "../../common/config";
+// import Store from "store";
 @connect(state => ({
   chart: state.chart,
+  // searchText: state.searchText,
+  mainMenu: state.mainMenu,
 }))
 export default class KdMainControl extends PureComponent {
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      kdMainNavs: [],
+    };
+  }
 
-  componentDidMount() {}
-
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'mainMenu/getMainModuleMeuns',
+      payload: true,
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      kdMainNavs: nextProps.mainMenu.mainMenu,
+    });
+  }
   componentWillUnmount() {
   }
-  changeLayoutSiderState = () => {
+  getContentBar=(title) => {
+    return <div className={styles['content-bar']}>{title}</div>;
+  };
+  getContent=() => {
+    const rows = [];
+    if (this.state.kdMainNavs && this.state.kdMainNavs.length > 0) {
+      this.state.kdMainNavs.forEach((kdMainNav) => {
+        rows.push(
+          <div className={styles['content-bar']}>{kdMainNav.title}</div>
+        );
+        const temp = [];
+        kdMainNav.childNav.forEach((childNav) => {
+          temp.push(
+            <Col span={4}>
+              <Card onClick={() => { this.changeLayoutSiderState(childNav.type, childNav.childType); }} className={styles['content-card']}>
+                <div className={styles['content-card-left']}><img alt="" src={childNav.icon} style={{ width: 40, height: 40 }} /></div>
+                <div
+                  className={styles['content-card-right']}
+                >{childNav.title}
+                </div>
+              </Card>
+            </Col>);
+        });
+        rows.push(
+          <Row style={{ marginBottom: 16 }} type="flex" justify="start" gutter={16}>
+            {temp}
+          </Row>
+        );
+      });
+      return (
+        <div>
+          { rows}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Spin size="large" />
+        </div>
+      );
+    }
+  };
+  changeLayoutSiderState = (menuName, subMenuName) => {
     this.props.dispatch({
       type: 'global/changeLayoutSiderState',
       siderwidth: 100,
@@ -32,70 +93,16 @@ export default class KdMainControl extends PureComponent {
     this.props.dispatch({
       type: 'kdMainControl/enterOrder',
     });
-  }
+    this.props.dispatch({
+      type: 'menu/getSubModuleMeuns',
+      menuName,
+      subMenuName,
+    });
+  };
   render() {
     return (
       <div>
-        <Row style={{ marginBottom: 16 }}>
-          <Card style={{ width: '100%', height: 112 }}>
-            <Col offset={1} span={3}>
-              <Button type="primary" ghost style={{ width: 120, height: 45 }} onClick={this.changeLayoutSiderState.bind(this)}>订单管理</Button>
-            </Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>合同管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发货管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发票管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>库存查询</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>报表管理</Button></Col>
-          </Card>
-        </Row>
-        <Row style={{ marginBottom: 10 }}>
-          <Card style={{ width: '100%', height: 112 }}>
-            <Col offset={1} span={3}>
-              <Button type="primary" ghost style={{ width: 120, height: 45 }}>订单管理</Button>
-            </Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>合同管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发货管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发票管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>库存查询</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>报表管理</Button></Col>
-          </Card>
-        </Row>
-        <Row style={{ marginBottom: 10 }}>
-          <Card style={{ width: '100%', height: 112 }}>
-            <Col offset={1} span={3}>
-              <Button type="primary" ghost style={{ width: 120, height: 45 }}>订单管理</Button>
-            </Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>合同管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发货管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发票管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>库存查询</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>报表管理</Button></Col>
-          </Card>
-        </Row>
-        <Row style={{ marginBottom: 10 }}>
-          <Card style={{ width: '100%', height: 112 }}>
-            <Col offset={1} span={3}>
-              <Button type="primary" ghost style={{ width: 120, height: 45 }}>订单管理</Button>
-            </Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>合同管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发货管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发票管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>库存查询</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>报表管理</Button></Col>
-          </Card>
-        </Row>
-        <Row style={{ marginBottom: 10 }}>
-          <Card style={{ width: '100%', height: 112 }}>
-            <Col offset={1} span={3}>
-              <Button type="primary" ghost style={{ width: 120, height: 45 }}>订单管理</Button>
-            </Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>合同管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发货管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>发票管理</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>库存查询</Button></Col>
-            <Col span={3}><Button type="primary" ghost style={{ width: 120, height: 45 }}>报表管理</Button></Col>
-          </Card>
-        </Row>
+        {this.getContent()}
       </div>
     );
   }

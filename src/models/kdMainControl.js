@@ -14,7 +14,7 @@ export default {
 
   effects: {
     *enterOrder(_, { put }) {
-      yield put(routerRedux.push('/dashboard/KdOrderManage'));
+      yield put(routerRedux.push('/dashboard/KdOrderManagementDetails'));
     },
   },
 

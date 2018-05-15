@@ -18,7 +18,14 @@ class FilterModel extends React.PureComponent {
       btnTxt: '过滤',
       iconType: 'down-circle',
       visible: false,
+      tableInfo: this.props.tableInfo,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      tableInfo: nextProps.tableInfo,
+    });
   }
   handleVisibleChange = (visible) => {
     if (visible) {
@@ -39,7 +46,7 @@ class FilterModel extends React.PureComponent {
             <SchemeCell />
           </Tabs.TabPane>
           <Tabs.TabPane tab="显示隐藏列" key="2">
-            <ColumnsCell />
+            <ColumnsCell tableInfo={this.state.tableInfo} />
           </Tabs.TabPane>
         </Tabs>
       </div>

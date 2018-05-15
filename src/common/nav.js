@@ -17,7 +17,7 @@ const dynamicWrapper = (app, models, component) => dynamic({
 // nav data
 export const getNavData = app => [
   {
-    component: dynamicWrapper(app, ['user', 'login', 'kdBaseTable', 'kdMainControl', 'kdOrderManage', 'kdOrderSaleList'], () => import('../layouts/BasicLayout')),
+    component: dynamicWrapper(app, ['user', 'login', 'menu', 'kdBaseTable', 'kdMainControl', 'kdOrderManage', 'kdOrderSaleList', 'mainMenu'], () => import('../layouts/BasicLayout')),
     layout: 'BasicLayout',
     name: '首页',
     path: '/',
@@ -30,7 +30,7 @@ export const getNavData = app => [
           {
             name: '主控台',
             path: 'KdMainControl',
-            component: dynamicWrapper(app, [], () => import('../routes/Dashboard/KdMainControl')),
+            component: dynamicWrapper(app, ['menu'], () => import('../routes/Dashboard/KdMainControl')),
           },
           {
             name: '订单操作界面',
