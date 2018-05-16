@@ -8,7 +8,7 @@
 /* eslint-disable prefer-destructuring */
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import { routerRedux, Link } from 'dva/router';
 import { fromJS } from 'immutable';
 import { Form, Input, Select, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
 import Config from '../../common/config';
@@ -26,16 +26,46 @@ const { Header, Footer } = Layout;
 export default class Login extends PureComponent {
   constructor(props) {
     super(props);
+    this.bgCount = 1;
+    this.time = null;
     this.state = {
       type: fromJS({
         type: 'account',
       }),
       DBAccounts: [],
       DBAddress: '',
+      bg: require('../../assets/login/bg/bg1.jpg'),
     };
   }
   componentDidMount() {
-
+    this.time = setInterval(() => {
+      this.bgCount += 1;
+      if (this.bgCount === 4) {
+        this.bgCount = 1;
+      }
+      switch (this.bgCount) {
+        case 1:
+          this.setState({
+            bg: require('../../assets/login/bg/bg1.jpg'),
+          });
+          break;
+        case 2:
+          this.setState({
+            bg: require('../../assets/login/bg/bg2.jpg'),
+          });
+          break;
+        case 3:
+          this.setState({
+            bg: require('../../assets/login/bg/bg3.jpg'),
+          });
+          break;
+        default:
+          this.setState({
+            bg: require('../../assets/login/bg/bg1.jpg'),
+          });
+          break;
+      }
+    }, 4000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,6 +94,11 @@ export default class Login extends PureComponent {
       });
     }
   }
+
+  componentWillUnmount() {
+    this.time.clear();
+  }
+
   onBlur=() => {
     // 可以使用this.props.form替代ref
     if (!this.isNull(this.state.DBAddress.input.value)) {
@@ -121,23 +156,21 @@ export default class Login extends PureComponent {
       </Menu>
     );
     return (
-      <Layout className={styles['login-layout']}>
+      <Layout className={styles['login-layout']} style={{ backgroundImage: `url(${this.state.bg})` }} >
         <Header className={styles['login-header-layout']}>
-          <Row type="flex" justify="start">
+          <Row type="flex" justify="space-between">
             <Col span={10}><img alt="" src={require('../../assets/bases/logo.png')} /></Col>
+            <Col span={8}><Link to="/user">随笔首页</Link><span className={styles['split-line']}>|</span><Link to="/user">客户端下载</Link><span className={styles['split-line']}>|</span><Link to="/user">官方贴吧</Link><span className={styles['split-line']}>|</span><Link to="/user">官方微博</Link></Col>
           </Row>
         </Header>
         <Layout className={styles['login-center-layout']} >
           <Row type="flex" justify="start" className={styles['login-center-content']} >
-            <Col span={13} className={styles['login-conter-img']} />
             <Col xs={20} sm={16} md={11} lg={8} xl={6} className={styles['login-form-container']}>
               <div className={styles['login-form']}>
-                <Form onSubmit={this.handleSubmit} horizontal="true" style={{ marginBottom: '10px' }} >
+                <Form onSubmit={this.handleSubmit} style={{ marginBottom: '10px' }} >
                   <FormItem
                     label="用户"
                     hasFeedback
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 18 }}
                   >
                     {getFieldDecorator('username', {
                       rules: [{
@@ -145,7 +178,7 @@ export default class Login extends PureComponent {
                       }],
                     })(
                       <Input
-                        prefix={<Icon type="user" className={styles.prefixIcon} />}
+                        prefix={<Icon type="user" />}
                         placeholder="请输入用户名"
                       />
                     )}
@@ -153,45 +186,27 @@ export default class Login extends PureComponent {
                   <FormItem
                     label="密码"
                     hasFeedback
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 18 }}
                   >
                     {getFieldDecorator('password')(
                       <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
                     )}
                   </FormItem>
                   <Row gutter={2}>
-                    <Col span={12}>
-                      <FormItem
-                        id="control-input"
-                        label="验证码"
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 12 }}
-                      >
-                        <Input id="control-input" placeholder="验证码" />
-                      </FormItem>
-                    </Col>
-                    <Col span={12}>
-                      <img alt="" src={`${Config.defaultProps.resource_server}//acct//acct.png`} style={{ height: '34px', width: '120px', display: 'inline-block' }} />
-                    </Col>
-                  </Row>
-                  <Row gutter={2}>
-                    <Col span={4} />
-                    <Col span={18}>
-                      <Row gutter={2}>
-                        <Col span={22} >  <Button type="primary" style={{ width: '100%' }} loading={login.submitting} size="large" htmlType="submit">确定</Button></Col>
+                    <Col span={24}>
+                      <Row gutter={2} type="flex" justify="space-between">
+                        <Col span={8} >  <Button type="primary" style={{ width: '100%' }} className={styles['submit-btn']} loading={login.submitting} size="large" htmlType="submit">确定</Button></Col>
+                        <Col span={12}><div className={styles['form-link']}><Link to="/" style={{ paddingRight: 16 }}>忘记密码</Link><Link to="/">新用户登陆</Link></div></Col>
                       </Row>
                     </Col>
                   </Row>
                 </Form>
               </div>
             </Col>
-            <Col span={2} />
           </Row>
         </Layout>
         <Footer className={styles['login-footer-layout']} >
           <Row>
-            <Col span={8} offset={8} >
+            <Col span={10} offset={8} >
               <div className={styles['color-write']} >
                 <span className={styles['text-center']}>建议浏览器：Chrome/IE11|建议分辨率：1290*1024|<a>清除本地缓存</a>|</span>
                 <Dropdown overlay={menu}>
@@ -203,7 +218,7 @@ export default class Login extends PureComponent {
             </Col>
           </Row>
           <Row>
-            <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 kingdee.  All rights reserved</span></div></Col>
+            <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 cp.  All rights reserved</span></div></Col>
           </Row>
         </Footer>
       </Layout>

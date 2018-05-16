@@ -8,7 +8,6 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'dva/router';
 import { LocaleProvider } from 'antd';
-import MediaQuery from 'react-responsive';
 
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
@@ -78,15 +77,13 @@ function RouterConfig({ history, app }) {
   };
   return (
     <LocaleProvider locale={zhCN}>
-      <MediaQuery query="(min-device-width:1224px)">
-        <Router history={history}>
-          <Switch>
-            <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
-            <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
-            <Redirect exact from="/" to="/dashboard/KdMainControl" />
-          </Switch>
-        </Router>
-      </MediaQuery>
+      <Router history={history}>
+        <Switch>
+          <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
+          <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
+          <Redirect exact from="/" to="/dashboard/KdMainControl" />
+        </Switch>
+      </Router>
     </LocaleProvider>
   );
 }
