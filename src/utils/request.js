@@ -45,9 +45,10 @@ export default function request(sUrl, options, isAbsolute = false) {
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!isAbsolute) {
       newOptions.headers = {
-        'Content-Type': 'application/x-www-from-urlencoded',
+        'Content-Type': 'application/json',
         ...newOptions.headers,
       };
+      console.log('只是序列化的body', JSON.stringify(newOptions.body));
       newOptions.body = JSON.stringify(newOptions.body);
     }
   }

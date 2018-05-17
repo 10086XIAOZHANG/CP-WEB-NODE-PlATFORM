@@ -10,13 +10,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux, Link } from 'dva/router';
 import { fromJS } from 'immutable';
-import { Form, Input, Select, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
+import { Form, Input, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
 import Config from '../../common/config';
 import { store } from '../../common/local.storage';
 import styles from './Login.less';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const { Header, Footer } = Layout;
 @connect(state => ({
   login: state.login,
@@ -32,8 +31,6 @@ export default class Login extends PureComponent {
       type: fromJS({
         type: 'account',
       }),
-      DBAccounts: [],
-      DBAddress: '',
       bg: require('../../assets/login/bg/bg1.jpg'),
     };
   }
@@ -69,20 +66,12 @@ export default class Login extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.login.data) {
-      this.setState({
-        DBAccounts: nextProps.login.data.Data,
-      });
-    }
     // 登录成功
     if (nextProps.login.status === 'ok') {
-      const userInfo = nextProps.login.info;
+      const userInfo = nextProps.login.info[0];
       // 模拟登录成功用户Token，2个小时超时哦
-      store.set(Config.defaultProps.K3_DB_ADDRESS, this.state.DBAddress.input.value);
-      store.set(Config.defaultProps.SESSION_KEY, userInfo.Data.SessionKey);
-      store.set(Config.defaultProps.ACCT_ID, userInfo.Data.LogonUser.AcctId);
       store.set(Config.defaultProps.USER_TOKEN, (new Date()).getTime());
-      store.set(Config.defaultProps.USER_ID, userInfo.Data.LogonUser); // 存储登录信息
+      store.set(Config.defaultProps.USER_ID, userInfo); // 存储登录信息
       this.props.dispatch(routerRedux.push('/'));
     }
 
@@ -96,25 +85,8 @@ export default class Login extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.time.clear();
+    clearInterval(this.time);
   }
-
-  onBlur=() => {
-    // 可以使用this.props.form替代ref
-    if (!this.isNull(this.state.DBAddress.input.value)) {
-      this.props.dispatch({
-        type: 'login/getAcctList',
-        payload: this.state.DBAddress.input.value,
-      });
-    }
-  };
-  selectItem=() => {
-    const row = [];
-    this.state.DBAccounts.forEach((DBAccount) => {
-      row.push(<Option value={DBAccount.AcctId}>{DBAccount.AcctName}</Option>);
-    });
-    return row;
-  };
   isNull= (str) => {
     if (str === '') return true;
     const regu = '^[ ]+$';
@@ -122,16 +94,19 @@ export default class Login extends PureComponent {
     return re.test(str);
   };
   handleSubmit = (e) => {
+    console.log('sumit 点击事件');
     e.preventDefault();
-    if (this.props.messageStatus) return; // 弹窗未完全关闭禁止再次提交
+    console.log('sumit 点击事件1');
+    // if (this.props.messageStatus) return; // 弹窗未完全关闭禁止再次提交
+    console.log('sumit 点击事件2');
     const { type } = this.state;
     this.props.form.validateFields({ force: true },
       (err, values) => {
-        const url = `${this.state.DBAddress.input.value}/WMSapi/api/Account/Login?userName=${values.username}&password=${values.password ? values.password : ''}&acctId=${values.acctId}&deviceType=1&clientId=&isResetLogin=false`;
+        console.log('这是登录信息', values);
         if (!err) {
           this.props.dispatch({
             type: `login/${type.get('type')}Submit`,
-            payload: url,
+            payload: values,
           });
         }
       }
@@ -141,7 +116,6 @@ export default class Login extends PureComponent {
   render() {
     const { form, login } = this.props;
     const { getFieldDecorator } = form;
-    const { type } = this.state;
     const menu = (
       <Menu>
         <Menu.Item>
@@ -160,22 +134,27 @@ export default class Login extends PureComponent {
         <Header className={styles['login-header-layout']}>
           <Row type="flex" justify="space-between">
             <Col span={10}><img alt="" src={require('../../assets/bases/logo.png')} /></Col>
-            <Col span={8}><Link to="/user">随笔首页</Link><span className={styles['split-line']}>|</span><Link to="/user">客户端下载</Link><span className={styles['split-line']}>|</span><Link to="/user">官方贴吧</Link><span className={styles['split-line']}>|</span><Link to="/user">官方微博</Link></Col>
+            <Col xs={16} sm={16} md={14} lg={12} xl={10}>
+              <Row gutter={1}>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>随笔首页</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>客户端下载</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方贴吧</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方微博</Link></Col>
+              </Row>
+            </Col>
           </Row>
         </Header>
         <Layout className={styles['login-center-layout']} >
           <Row type="flex" justify="start" className={styles['login-center-content']} >
             <Col xs={20} sm={16} md={11} lg={8} xl={6} className={styles['login-form-container']}>
               <div className={styles['login-form']}>
-                <Form onSubmit={this.handleSubmit} style={{ marginBottom: '10px' }} >
+                <Form style={{ marginBottom: '10px' }} >
                   <FormItem
                     label="用户"
                     hasFeedback
                   >
                     {getFieldDecorator('username', {
-                      rules: [{
-                        required: type.get('type') === 'account', message: '请输入用户名！',
-                      }],
+                      rules: [{ required: true, message: '请输入用户名!' }],
                     })(
                       <Input
                         prefix={<Icon type="user" />}
@@ -187,14 +166,16 @@ export default class Login extends PureComponent {
                     label="密码"
                     hasFeedback
                   >
-                    {getFieldDecorator('password')(
+                    {getFieldDecorator('pwd', {
+                      rules: [{ required: true, message: '请输入密码!' }],
+                    })(
                       <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
                     )}
                   </FormItem>
                   <Row gutter={2}>
                     <Col span={24}>
                       <Row gutter={2} type="flex" justify="space-between">
-                        <Col span={8} >  <Button type="primary" style={{ width: '100%' }} className={styles['submit-btn']} loading={login.submitting} size="large" htmlType="submit">确定</Button></Col>
+                        <Col span={8} >  <Button type="primary" style={{ width: '100%' }} className={styles['submit-btn']} loading={login.submitting} size="large" htmlType="submit" onClick={this.handleSubmit}>确定</Button></Col>
                         <Col span={12}><div className={styles['form-link']}><Link to="/" style={{ paddingRight: 16 }}>忘记密码</Link><Link to="/">新用户登陆</Link></div></Col>
                       </Row>
                     </Col>

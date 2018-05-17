@@ -6,7 +6,7 @@
  */
 
 import { routerRedux } from 'dva/router';
-import { signIn, signOut, GetAcctList } from '../services/api';
+import { signIn, signOut } from '../services/login';
 
 export default {
   namespace: 'login',
@@ -31,13 +31,6 @@ export default {
         payload: false,
       });
     },
-    *getAcctList({ payload }, { call, put }) {
-      const response = yield call(GetAcctList, payload);
-      yield put({
-        type: 'getAcctLists',
-        payload: response,
-      });
-    },
     *logout(_, { call, put }) {
       const response = yield call(signOut);
       if (response) {
@@ -47,25 +40,17 @@ export default {
   },
 
   reducers: {
-    getAcctLists(state, { payload }) {
-      return {
-        ...state,
-        data: payload,
-      };
-    },
     changeLoginStatus(state, { payload }) {
-      console.log('登录成功', payload.Data);
+      console.log('登录成功', payload);
       return {
         ...state,
-        status: payload.Message === '登录成功' ? 'ok' : 'error',
-        type: payload.type,
+        status: payload.length > 0 ? 'ok' : 'error',
         info: payload,
       };
     },
     changeSubmitting(state, { payload }) {
       return {
         ...state,
-        status: payload,
         submitting: payload,
       };
     },
