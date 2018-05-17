@@ -22,10 +22,10 @@ class UserLayout extends React.PureComponent {
   getPageTitle() {
     const { getRouteData, location } = this.props;
     const { pathname } = location;
-    let title = '金蝶K/3 WISE 供应链云平台';
+    let title = 'CP 聚合博客';
     getRouteData('UserLayout').forEach((item) => {
       if (item.path === pathname) {
-        title = `${item.name} - 金蝶K/3 WISE 供应链云平台`;
+        title = `${item.name} - CP 聚合博客`;
       }
     });
     return title;

@@ -96,7 +96,7 @@ export default class Login extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.time.clear();
+    clearInterval(this.time);
   }
 
   onBlur=() => {
@@ -141,7 +141,6 @@ export default class Login extends PureComponent {
   render() {
     const { form, login } = this.props;
     const { getFieldDecorator } = form;
-    const { type } = this.state;
     const menu = (
       <Menu>
         <Menu.Item>
@@ -160,7 +159,14 @@ export default class Login extends PureComponent {
         <Header className={styles['login-header-layout']}>
           <Row type="flex" justify="space-between">
             <Col span={10}><img alt="" src={require('../../assets/bases/logo.png')} /></Col>
-            <Col span={8}><Link to="/user">随笔首页</Link><span className={styles['split-line']}>|</span><Link to="/user">客户端下载</Link><span className={styles['split-line']}>|</span><Link to="/user">官方贴吧</Link><span className={styles['split-line']}>|</span><Link to="/user">官方微博</Link></Col>
+            <Col xs={16} sm={14} md={12} lg={12} xl={6}>
+              <Row gutter={1}>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>随笔首页</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>客户端下载</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方贴吧</Link></Col>
+                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方微博</Link></Col>
+              </Row>
+            </Col>
           </Row>
         </Header>
         <Layout className={styles['login-center-layout']} >
@@ -173,9 +179,7 @@ export default class Login extends PureComponent {
                     hasFeedback
                   >
                     {getFieldDecorator('username', {
-                      rules: [{
-                        required: type.get('type') === 'account', message: '请输入用户名！',
-                      }],
+                      rules: [{ required: true, message: '请输入用户名!' }],
                     })(
                       <Input
                         prefix={<Icon type="user" />}
@@ -187,7 +191,9 @@ export default class Login extends PureComponent {
                     label="密码"
                     hasFeedback
                   >
-                    {getFieldDecorator('password')(
+                    {getFieldDecorator('password', {
+                      rules: [{ required: true, message: '请输入密码!' }],
+                    })(
                       <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
                     )}
                   </FormItem>

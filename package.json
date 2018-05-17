@@ -1,7 +1,7 @@
 {
-  "name": "Kingdee.K3.SCM.WMS.WebEnd",
+  "name": "CP-WEB-SOURCE-PlATFORM",
   "version": "0.0.1",
-  "description": "K3 WISE 供应链 Web化 项目",
+  "description": "CP 聚合博客",
   "private": true,
   "scripts": {
     "precommit": "npm run lint-staged",

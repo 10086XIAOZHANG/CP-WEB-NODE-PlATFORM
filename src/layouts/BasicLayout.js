@@ -166,10 +166,10 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() { // 获取页面标题
     const { location, getRouteData } = this.props;
     const { pathname } = location;
-    let title = '金蝶K/3 WISE 供应链云平台';
+    let title = 'CP 聚合博客';
     getRouteData('BasicLayout').forEach((item) => {
       if (item.path === pathname) {
-        title = `${item.name} - 金蝶K/3 WISE 供应链云平台`;
+        title = `${item.name} - CP 聚合博客`;
       }
     });
     return title;
