@@ -17,20 +17,20 @@ const dynamicWrapper = (app, models, component) => dynamic({
 // nav data
 export const getNavData = app => [
   {
-    component: dynamicWrapper(app, ['user', 'login', 'kdMainControl'], () => import('../layouts/BasicLayout')),
+    component: dynamicWrapper(app, ['user', 'login', 'home'], () => import('../layouts/BasicLayout')),
     layout: 'BasicLayout',
     name: '首页',
     path: '/',
     children: [
       {
-        name: 'Dashboard',
-        icon: 'dashboard',
-        path: 'dashboard',
+        name: 'Main',
+        icon: 'main',
+        path: 'main',
         children: [
           {
-            name: '主控台',
-            path: 'KdMainControl',
-            component: dynamicWrapper(app, [], () => import('../routes/Dashboard/KdMainControl')),
+            name: '主页',
+            path: 'home',
+            component: dynamicWrapper(app, [], () => import('../routes/Main/Home')),
           },
         ],
       },

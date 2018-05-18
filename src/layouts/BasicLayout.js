@@ -134,7 +134,7 @@ class BasicLayout extends React.PureComponent {
                   )
                 )
               }
-              <Redirect exact from="/" to="/dashboard/KdMainControl" />
+              <Redirect exact from="/" to="/main/Home" />
             </Switch>
           </div>
           <FooterCell />

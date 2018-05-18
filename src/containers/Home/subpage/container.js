@@ -7,6 +7,7 @@
 import React from 'react';
 import { Row, Col, Icon, BackTop, Tabs, Card, Tag } from 'antd';
 import PCNewsList from './newslist';
+import styles from './style.less';
 
 class PCNewsContainer extends React.PureComponent {
   constructor(props) {
@@ -19,8 +20,8 @@ class PCNewsContainer extends React.PureComponent {
       <div>
         <Row style={{ marginTop: 20 }}>
           <Col span={2} />
-          <Col span={13}>
-            <Tabs className="tabs_news">
+          <Col span={13} className={styles['news-contents']}>
+            <Tabs className={styles['tabs-news']} tabBarStyle={{ backgroundColor: '#fff', marginBottom: 12 }}>
               <Tabs.TabPane tab="头条新闻" key="1">
                 <PCNewsList count="22" type="top" width="100%" bordered="false" />
               </Tabs.TabPane>
@@ -33,18 +34,18 @@ class PCNewsContainer extends React.PureComponent {
             </Tabs>
           </Col>
           <Col span={6}>
-            <Card extra={<Icon type="schedule" />} title="站点推荐" className="recommend">
-              <div className="recommend-image">
+            <Card extra={<Icon type="schedule" />} title="站点推荐" className={styles.recommend}>
+              <div className={styles['recommend-image']}>
                 <img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
               </div>
             </Card>
-            <Card extra={<Icon type="schedule" />} title="热门文章" className="hot">
-              <div className="recommend-image">
+            <Card extra={<Icon type="schedule" />} title="热门文章" className={styles.hot}>
+              <div className={styles['recommend-image']}>
                 <PCNewsList count="4" type="keji" width="100%" bordered="false" />
               </div>
             </Card>
             <Card title="标签" noHovering className="tags">
-              <div className="tags_content">
+              <div className={styles['tags-content']}>
                 <Tag color="orange" style={{ fontSize: 11 }}>主题(2)</Tag>
                 <Tag color="orange" style={{ fontSize: 17 }}>周杰伦</Tag>
                 <Tag color="green" style={{ fontSize: 31 }}>alibaba(3)</Tag>
@@ -59,8 +60,8 @@ class PCNewsContainer extends React.PureComponent {
             </Card>
           </Col>
         </Row>
-        <BackTop className="backtop">
-          <div className="ant-back-top-inner"><Icon type="to-top" style={{ size: 32, fontSize: 24 }} />回到顶部</div>
+        <BackTop className={styles.backtop}>
+          <div className={styles['ant-back-top-inner']}><Icon type="to-top" style={{ size: 32, fontSize: 24 }} />回到顶部</div>
         </BackTop>
       </div>
     );

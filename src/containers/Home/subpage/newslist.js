@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-tag-location */
 /**
  *创建时间:  2018/5/18
  *  作  者：Jimck_Zhang
@@ -6,7 +7,8 @@
  */
 import React from 'react';
 import { Link } from 'dva/router';
-import { Card } from 'antd';
+import { Card, Row, Col, Spin } from 'antd';
+import styles from './style.less';
 
 class NewsList extends React.PureComponent {
   constructor(props) {
@@ -24,30 +26,31 @@ class NewsList extends React.PureComponent {
   render() {
     const { news } = this.state;
     const newsList = news.length
-      ? news.map((newsItem, index) => {
-        <li key={index} className="newitem">
-          <img alt="" src={`${newsItem.thumbnail_pic_s}`} className="contentleft"/>
-          <div className="contentleft contentnew">
-            <h2>
-              <Link to={`details/${newsItem.uniquekey}`} target="_blank">
-                {newsItem.title}
-              </Link>
-            </h2>
-            <div>
-              <ul className="list-inline meta">
-                <li>{newsItem.author_name} · <span>{newsItem.date}</span></li>
-                <li><i className="icon icon-tag"/> <a href="http://demo.sisome.com/internet/">{newsItem.category}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      })
-      : '没有加载到任何新闻';
+      ? news.map(newsItem =>
+        (<li className={`${styles['new-item']} ${styles.clearfloat}`}>
+          <Row>
+            <Col xs={2} sm={8} md={12} lg={16} xl={7}>
+              <img alt="" src={`${newsItem.thumbnail_pic_s}`} className={styles['new-item-contentleft']} /></Col>
+            <Col xs={22} sm={16} md={12} lg={8} xl={17}>
+              <div className={styles['new-item-content-right']}>
+                <h2>
+                  <Link to={`details/${newsItem.uniquekey}`} target="_blank">
+                    {newsItem.title}
+                  </Link>
+                </h2>
+                <ul className={`${styles['list-inline']} ${styles.meta}`}>
+                  <li>{newsItem.author_name} · <span>{newsItem.date}</span></li>
+                  <li><i className="icon icon-tag" /> <a href="http://demo.sisome.com/internet/">{newsItem.category}</a>
+                  </li>
+                </ul>
+              </div></Col>
+          </Row>
+        </li>))
+      : <Spin size="large" />;
     return (
-      <div className="topNewsList">
+      <div className={styles.topNewsList}>
         <Card>
-          <ul>
+          <ul style={{ paddingLeft: 0 }}>
             {newsList}
           </ul>
         </Card>

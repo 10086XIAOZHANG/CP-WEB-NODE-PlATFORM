@@ -7,6 +7,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import PCNewsList from './newslist';
+import styles from './style.less';
 
 class PCBlock extends React.PureComponent {
   constructor(props) {
@@ -17,7 +18,7 @@ class PCBlock extends React.PureComponent {
   render() {
     return (
       <div>
-        <Tabs class="tabs_news">
+        <Tabs class={styles['tabs-news']}>
           <Tabs.TabPane tab="头条新闻" key="1">
             <PCNewsList key="0f3e0acb886a9980f5e7243361c2f5a0" type="top" width="100%" bordered="false" />
           </Tabs.TabPane>

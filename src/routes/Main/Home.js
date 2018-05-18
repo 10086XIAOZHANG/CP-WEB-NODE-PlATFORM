@@ -7,6 +7,8 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import PCContainer from '../../containers/Home/subpage/container';
+
 @connect(state => ({
   chart: state.chart,
   mainMenu: state.mainMenu,
@@ -25,7 +27,7 @@ export default class KdMainControl extends PureComponent {
   render() {
     return (
       <div>
-        aa
+        <PCContainer />
       </div>
     );
   }

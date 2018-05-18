@@ -40,7 +40,7 @@ class Footer extends React.PureComponent {
           </Col>
         </Row>
         <Row>
-          <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 kingdee.  All rights reserved</span></div></Col>
+          <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 CP聚合博客.  All rights reserved</span></div></Col>
         </Row>
       </div>
     );

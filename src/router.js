@@ -81,7 +81,7 @@ function RouterConfig({ history, app }) {
         <Switch>
           <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
           <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
-          <Redirect exact from="/" to="/dashboard/KdMainControl" />
+          <Redirect exact from="/" to="/main/Home" />
         </Switch>
       </Router>
     </LocaleProvider>
