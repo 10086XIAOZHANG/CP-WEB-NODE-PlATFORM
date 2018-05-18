@@ -12,6 +12,9 @@ import {
   Menu,
   Icon,
   Button,
+  Input,
+  Avatar,
+  Dropdown,
 } from 'antd';
 import ClassNames from 'classnames';
 import styles from './style.less';
@@ -23,9 +26,20 @@ class Header extends React.PureComponent {
       current: 'top',
     };
   }
+  onMenuClick=() => {
+    this.props.onMenuClick();
+  }
   handleClick=() => {
   }
   render() {
+    const menu = (
+      <Menu theme="dark" className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
+        <Menu.Item disabled key="user"><Icon type="user" />个人中心</Menu.Item>
+        <Menu.Item disabled key="setting"><Icon type="setting" />设置</Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>
+      </Menu>
+    );
     return (
       <Row className={styles['header-row']}>
         <Col span={2} className={ClassNames(styles['header-border'], styles.h65, styles['white-bg'])} />
@@ -67,9 +81,22 @@ class Header extends React.PureComponent {
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
-          <Button icon="search" >搜索</Button>
-          <Link to="/login"><Button icon="solution" > 登录</Button></Link>
-          <Link to="/register"><Button icon="exception"> 注册</Button></Link>
+          <Input.Search
+            placeholder="请输入搜索内容"
+            style={{ width: 200 }}
+            onSearch={value => console.log(value)}
+          />
+          <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']} /><Link to="/help"><Button icon="question-circle-o"> 帮助</Button></Link></span></div>
+          <Dropdown overlay={menu} placement="bottomCenter">
+            <div className={styles['header-right']}>
+              <div className={styles['user-inf']}>
+                <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar} />
+                {this.props.currentUser.name}
+              </div>
+            </div>
+          </Dropdown>
+          {/* <Link to="/login"><Button icon="solution" > 登录</Button></Link> */}
+          {/* <Link to="/register"><Button icon="exception"> 注册</Button></Link> */}
         </Col>
         <Col span={2} className={ClassNames(styles['header-border'], styles.h65, styles['white-bg'])} />
       </Row>

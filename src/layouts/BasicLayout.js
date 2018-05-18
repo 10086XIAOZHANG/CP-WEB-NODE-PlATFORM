@@ -115,10 +115,10 @@ class BasicLayout extends React.PureComponent {
     window.dispatchEvent(event);
   }
   render() {
-    const { getRouteData } = this.props;
+    const { getRouteData, currentUser } = this.props;
     const layout = (
       <Layout className={styles['basic-layout']}>
-        <Header className={styles['basic-header']}><PCHeader /></Header>
+        <Header className={styles['basic-header']}><PCHeader currentUser={currentUser} /></Header>
         <Content style={{ marginTop: 56 }} className={styles['basic-content']}>
           <div style={{ minHeight: 'calc(100vh - 260px)' }}>
             <Switch>

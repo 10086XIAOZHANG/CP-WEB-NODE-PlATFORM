@@ -13,9 +13,16 @@ class PCHeader extends React.PureComponent {
     this.state = {
     };
   }
+  onMenuClick = ({ key }) => {
+    if (key === 'logout') {
+      this.props.dispatch({
+        type: 'login/logout',
+      });
+    }
+  }
   render() {
     return (
-      <HomeHeader />
+      <HomeHeader currentUser={this.props.currentUser} onMenuClick={this.onMenuClick} />
     );
   }
 }

@@ -4,6 +4,7 @@
 *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
 *  功  能:
 */
+@header-height: 65px;
 .logo {
   align-items: center;
   display: flex;
@@ -11,6 +12,38 @@
 
 .header-row {
   margin-top: 0 !important;
+  .header-right {
+    float: right;
+    line-height: @header-height - 2;
+    height: @header-height - 2;
+    display: block;
+    z-index: 2;
+    background: #fff;
+    color: #fff;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    .user-org {
+      color: #333;
+      display: inline-table;
+    }
+    .user-inf {
+      width: 100px;
+      padding: 0 10px;
+      text-align: center;
+      color: #004dbd;
+    }
+    .avatar {
+      background: rgba(255, 255, 255, .85);
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    .platform-help {
+      color: #333;
+    }
+  }
 }
 
 .h65 {
@@ -18,8 +51,8 @@
 }
 
 .header-menu, .logo, .h65 {
-  line-height: 65px;
-  height: 65px;
+  line-height: @header-height;
+  height: @header-height;
 }
 
 .header-border {
