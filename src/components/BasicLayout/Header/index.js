@@ -26,8 +26,8 @@ class Header extends React.PureComponent {
       current: 'top',
     };
   }
-  onMenuClick=() => {
-    this.props.onMenuClick();
+  onMenuClick=({ key }) => {
+    this.props.onMenuClick({ key });
   }
   handleClick=() => {
   }
