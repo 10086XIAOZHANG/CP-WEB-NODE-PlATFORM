@@ -14,7 +14,7 @@ import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import Debounce from 'lodash-decorators/debounce';
 import Config from '../common/config';
-import BlogContainerList from '../containers/BlogContainerList';
+import styles from './BlogLayout.less';
 
 const { Header, Sider, Content } = Layout;
 
@@ -26,7 +26,6 @@ class BlogLayout extends React.PureComponent {
       collapsed: false,
       shrinked: false,
       lighted: true,
-      blogPageState: 0,
     };
   }
   componentDidMount() {
@@ -51,7 +50,7 @@ class BlogLayout extends React.PureComponent {
     event.initEvent('resize', true, false);
     window.dispatchEvent(event);
   }
-  toggle() {
+  toggle=() => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
@@ -64,12 +63,6 @@ class BlogLayout extends React.PureComponent {
   triggerShrink() {
     this.setState({
       shrinked: !this.state.shrinked,
-    });
-  }
-  changeblogPageState(stateId) {
-    console.log('进入点击事件');
-    this.setState({
-      blogPageState: stateId,
     });
   }
   receiveMarkdown=(content) => {
@@ -88,10 +81,10 @@ class BlogLayout extends React.PureComponent {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1">
-                <a onClick={() => this.changeblogPageState(0)}>
+                <Link to="/blog/">
                   <Icon type="user" />
                   <span>首页</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <a onClick={() => this.changeblogPageState(1)}>
@@ -133,19 +126,19 @@ class BlogLayout extends React.PureComponent {
           </Sider>
           {
             this.state.shrinked ? '' :
-            <Sider className="bg_show fix_position">
-              <div className="qg">
-                <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                <p>浮云小哥</p>
-                <p>浮云小哥的个人博客</p>
+            <Sider className={`${styles['bg-show']} ${styles['fix-position']}`} style={{ backgroundImage: `url(${Config.defaultProps.resource_server}/blog/${currentUser.username}/myblogbg.jpg)`, height: document.body.clientHeight }}>
+              <div className={styles.qg}>
+                <Avatar size="large" src={currentUser.avatar} />
+                <p>{currentUser.username}</p>
+                <p>{currentUser.username}的个人博客</p>
                 <span><Icon type="github" /></span>
               </div>
             </Sider>
           }
           <Layout className={this.state.lighted ? 'light' : 'dark'}>
-            <Header style={{ padding: 0 }}>
+            <Header style={{ padding: 0, backgroundColor: '#fff', width: '100%' }}>
               <div style={{ padding: 3, fontSize: 23 }}>
-                <Row>
+                <Row type="flex" justify="between-space">
                   <Col span={20}>
                     <Menu
                       theme={this.state.lighted ? '' : 'dark'}
@@ -157,7 +150,7 @@ class BlogLayout extends React.PureComponent {
                         <Icon
                           className="trigger"
                           type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                          onClick={this.toggle.bind(this)}
+                          onClick={this.toggle}
                         />
                       </Menu.Item>
                       {/* <Icon type="shrink" /> */}
@@ -177,12 +170,12 @@ class BlogLayout extends React.PureComponent {
                       </Menu.Item>
                     </Menu>
                   </Col>
-                  <Col>
+                  <Col span={4}>
                     <Menu
                       theme={this.state.lighted ? '' : 'dark'}
                       mode="horizontal"
                       defaultSelectedKeys={['2']}
-                      style={{ lineHeight: '64px' }}
+                      style={{ height: '100%' }}
                     >
                       <Menu.Item key="1" >
                         <Icon
@@ -203,24 +196,24 @@ class BlogLayout extends React.PureComponent {
                 </Row>
               </div>
             </Header>
-            <Content style={{ margin: '5px 0px', padding: 24, minHeight: 660 }}>
-              {
-                this.state.blogPageState === 0 ?
-                  <BlogContainerList />
-                  :
-                  (this.state.blogPageState === 1 ?
-                    <BlogEditor />
-                      : (this.state.blogPageState === 2 ?
-                        <BlogArchive />
-                          : (this.state.blogPageState === 3 ?
-                            <BlogTag />
-                            : (this.state.blogPageState === 4 ?
-                              <BlogLink /> : (this.state.blogPageState === 5 ?
-                                <BlogLeaveMsg /> : (this.state.blogPageState === 6 ?
-                                  <PcBlogAbout /> : ''))))
+            <Content style={{ margin: '2px 2px 10px 2px', padding: 24, minHeight: 660, overflow: 'initial' }}>
+              <div style={{ minHeight: 'calc(100vh - 260px)' }}>
+                <Switch>
+                  {
+                    getRouteData('BlogLayout').map(item =>
+                      (
+                        <Route
+                          exact={item.exact}
+                          key={item.path}
+                          path={item.path}
+                          component={item.component}
+                        />
                       )
-                  )
-              }
+                    )
+                  }
+                  <Redirect exact from="/blog" to="/blog/index" />
+                </Switch>
+              </div>
             </Content>
           </Layout>
         </Layout>

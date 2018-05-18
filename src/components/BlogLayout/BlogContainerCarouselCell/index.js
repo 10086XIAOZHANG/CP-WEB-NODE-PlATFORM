@@ -32,53 +32,53 @@ class BlogContainerCarouselCell extends React.PureComponent {
               <Carousel {...settings}>
                 <div className={styles.fillview}>
                   <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.default.defaultProps.resource_server}/ContainerCarousel/images/carousel_1.jpg`} />
+                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1.jpg`} />
                   </div>
                   <div className={styles.rightContainer}>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_1_1.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1_1.jpg`} />
                     </div>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_1_2.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1_2.jpg`} />
                     </div>
                   </div>
                 </div>
                 <div className={styles.fillview}>
                   <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_2.jpg`} />
+                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2.jpg`} />
                   </div>
                   <div className={styles.rightContainer}>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_2_1.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2_1.jpg`} />
                     </div>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_2_2.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2_2.jpg`} />
                     </div>
                   </div>
                 </div>
                 <div className={styles.fillview}>
                   <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_3.jpg`} />
+                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3.jpg`} />
                   </div>
                   <div className={styles.rightContainer}>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_3_1.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3_1.jpg`} />
                     </div>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_3_2.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3_2.jpg`} />
                     </div>
                   </div>
                 </div>
                 <div className={styles.fillview}>
                   <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_4.jpg`} />
+                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4.jpg`} />
                   </div>
                   <div className={styles.rightContainer}>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_4_1.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4_1.jpg`} />
                     </div>
                     <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.default.defaultProps.resource_server}/components/ContainerCarousel/images/carousel_4_2.jpg`} />
+                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4_2.jpg`} />
                     </div>
                   </div>
                 </div>

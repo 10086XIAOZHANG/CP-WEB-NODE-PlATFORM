@@ -69,7 +69,7 @@ class Header extends React.PureComponent {
               <Icon type="appstore" />时尚
             </Menu.Item>
             <Menu.Item key="boke">
-              <Link to="/blog" target="_blank">
+              <Link to="/blog">
                 <Icon type="appstore" />博客
               </Link>
 
@@ -77,7 +77,7 @@ class Header extends React.PureComponent {
           </Menu>
         </Col>
         <Col
-          span={5}
+          span={7}
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
@@ -105,7 +105,6 @@ class Header extends React.PureComponent {
             </div>
           }
         </Col>
-        <Col span={2} className={ClassNames(styles['header-border'], styles.h65, styles['white-bg'])} />
       </Row>
     );
   }

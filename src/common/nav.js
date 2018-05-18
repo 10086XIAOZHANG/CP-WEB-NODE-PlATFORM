@@ -34,18 +34,6 @@ export const getNavData = app => [
           },
         ],
       },
-      {
-        name: '表单页',
-        path: 'form',
-        icon: 'form',
-        children: [
-          {
-            name: '基础表单',
-            path: 'basic-form',
-            component: dynamicWrapper(app, [], () => import('../routes/Forms/BasicForm')),
-          },
-        ],
-      },
     ],
   },
   {
@@ -80,7 +68,7 @@ export const getNavData = app => [
           {
             name: '主页',
             path: 'index',
-            component: dynamicWrapper(app, ['blog'], () => import('../routes/blog/Index')),
+            component: dynamicWrapper(app, ['blog'], () => import('../routes/BlogList/Index')),
           },
         ],
       },

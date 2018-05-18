@@ -66,6 +66,7 @@ function RouterConfig({ history, app }) {
   const navData = getNavData(app);
   const UserLayout = getLayout(navData, 'UserLayout').component;
   const BasicLayout = getLayout(navData, 'BasicLayout').component;
+  const BlogLayout = getLayout(navData, 'BlogLayout').component;
   const passProps = {
     app,
     navData: navData.filter((item) => {
@@ -80,6 +81,7 @@ function RouterConfig({ history, app }) {
       <Router history={history}>
         <Switch>
           <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
+          <Route path="/blog" render={props => requireAuth(BlogLayout, props, passProps)} />
           <Route path="/" render={props => requireAuth(BasicLayout, props, passProps)} />
           <Redirect exact from="/" to="/main/Home" />
         </Switch>
