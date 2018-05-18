@@ -5,8 +5,12 @@
  *  功  能:
  */
 import React from 'react';
+import { connect } from 'dva';
 import HomeHeader from '../../../components/BasicLayout/Header';
 
+@connect(state => ({
+  home: state.home,
+}))
 class PCHeader extends React.PureComponent {
   constructor(props) {
     super(props);
