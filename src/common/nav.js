@@ -67,5 +67,23 @@ export const getNavData = app => [
       },
     ],
   },
-
+  {
+    component: dynamicWrapper(app, ['blog'], () => import('../layouts/BlogLayout')),
+    path: '/blog',
+    layout: 'BlogLayout',
+    children: [
+      {
+        name: '博客',
+        icon: 'blog',
+        path: 'blog',
+        children: [
+          {
+            name: '主页',
+            path: 'index',
+            component: dynamicWrapper(app, ['blog'], () => import('../routes/blog/Index')),
+          },
+        ],
+      },
+    ],
+  },
 ];

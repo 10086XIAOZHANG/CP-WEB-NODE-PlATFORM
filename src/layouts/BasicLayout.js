@@ -5,13 +5,6 @@
  *  功  能:
  */
 
-/**
- *创建时间:  2017/11/4
- *  作  者：Jimck_Zhang
- *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
- *  功  能:
- */
-
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import DocumentTitle from 'react-document-title';
