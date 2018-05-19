@@ -81,46 +81,46 @@ class BlogLayout extends React.PureComponent {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1">
-                <Link to="/blog/">
+                <Link to="/blog/index">
                   <Icon type="user" />
                   <span>首页</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <a onClick={() => this.changeblogPageState(1)}>
+                <Link to="/blog/editor">
                   <Icon type="plus" />
                   <span>写博</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3">
-                <a onClick={() => this.changeblogPageState(2)}>
+                <Link to="/blog/archives">
                   <Icon type="hdd" />
                   <span>归档</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="4">
-                <a onClick={() => this.changeblogPageState(3)}>
+                <Link to="/blog/tags">
                   <Icon type="tag" />
                   <span>标签</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="5">
-                <a onClick={() => this.changeblogPageState(4)}>
+                <Link to="/blog/links">
                   <Icon type="share-alt" />
                   <span>链接</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="6">
-                <a onClick={() => this.changeblogPageState(5)}>
+                <Link to="/blog/leaveMsg">
                   <Icon type="contacts" />
                   <span>留言</span>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item key="7">
-                <a onClick={() => this.changeblogPageState(6)}>
+                <Link to="/blog/abouts">
                   <Icon type="paper-clip" />
                   <span>关于</span>
-                </a>
+                </Link>
               </Menu.Item>
             </Menu>
           </Sider>
@@ -139,64 +139,39 @@ class BlogLayout extends React.PureComponent {
             <Header style={{ padding: 0, backgroundColor: '#fff', width: '100%' }}>
               <div style={{ padding: 3, fontSize: 23 }}>
                 <Row type="flex" justify="between-space">
-                  <Col span={20}>
-                    <Menu
-                      theme={this.state.lighted ? '' : 'dark'}
-                      mode="horizontal"
-                      defaultSelectedKeys={['2']}
-                      style={{ lineHeight: '64px' }}
-                    >
-                      <Menu.Item key="1" >
-                        <Icon
-                          className="trigger"
-                          type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                          onClick={this.toggle}
-                        />
-                      </Menu.Item>
-                      {/* <Icon type="shrink" /> */}
-                      <Menu.Item key="2">
-                        <Icon
-                          className="triggerShrink"
-                          type={this.state.shrinked ? 'arrows-alt' : 'shrink'}
-                          onClick={this.triggerShrink.bind(this)}
-                        />
-                      </Menu.Item>
-                      <Menu.Item key="3">
-                        <Input.Search
-                          placeholder="搜索"
-                          style={{ width: 200 }}
-                          onSearch={value => console.log(value)}
-                        />
-                      </Menu.Item>
-                    </Menu>
+                  <Col span={21}>
+                    <Icon
+                      className={styles.trigger}
+                      type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                      onClick={this.toggle}
+                    />
+                    <Icon
+                      className={styles.triggerShrink}
+                      type={this.state.shrinked ? 'arrows-alt' : 'shrink'}
+                      onClick={this.triggerShrink.bind(this)}
+                    />
+                    <Input.Search
+                      placeholder="搜索"
+                      style={{ width: 200 }}
+                      onSearch={value => console.log(value)}
+                    />
                   </Col>
-                  <Col span={4}>
-                    <Menu
-                      theme={this.state.lighted ? '' : 'dark'}
-                      mode="horizontal"
-                      defaultSelectedKeys={['2']}
-                      style={{ height: '100%' }}
-                    >
-                      <Menu.Item key="1" >
-                        <Icon
-                          type="bulb"
-                          onClick={this.lightState.bind(this)}
-                        />
-                      </Menu.Item>
-                      <Menu.Item key="2" >
-                        <Link to="/login">
-                          <Icon
-                            type="login"
-                            className=""
-                          />
-                        </Link>
-                      </Menu.Item>
-                    </Menu>
+                  <Col span={3}>
+                    <Icon
+                      type="bulb"
+                      onClick={this.lightState.bind(this)}
+                    />
+                    <Link to="/user">
+                      <Icon
+                        type="login"
+                        className={styles.logout}
+                      />
+                    </Link>
                   </Col>
                 </Row>
               </div>
             </Header>
-            <Content style={{ margin: '2px 2px 10px 2px', padding: 24, minHeight: 660, overflow: 'initial' }}>
+            <Content style={{ margin: '2px 2px 10px 2px', padding: 24, minHeight: 660, overflowY: 'auto', height: 600 }}>
               <div style={{ minHeight: 'calc(100vh - 260px)' }}>
                 <Switch>
                   {
@@ -211,7 +186,7 @@ class BlogLayout extends React.PureComponent {
                       )
                     )
                   }
-                  <Redirect exact from="/blog" to="/blog/index" />
+                  <Redirect exact to="/blog/index" />
                 </Switch>
               </div>
             </Content>

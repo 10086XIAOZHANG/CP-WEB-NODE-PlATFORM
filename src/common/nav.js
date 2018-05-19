@@ -68,7 +68,37 @@ export const getNavData = app => [
           {
             name: '主页',
             path: 'index',
-            component: dynamicWrapper(app, ['blog'], () => import('../routes/BlogList/Index')),
+            component: dynamicWrapper(app, [], () => import('../routes/BlogList/Index')),
+          },
+          {
+            name: '写博',
+            path: 'editor',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogEditor/Index')),
+          },
+          {
+            name: '归档',
+            path: 'archives',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogArchives/Index')),
+          },
+          {
+            name: '标签',
+            path: 'tags',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogTags/Index')),
+          },
+          {
+            name: '链接',
+            path: 'links',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogLinks/Index')),
+          },
+          {
+            name: '留言',
+            path: 'leaveMsg',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogLeaveMsg/Index')),
+          },
+          {
+            name: '留言',
+            path: 'abouts',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogAbouts/Index')),
           },
         ],
       },

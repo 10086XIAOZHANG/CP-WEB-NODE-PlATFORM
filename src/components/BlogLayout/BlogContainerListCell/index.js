@@ -16,7 +16,7 @@ class BlogContainerListCell extends React.PureComponent {
     this.state = {
       blogs: [{
         uname: '坚持到底',
-        uimg: '../../static/avatar/j.jpg',
+        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
@@ -26,7 +26,7 @@ class BlogContainerListCell extends React.PureComponent {
       },
       {
         uname: '隔壁的老王',
-        uimg: '../../static/avatar/j.jpg',
+        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
@@ -36,7 +36,7 @@ class BlogContainerListCell extends React.PureComponent {
       },
       {
         uname: '老曾头',
-        uimg: '../../static/avatar/j.jpg',
+        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
@@ -63,7 +63,7 @@ class BlogContainerListCell extends React.PureComponent {
             <h2 className={styles.mb10}>{newsItem.title}</h2>
             <p>{newsItem.content}</p>
             <div>
-              <ul className="list-inline meta">
+              <ul className={styles['list-inline']}>
                 <li> <Button type="danger" size="small" ghost>{newsItem.classType}</Button> · <span><Icon type="eye-o" />{newsItem.scanNum}</span></li>
                 <li><span style={{ paddingRight: 5 }}><Icon type="message" />{newsItem.msgNum}</span>    <span><Icon type="heart" />{newsItem.colNum}</span></li>
               </ul>

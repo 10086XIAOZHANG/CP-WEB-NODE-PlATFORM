@@ -5,47 +5,73 @@
  *  功  能:
  */
 import React from 'react';
-import { Checkbox, Row, Col, Button, Collapse, Radio } from 'antd';
-import LzEditor from '../../../modules/editor';
+import { Collapse, Radio, Checkbox, Row, Col, Button } from 'antd';
+import Editor from 'react-umeditor';
 import styles from './styles.less';
 
 class BlogContainerEditorCell extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      markdownContent: '## HEAD 2 \n markdown examples \n ``` welcome ```',
+      // content: '',
     };
   }
   onChange=(checkedValues) => {
     console.log('checked = ', checkedValues);
   }
+  getIcons=() => {
+    const icons = [
+      'source | undo redo | bold italic underline strikethrough fontborder emphasis | ',
+      'paragraph fontfamily fontsize | superscript subscript | ',
+      'forecolor backcolor | removeformat | insertorderedlist insertunorderedlist | selectall | ',
+      'cleardoc  | indent outdent | justifyleft justifycenter justifyright | touppercase tolowercase | ',
+      'horizontal date time  | image emotion spechars | inserttable',
+    ];
+    return icons;
+  }
+  getPlugins=() => {
+    return {
+      image: {
+        uploader: {
+          name: 'file',
+          url: '/api/upload',
+        },
+      },
+    };
+  }
+  handleChange=(content) => {
+    console.log(content);
+    this.setState({
+      content,
+    });
+  }
   receiveMarkdown=(content) => {
     console.log('recieved markdown content in', content);
   }
   render() {
+    const icons = this.getIcons();
+    const plugins = this.getPlugins();
     return (
       <div className={styles['blog-editor']}>
-        <LzEditor
-          active
-          importContent={this.state.markdownContent}
-          cbReceiver={this.receiveMarkdown}
-          image={false}
-          video={false}
-          audio={false}
-          convertFormat="markdown"
+        <Editor
+          icons={icons}
+          value={this.state.content}
+          defaultValue=""
+          onChange={this.handleChange}
+          plugins={plugins}
         />
         <div className={styles['blog-setting']}>
           <Collapse bordered={false} defaultActiveKey={['1']}>
             <Collapse.Panel header="网站分类" key="1">
               <div>
                 <span>编程语言：</span>
-                <Radio.RadioGroup name="radiogroup" defaultValue={1}>
+                <Radio.Group name="radiogroup" defaultValue={1}>
                   <Radio value={1}>c#</Radio>
                   <Radio value={2}>.net</Radio>
                   <Radio value={3}>asp.net</Radio>
                   <Radio value={4}>python</Radio>
                   <Radio value={4}>c++</Radio>
-                </Radio.RadioGroup>
+                </Radio.Group>
               </div>
             </Collapse.Panel>
             <Collapse.Panel header="发布选项" key="2">
