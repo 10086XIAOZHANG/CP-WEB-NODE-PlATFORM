@@ -29,7 +29,10 @@ class Header extends React.PureComponent {
   onMenuClick=({ key }) => {
     this.props.onMenuClick({ key });
   }
-  handleClick=() => {
+  onTitleMenuClick=(item) => {
+    if (item.key === 'top') {
+      this.props.onTitleMenuClick();
+    }
   }
   render() {
     const menu = (
@@ -42,14 +45,15 @@ class Header extends React.PureComponent {
     );
     return (
       <Row className={styles['header-row']}>
-        <Col span={2} className={ClassNames(styles['header-border'], styles.h65, styles['white-bg'])} />
+        {/* <Col span={1} className={ClassNames(styles['header-border'],
+         styles.h65, styles['white-bg'])} /> */}
         <Col span={3} className={ClassNames(styles['header-border'], styles['white-bg'])} >
           <a href="/" className={styles.logo}>
             <img src={require('../../../assets/bases/logo_main.png')} alt="" />
           </a>
         </Col>
-        <Col span={12}>
-          <Menu mode="horizontal" className={styles['header-menu']} onClick={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
+        <Col span={13}>
+          <Menu mode="horizontal" className={styles['header-menu']} onClick={this.onTitleMenuClick} selectedKeys={[this.state.current]}>
             <Menu.Item key="top">
               <Icon type="appstore" />首页
             </Menu.Item>
@@ -77,32 +81,49 @@ class Header extends React.PureComponent {
           </Menu>
         </Col>
         <Col
-          span={7}
+          span={8}
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
-          {this.props.currentUser && this.props.currentUser !== {} ? (
-            <div>
-              <Input.Search
-                placeholder="请输入搜索内容"
-                style={{ width: 200 }}
-                onSearch={value => console.log(value)}
-              />
-              <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']} /><Link to="/help"><Button icon="question-circle-o"> 帮助</Button></Link></span></div>
-              <Dropdown overlay={menu} placement="bottomCenter">
-                <div className={styles['header-right']}>
-                  <div className={styles['user-inf']}>
-                    <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar} />
-                    {this.props.currentUser.name}
+          {this.props.currentUser && this.props.currentUser.avatar && this.props.currentUser.avatar !== '' ? (
+            <Row>
+              <Col span={10}>
+                <Input.Search
+                  placeholder="请输入搜索内容"
+                  style={{ width: '100%' }}
+                  onSearch={value => console.log(value)}
+                />
+              </Col>
+              <Col span={7}>
+                <Dropdown overlay={menu} placement="bottomCenter">
+                  <div className={styles['header-right']}>
+                    <div className={styles['user-inf']}>
+                      <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar} />
+                      {this.props.currentUser.name}
+                    </div>
                   </div>
-                </div>
-              </Dropdown>
-            </div>
+                </Dropdown>
+              </Col>
+              <Col span={5}>
+                <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']} /><Link to="/help"><Button icon="question-circle-o"> 帮助</Button></Link></span></div>
+              </Col>
+            </Row>
           ) :
-            <div>
-              <Link to="/login"><Button icon="solution" > 登录</Button></Link>
-              <Link to="/register"><Button icon="exception"> 注册</Button></Link>
-            </div>
+            <Row>
+              <Col span={10}>
+                <Input.Search
+                  placeholder="请输入搜索内容"
+                  style={{ width: '100%' }}
+                  onSearch={value => console.log(value)}
+                />
+              </Col>
+              <Col span={5} offset={1}>
+                <Link to="/main/login"><Button icon="solution" > 登录</Button></Link>
+              </Col>
+              <Col span={5}>
+                <Link to="/main/register"><Button icon="exception"> 注册</Button></Link>
+              </Col>
+            </Row>
           }
         </Col>
       </Row>

@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
+import Login from '../../components/BasicLayout/Login';
 
-class HomeLogin extends React.PureComponent {
+class HomeContainerLogin extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,10 +17,10 @@ class HomeLogin extends React.PureComponent {
   render() {
     return (
       <div>
-        <h1>404 not found page</h1>
+        <Login />
       </div>
     );
   }
 }
 
-export default HomeLogin;
+export default HomeContainerLogin;

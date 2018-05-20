@@ -34,12 +34,22 @@ export default {
     *logout(_, { call, put }) {
       const response = yield call(signOut);
       if (response) {
+        yield put({
+          type: 'changeLogoutState',
+          payload: response,
+        });
         yield put(routerRedux.push('/user/login'));
       }
     },
   },
 
   reducers: {
+    changeLogoutState(state, { payload }) {
+      return {
+        ...state,
+        status: payload,
+      };
+    },
     changeLoginStatus(state, { payload }) {
       console.log('登录成功', payload);
       return {

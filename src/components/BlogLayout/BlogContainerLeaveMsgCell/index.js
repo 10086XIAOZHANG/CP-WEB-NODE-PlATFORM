@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key,jsx-a11y/anchor-has-content */
+/* eslint-disable react/no-array-index-key,jsx-a11y/anchor-has-content,jsx-a11y/accessible-emoji */
 /**
  *创建时间:  2018/5/18
  *  作  者：Jimck_Zhang
@@ -6,7 +6,8 @@
  *  功  能:
  */
 import React from 'react';
-import { Pagination, Card } from 'antd';
+import { Pagination, Card, Avatar, Tag } from 'antd';
+import { Link } from 'dva/router';
 import styles from './style.less';
 
 class BlogContainerLeaveMsgCell extends React.PureComponent {
@@ -38,14 +39,15 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
     const msgsList = msgs.length
       ? msgs.map((newsItem, index) => (
         <li key={index} className={styles['leave-msgsitem']}>
-          <Card bordered={false} style={{ width: '100%' }}>
+          <Card style={{ width: '100%' }}>
             <div className={styles.cf}>
               <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
-                <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`} style={{ backgroundImage: `url(${newsItem.uimg})` }} />
-                <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.uname}</span><span>2017-10-02</span></div>
+                <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.uimg} /></div>
+                <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.uname}</span><span>{newsItem.public_date}</span></div>
                 <div className={styles.fr}><a onClick={this.resHandle} /></div>
               </div>
               <p>{newsItem.content}</p>
+              <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 {newsItem.approval_num}</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
             </div>
           </Card>
         </li>

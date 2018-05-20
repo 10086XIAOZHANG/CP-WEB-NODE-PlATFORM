@@ -32,6 +32,16 @@ export const getNavData = app => [
             path: 'home',
             component: dynamicWrapper(app, [], () => import('../routes/Main/Home')),
           },
+          {
+            name: '登录',
+            path: 'login',
+            component: dynamicWrapper(app, [], () => import('../routes/HomeLogin/Index')),
+          },
+          {
+            name: '注册',
+            path: 'register',
+            component: dynamicWrapper(app, [], () => import('../routes/Register/Index')),
+          },
         ],
       },
     ],

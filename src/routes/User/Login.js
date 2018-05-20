@@ -136,7 +136,7 @@ export default class Login extends PureComponent {
             <Col span={10}><img alt="" src={require('../../assets/bases/logo.png')} /></Col>
             <Col xs={16} sm={16} md={14} lg={12} xl={10}>
               <Row gutter={1}>
-                <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>随笔首页</Link></Col>
+                <Col span={6} ><Link to={{ pathname: '/main/Home', state: { currentUser: null } }} style={{ width: '100%', fontSize: 18 }}>随笔首页</Link></Col>
                 <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>客户端下载</Link></Col>
                 <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方贴吧</Link></Col>
                 <Col span={6} ><Link to="/user" style={{ width: '100%', fontSize: 18 }}>官方微博</Link></Col>

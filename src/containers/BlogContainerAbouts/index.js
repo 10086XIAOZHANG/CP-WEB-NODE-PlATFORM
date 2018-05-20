@@ -15,7 +15,7 @@ class BlogContainerAbouts extends React.PureComponent {
   }
   render() {
     return (
-      <div>
+      <div style={{ color: '#fff' }}>
         <BlogContainerAboutsCell />
       </div>
     );

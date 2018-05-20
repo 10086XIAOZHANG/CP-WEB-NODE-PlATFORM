@@ -16,33 +16,36 @@ class BlogContainerListCell extends React.PureComponent {
     this.state = {
       blogs: [{
         uname: '坚持到底',
-        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
+        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
         scanNum: 12,
         colNum: 4,
         msgNum: 3,
+        public_date: '2018-03-03',
       },
       {
         uname: '隔壁的老王',
-        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
+        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
         scanNum: 12,
         colNum: 4,
         msgNum: 3,
+        public_date: '2018-04-03',
       },
       {
         uname: '老曾头',
-        uimg: 'http://192.168.1.109:8085/bloglist/test.jpg',
+        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
         title: '不使用插件实现文章浏览数统计',
         content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
         classType: '.NET',
         scanNum: 12,
         colNum: 4,
         msgNum: 3,
+        public_date: '2018-05-31',
       },
       ],
     };
@@ -57,7 +60,7 @@ class BlogContainerListCell extends React.PureComponent {
               <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`} style={{ backgroundImage: `url(${newsItem.uimg})` }} />
               <div className={styles.fl}>
                 <span className={styles['pd5-r']}>{newsItem.uname}
-                </span><span>2017-10-02</span>
+                </span><span>{newsItem.public_date}</span>
               </div>
             </div>
             <h2 className={styles.mb10}>{newsItem.title}</h2>

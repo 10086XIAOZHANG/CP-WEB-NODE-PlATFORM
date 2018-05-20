@@ -5,7 +5,7 @@
  *  功  能:
  */
 import React from 'react';
-import { Card, Input, Button } from 'antd';
+import { Card } from 'antd';
 import styles from './style.less';
 
 class LeaveMsgCommentListCell extends React.PureComponent {

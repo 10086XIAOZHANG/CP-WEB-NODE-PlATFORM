@@ -5,6 +5,7 @@
  *  功  能:
  */
 import React from 'react';
+import { withRouter } from 'dva/router';
 import { connect } from 'dva';
 import HomeHeader from '../../../components/BasicLayout/Header';
 
@@ -24,11 +25,18 @@ class PCHeader extends React.PureComponent {
       });
     }
   }
+  onTitleMenuClick=() => {
+    this.props.history.push('/main/Home');
+  }
   render() {
     return (
-      <HomeHeader currentUser={this.props.currentUser} onMenuClick={this.onMenuClick} />
+      <HomeHeader
+        currentUser={this.props.currentUser}
+        onMenuClick={this.onMenuClick}
+        onTitleMenuClick={this.onTitleMenuClick}
+      />
     );
   }
 }
 
-export default PCHeader;
+export default withRouter(PCHeader);

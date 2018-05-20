@@ -55,12 +55,17 @@ class BlogLayout extends React.PureComponent {
       collapsed: !this.state.collapsed,
     });
   }
-  lightState() {
+  lightState=() => {
     this.setState({
       lighted: !this.state.lighted,
     });
   }
-  triggerShrink() {
+  logout=() => {
+    this.props.dispatch({
+      type: 'login/logout',
+    });
+  }
+  triggerShrink=() => {
     this.setState({
       shrinked: !this.state.shrinked,
     });
@@ -71,14 +76,14 @@ class BlogLayout extends React.PureComponent {
   render() {
     const { getRouteData, currentUser } = this.props;
     const layout = (
-      <div className={this.state.shrinked ? 'blog_home blog_home_shrinked' : 'blog_home'}>
-        <Layout>
+      <div className={this.state.shrinked ? `${styles['blog-home']} ${styles['blog-home-shrinked']}` : styles['blog-home']} style={{ height: '100%' }}>
+        <Layout className="ant-layout-has-sider" style={{ height: '100%' }}>
           <Sider
             trigger={null}
             collapsible
             collapsed={this.state.collapsed}
           >
-            <div className="logo" />
+            <div className={styles.logo} />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1">
                 <Link to="/blog/index">
@@ -135,7 +140,7 @@ class BlogLayout extends React.PureComponent {
               </div>
             </Sider>
           }
-          <Layout className={this.state.lighted ? 'light' : 'dark'}>
+          <Layout className={this.state.lighted ? styles.light : styles.dark}>
             <Header style={{ padding: 0, backgroundColor: '#fff', width: '100%' }}>
               <div style={{ padding: 3, fontSize: 23 }}>
                 <Row type="flex" justify="between-space">
@@ -148,7 +153,7 @@ class BlogLayout extends React.PureComponent {
                     <Icon
                       className={styles.triggerShrink}
                       type={this.state.shrinked ? 'arrows-alt' : 'shrink'}
-                      onClick={this.triggerShrink.bind(this)}
+                      onClick={this.triggerShrink}
                     />
                     <Input.Search
                       placeholder="搜索"
@@ -159,14 +164,13 @@ class BlogLayout extends React.PureComponent {
                   <Col span={3}>
                     <Icon
                       type="bulb"
-                      onClick={this.lightState.bind(this)}
+                      onClick={this.lightState}
                     />
-                    <Link to="/user">
-                      <Icon
-                        type="login"
-                        className={styles.logout}
-                      />
-                    </Link>
+                    <Icon
+                      onClick={this.logout}
+                      type="login"
+                      className={styles.logout}
+                    />
                   </Col>
                 </Row>
               </div>
@@ -197,7 +201,7 @@ class BlogLayout extends React.PureComponent {
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <ContainerQuery query={Config.screenConfig.SCREEN_QUERY}>
-          {params => <div className={classNames(params)}>{layout}</div>}
+          {params => <div className={classNames(params)} style={{ height: '100%', background: 'rgba(105, 86, 128, 0.47)' }}>{layout}</div>}
         </ContainerQuery>
       </DocumentTitle>
     );

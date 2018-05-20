@@ -31,10 +31,12 @@ class BasicLayout extends React.PureComponent {
   }
   componentDidMount() {
     // 获取用户信息
-    this.props.dispatch({
-      type: 'user/fetchCurrent',
-      payload: Store.get(Config.defaultProps.USER_ID),
-    });
+    if (Store.get(Config.defaultProps.USER_ID)) {
+      this.props.dispatch({
+        type: 'user/fetchCurrent',
+        payload: Store.get(Config.defaultProps.USER_ID),
+      });
+    }
   }
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
