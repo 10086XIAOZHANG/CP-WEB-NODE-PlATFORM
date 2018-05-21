@@ -24,7 +24,14 @@ class Header extends React.PureComponent {
     super(props);
     this.state = {
       current: 'top',
+      status: this.props.status,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('进入nextProps header中', nextProps.status);
+    this.setState({
+      status: nextProps.status,
+    });
   }
   onMenuClick=({ key }) => {
     this.props.onMenuClick({ key });
@@ -85,7 +92,7 @@ class Header extends React.PureComponent {
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
-          {this.props.currentUser && this.props.currentUser.avatar && this.props.currentUser.avatar !== '' ? (
+          {this.state.status && this.state.status === 'ok' && this.props.currentUser && this.props.currentUser.avatar && this.props.currentUser.avatar !== '' ? (
             <Row>
               <Col span={10}>
                 <Input.Search

@@ -12,11 +12,8 @@ export default {
 
   state: { // 初始值，优先级低于传给 dva() 的 opts.initialState。
     collapsed: false,
-    siderWidth: 100,
-    siderImgWidth: 25,
     messageStatus: false,
     tabActiveKey: '/dashboard/KdMainControl',
-    menuList: [{ imgUrl: '../assets/basiclayout/sale.png', menuTitle: '首页', path: '/dashboard/KdMainControl', siderImgWidth: 25, key: '/dashboard/KdMainControl', closable: false }],
   },
   /**
    * 以 key/value 格式定义 effect。用于处理异步操作和业务逻辑，不直接修改 state。由 action 触发，
@@ -46,14 +43,6 @@ export default {
     },
     *watchAndRefreshList(_, { put }) {
       yield put(routerRedux.push('/'));
-    },
-    *enter({ payload }, { put, select }) {
-      const menu = yield select(state => state.global.menuList);
-      yield put({
-        type: 'changeMenuList',
-        payload,
-        menu,
-      });
     },
     *changeErrorMessage({ payload }, { call, put }) {
       yield put({
@@ -88,12 +77,6 @@ export default {
         payload: response,
       });
     },
-    *changetabActiveKey({ payload }, { put }) {
-      yield put({
-        type: 'changetabActiveKeyState',
-        payload,
-      });
-    },
   },
 
   /**
@@ -101,58 +84,17 @@ export default {
    * 格式为 (state, action) => newState 或 [(state, action) => newState, enhancer]。
    */
   reducers: {
-    changetabActiveKeyState(state, { payload }) {
-      return {
-        ...state,
-        tabActiveKey: payload,
-      };
-    },
-    changeLayoutCollapsed(state, { payload }) {
-      return {
-        ...state,
-        collapsed: payload,
-      };
-    },
-    changeLayoutSiderState(state, { siderwidth, siderimgwidth, collapsed }) {
-      return {
-        ...state,
-        siderWidth: siderwidth,
-        siderImgWidth: siderimgwidth,
-        collapsed,
-      };
-    },
     changeMessageStatus(state, { payload }) {
       return {
         ...state,
         messageStatus: payload,
       };
     },
-    changeMenuList(state, { payload, menu }) {
-      for (const m of menu) {
-        if (m.menuTitle === payload.menuTitle) {
-          return {
-            ...state,
-            tabActiveKey: payload.key,
-            menuList: menu,
-          };
-        }
-      }
-      menu.push(payload);
-      return {
-        ...state,
-        tabActiveKey: payload.key,
-        menuList: [...menu],
-      };
-    },
     goBackDefaultState(state, { payload }) {
       return {
         ...state,
-        collapsed: payload.collapsed,
-        siderWidth: payload.siderWidth,
-        siderImgWidth: payload.siderImgWidth,
         messageStatus: payload.messageStatus,
         menuList: payload.menuList,
-        tabActiveKey: payload.tabActiveKey,
       };
     },
   },

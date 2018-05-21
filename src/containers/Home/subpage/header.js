@@ -11,12 +11,19 @@ import HomeHeader from '../../../components/BasicLayout/Header';
 
 @connect(state => ({
   home: state.home,
+  login: state.login,
 }))
 class PCHeader extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      status: this.props.status,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      status: nextProps.login.status,
+    });
   }
   onMenuClick = ({ key }) => {
     if (key === 'logout') {
@@ -31,6 +38,7 @@ class PCHeader extends React.PureComponent {
   render() {
     return (
       <HomeHeader
+        status={this.state.status}
         currentUser={this.props.currentUser}
         onMenuClick={this.onMenuClick}
         onTitleMenuClick={this.onTitleMenuClick}

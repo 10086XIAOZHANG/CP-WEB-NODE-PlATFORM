@@ -12,16 +12,20 @@ class LeaveMsgCommentEditorCell extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      text: '',
     };
+  }
+  publicMsg=() => {
+    console.log(this.state.text);
   }
   render() {
     return (
       <div className={styles['comment-editor']}>
         <Card bordered={false} style={{ width: '100%' }}>
           <p>我要留言</p>
-          <Input.TextArea rows={4} />
+          <Input.TextArea rows={4} value={this.state.text} />
           <div className={styles['comment-editor-btn']}>
-            <Button style={{ float: 'right' }} type="danger">发表留言</Button>
+            <Button onClick={this.publicMsg} style={{ float: 'right' }} type="danger">发表留言</Button>
           </div>
         </Card>
       </div>

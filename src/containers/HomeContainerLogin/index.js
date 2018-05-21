@@ -17,7 +17,7 @@ class HomeContainerLogin extends React.PureComponent {
   render() {
     return (
       <div>
-        <Login />
+        <Login handleSubmit={this.handleSubmit} {...this.props} />
       </div>
     );
   }

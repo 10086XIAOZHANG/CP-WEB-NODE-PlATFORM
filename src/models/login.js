@@ -51,7 +51,6 @@ export default {
       };
     },
     changeLoginStatus(state, { payload }) {
-      console.log('登录成功', payload);
       return {
         ...state,
         status: payload.length > 0 ? 'ok' : 'error',
