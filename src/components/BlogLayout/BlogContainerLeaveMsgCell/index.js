@@ -36,21 +36,25 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
   }
   render() {
     const msgs = this.state.contentsDate;
-    const msgsList = msgs.length
+    const endIndex = (this.state.current * this.props.pageSize) - 1;
+    const startIndex = (this.state.current * this.props.pageSize) - this.props.pageSize;
+    console.log(endIndex, startIndex);
+    const msgsList = msgs.length > 0
       ? msgs.map((newsItem, index) => (
-        <li key={index} className={styles['leave-msgsitem']}>
-          <Card style={{ width: '100%' }}>
-            <div className={styles.cf}>
-              <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
-                <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.uimg} /></div>
-                <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.uname}</span><span>{newsItem.public_date}</span></div>
-                <div className={styles.fr}><a onClick={this.resHandle} /></div>
+        (index <= endIndex && index >= startIndex) ? (
+          <li key={index} className={styles['leave-msgsitem']}>
+            <Card style={{ width: '100%' }}>
+              <div className={styles.cf}>
+                <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
+                  <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.uimg} /></div>
+                  <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.uname}</span><span>{newsItem.public_date}</span></div>
+                  <div className={styles.fr}><a onClick={this.resHandle} /></div>
+                </div>
+                <p>{newsItem.content}</p>
+                <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 {newsItem.approval_num}</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
               </div>
-              <p>{newsItem.content}</p>
-              <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 {newsItem.approval_num}</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
-            </div>
-          </Card>
-        </li>
+            </Card>
+          </li>) : ''
       ))
       : '当前暂无评价，小Cp等你来哦';
     return (
@@ -64,6 +68,7 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
             current={this.state.current}
             total={this.props.total}
             onChange={this.onChange}
+            pageSize={this.props.pageSize}
             itemRender={this.getItemRender}
           />
         </div>
