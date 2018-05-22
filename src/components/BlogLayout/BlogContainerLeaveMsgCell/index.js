@@ -19,10 +19,14 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
     };
   }
   onChange=(page, pageSize) => {
+    this.setState({
+      current: page,
+    });
     const changeState = this.props.onChange;
     changeState(page, pageSize);
   }
   getItemRender=(current, type, originalElement) => {
+    console.log(current);
     if (type === 'prev') {
       return <a>上一页</a>;
     } else if (type === 'next') {
