@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /**
  *创建时间:  2018/5/18
  *  作  者：Jimck_Zhang
@@ -14,6 +15,30 @@ class BlogContainerEditorCell extends React.PureComponent {
     super(props);
     this.state = {
       // content: '',
+      blogs: {
+        data: {
+          siteClass: [{
+            title: '编程语言',
+            subClass: ['c#', '.net', 'asp.net', 'python', 'c++'],
+          },
+          {
+            title: 'Web前端',
+            subClass: ['Html/Css', 'JavaScript', 'jQuery', 'HTML5'],
+          },
+          {
+            title: '其他分类',
+            subClass: ['非技术区', '软件测试', '代码与软件发布', '游戏开发', '读书区', '算法与数据结构', '云计算', '区块链'],
+          }],
+          publicItem: {
+            title: '发布选项',
+            subClass: ['c#', '.net', 'asp.net', 'python', 'c++'],
+          },
+          advancedOption: {
+            title: '高级选项',
+            subClass: ['发布', '置顶', '存为草稿', '取消'],
+          },
+        },
+      },
     };
   }
   onChange=(checkedValues) => {
@@ -61,37 +86,35 @@ class BlogContainerEditorCell extends React.PureComponent {
           plugins={plugins}
         />
         <div className={styles['blog-setting']}>
-          <Collapse bordered={false} defaultActiveKey={['1']}>
-            <Collapse.Panel header="网站分类" key="1">
-              <div>
-                <span>编程语言：</span>
-                <Radio.Group name="radiogroup" defaultValue={1}>
-                  <Radio value={1}>c#</Radio>
-                  <Radio value={2}>.net</Radio>
-                  <Radio value={3}>asp.net</Radio>
-                  <Radio value={4}>python</Radio>
-                  <Radio value={4}>c++</Radio>
-                </Radio.Group>
-              </div>
+          <Collapse bordered={false} defaultActiveKey={['1', '2', '3']}>
+            <Collapse.Panel header="网站分类" key={1}>
+              {this.state.blogs.data.siteClass.length >= 0 ?
+                    this.state.blogs.data.siteClass.map(item => (
+                      <div className={styles['mb-5']}>
+                        <span>{item.title}：</span>
+                        <Radio.Group name="radiogroup" defaultValue={1}>
+                          {item.subClass.map((subItem, subIndex) => (
+                            <Radio value={subIndex}>{subItem}</Radio>
+                      ))}
+                        </Radio.Group>
+                      </div>
+                  )) : ''
+                  }
             </Collapse.Panel>
             <Collapse.Panel header="发布选项" key="2">
-              <Checkbox.Group onChange={this.onChange}>
-                <Row>
-                  <Col span={8}><Checkbox value="A">A</Checkbox></Col>
-                  <Col span={8}><Checkbox value="B">B</Checkbox></Col>
-                  <Col span={8}><Checkbox value="C">C</Checkbox></Col>
-                  <Col span={8}><Checkbox value="D">D</Checkbox></Col>
-                  <Col span={8}><Checkbox value="E">E</Checkbox></Col>
-                </Row>
-              </Checkbox.Group>
+              {this.state.blogs.data.publicItem !== null ? (
+                <Checkbox.Group onChange={this.onChange}>
+                  <Row>
+                    {this.state.blogs.data.publicItem.subClass.map(item => (
+                      <Col span={8}><Checkbox value={item}>{item}</Checkbox></Col>
+                    ))}
+                  </Row>
+                </Checkbox.Group>
+              ) : ''
+              }
             </Collapse.Panel>
             <Collapse.Panel header="高级选项" key="3">
-              <Row>
-                <Col span={17} />
-                <Col span={3}><Button type="primary">存为草稿</Button></Col>
-                <Col span={2}><Button type="primary">发布</Button></Col>
-                <Col span={2}><Button >取消</Button></Col>
-              </Row>
+              <div style={{ float: 'right', marginBottom: 10 }}><Button type="primary" style={{ marginLeft: 5 }}>存为草稿</Button><Button type="primary" style={{ marginLeft: 5 }}>置顶</Button><Button type="primary" style={{ marginLeft: 5 }}>发布</Button><Button style={{ marginLeft: 5 }}>取消</Button></div>
             </Collapse.Panel>
           </Collapse>
         </div>
