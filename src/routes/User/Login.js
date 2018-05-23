@@ -181,6 +181,14 @@ export default class Login extends PureComponent {
                     </Col>
                   </Row>
                 </Form>
+                <div className={styles['other-platform-login']}>
+                  <p>第三方平台登录</p>
+                  <div>
+                    <Link to="/qq"><img alt="qq" src={require('../../assets/login/icon/qq.svg')} /></Link>
+                    <Link to="/weibo"><img alt="微博" src={require('../../assets/login/icon/weibo.svg')} /></Link>
+                    <Link to="/weixin"><img alt="微信" src={require('../../assets/login/icon/weixin.svg')} /></Link>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>

@@ -56,6 +56,14 @@ class Login extends React.PureComponent {
             <Button className={styles['btn-login']} loading={login.submitting} size="large" htmlType="submit" onClick={this.handleSubmit}>登录</Button>
           Or <Link to="/register">register now!</Link>
           </Form>
+          <div className={styles['other-platform-login']}>
+            <p>第三方平台登录</p>
+            <div>
+              <Link to="/qq"><img alt="qq" src={require('../../../assets/login/icon/qq.svg')} /></Link>
+              <Link to="/weibo"><img alt="微博" src={require('../../../assets/login/icon/weibo.svg')} /></Link>
+              <Link to="/weixin"><img alt="微信" src={require('../../../assets/login/icon/weixin.svg')} /></Link>
+            </div>
+          </div>
         </div>
       </div>
     );
