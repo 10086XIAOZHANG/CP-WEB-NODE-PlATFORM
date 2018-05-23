@@ -62,28 +62,27 @@ class Header extends React.PureComponent {
         <Col span={13}>
           <Menu mode="horizontal" className={styles['header-menu']} onClick={this.onTitleMenuClick} selectedKeys={[this.state.current]}>
             <Menu.Item key="top">
-              <Icon type="appstore" />首页
+              <Icon type="home" />首页
             </Menu.Item>
             <Menu.Item key="guonei">
-              <Icon type="appstore" />国内
+              <Icon type="shop" />国内
             </Menu.Item>
             <Menu.Item key="guoji">
-              <Icon type="appstore" />国际
-            </Menu.Item>
-            <Menu.Item key="yule">
-              <Icon type="appstore" />娱乐
+              <Icon type="global" />国际
             </Menu.Item>
             <Menu.Item key="keji">
-              <Icon type="appstore" />科技
+              <Icon type="trophy" />科技
             </Menu.Item>
             <Menu.Item key="shishang">
-              <Icon type="appstore" />时尚
+              <Icon type="car" />时尚
+            </Menu.Item>
+            <Menu.Item key="bowen">
+              <Icon type="coffee" />博文
             </Menu.Item>
             <Menu.Item key="boke">
               <Link to="/blog">
-                <Icon type="appstore" />博客
+                <Icon type="laptop" />博客
               </Link>
-
             </Menu.Item>
           </Menu>
         </Col>
