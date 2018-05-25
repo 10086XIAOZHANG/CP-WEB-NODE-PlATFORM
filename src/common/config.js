@@ -8,9 +8,9 @@ import ScreenConfig from './screen.config';
 
 const Config = {};
 Config.defaultProps = {
-  api: 'http://localhost:3000',
+  api: '192.168.1.115:3000',
   K3_DB_ADDRESS: 'K3_DB_ADDRESS',
-  resource_server: 'http://k3web.kingdee.com:8085/',
+  resource_server: '192.168.1.115:8085/',
   ACCT_ID: 'ACCT_ID',
   SESSION_KEY: 'SESSION_KEY',
   USER_TOKEN: 'USER_TOKEN',
