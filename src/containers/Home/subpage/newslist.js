@@ -15,7 +15,7 @@ class NewsList extends React.PureComponent {
     super(props);
     this.state = {
       currentIndex: 1,
-      pageSize: 3,
+      pageSize: 4,
       startNum: 0,
       endNum: 0,
       isAll: false,

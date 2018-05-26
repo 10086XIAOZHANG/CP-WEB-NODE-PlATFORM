@@ -17,7 +17,7 @@ export async function queryCurrent(params) {
       pwd: params.pwd,
     },
     headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MjY1Mzc2MTl9.vOgk7qfIo4wWMnG3E1EhEq7wHpG4mar2SBJWJZ0XZg8',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MjcyNjA5NDN9.IE4BzlROxy9mb4JhJGo2hAwgCOw-1BWW9YFbbUhtZD0',
     },
   });
 }

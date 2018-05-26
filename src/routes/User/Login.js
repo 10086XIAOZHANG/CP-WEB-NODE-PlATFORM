@@ -69,8 +69,6 @@ export default class Login extends PureComponent {
     // 登录成功
     if (nextProps.login.status === 'ok') {
       const userInfo = nextProps.login.info[0];
-      // 模拟登录成功用户Token，2个小时超时哦
-      store.set(Config.defaultProps.USER_TOKEN, (new Date()).getTime());
       store.set(Config.defaultProps.USER_ID, userInfo); // 存储登录信息
       this.props.dispatch(routerRedux.push('/'));
     }
