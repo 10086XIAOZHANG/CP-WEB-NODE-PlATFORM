@@ -7,9 +7,10 @@
 
 // import { stringify } from 'qs';
 import request from '../utils/request';
+import { store } from '../common/local.storage';
+import Config from '../common/config';
 
 export async function queryCurrent(params) {
-  console.log('这是user请求', params);
   return request('/api/users/find', {
     method: 'POST',
     body: {
@@ -17,7 +18,7 @@ export async function queryCurrent(params) {
       pwd: params.pwd,
     },
     headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MjcyNjA5NDN9.IE4BzlROxy9mb4JhJGo2hAwgCOw-1BWW9YFbbUhtZD0',
+      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
     },
   });
 }

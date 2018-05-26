@@ -18,7 +18,7 @@ export async function signIn(params) {
       pwd: params.pwd,
     },
     headers: {
-      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN).token}`,
+      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
     },
   });
 }

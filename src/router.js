@@ -12,7 +12,7 @@ import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
 import cloneDeep from 'lodash/cloneDeep';
-import Store from 'store';
+import { store } from './common/local.storage';
 import LoadingBar from './components/Bases/LoadingBar';
 import { getNavData } from './common/nav';
 import { getPlainNode } from './utils/utils';
@@ -52,9 +52,10 @@ function getLayout(navData, path) {
 // 登录验证
 function requireAuth(Layout, props, passProps) {
   // 模拟token失效时间
-  const token = Store.get(Config.defaultProps.USER_TOKEN);
+  const tokenTimeout = store.get(Config.defaultProps.USER_TOKEN_TIMEOUT);
+  const token = store.get(Config.defaultProps.USER_TOKEN);
   const current = (new Date()).getTime();
-  if (token && current - token < 7200000) {
+  if (token && current - tokenTimeout < 7200000) {
     return <Layout {...props} {...passProps} />;
   } else {
     return <Redirect to="/user/login" />;

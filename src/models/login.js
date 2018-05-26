@@ -26,7 +26,8 @@ export default {
       });
       console.log('返回的是response', payload);
       const token = yield call(auth, payload);
-      store.set(Config.defaultProps.USER_TOKEN, token);
+      store.set(Config.defaultProps.USER_TOKEN, token.token);
+      store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
       const response = yield call(signIn, payload);
       yield put({
         type: 'changeLoginStatus',
