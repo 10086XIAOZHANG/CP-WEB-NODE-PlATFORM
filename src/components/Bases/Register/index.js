@@ -5,7 +5,7 @@
  *  功  能:
  */
 import React from 'react';
-import { Input, Icon } from 'antd';
+import { Input, Icon, Button } from 'antd';
 import { Link } from 'dva/router';
 import styles from './style.less';
 
@@ -14,7 +14,37 @@ class Register extends React.PureComponent {
     super(props);
     this.state = {
       username: '',
+      disabled: false,
     };
+    this.intervalId = null;
+    this.time = 60;
+    this.target = null;
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  getculCount=() => {
+    if (this.time === 0) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+      this.target.getElementsByTagName('span')[0].innerHTML = '获取验证码';
+      this.setState({
+        disabled: false,
+      });
+    } else {
+      this.target.getElementsByTagName('span')[0].innerHTML = `${this.time}秒后重新获取验证码`;
+      this.time -= 1;
+      this.setState({
+        disabled: true,
+      });
+    }
+  }
+  getMsgCode=(e) => {
+    this.target = e.target;
+    this.intervalId = setInterval(this.getculCount, 1000);
   }
   changeHandle=(e) => {
     this.setState({
@@ -32,10 +62,7 @@ class Register extends React.PureComponent {
           <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} value={this.state.username} onChange={this.changeHandle} placeholder="输入手机号" />
         </div>
         <div className={styles.mb10}>
-          <Input prefix={<Icon type="mail" style={{ fontSize: 13 }} />} placeholder="请输入邮箱" />
-        </div>
-        <div className={styles.mb10}>
-          <Input addonBefore={<Icon type="lock" style={{ fontSize: 13 }} />} addonAfter={<img alt="" src="http://demo.sisome.com/action/TeUser?do=captcha&h=32&w=120&t=register&0.7511157879908745" style={{ width: 20 }} />} defaultValue="请输入验证码" />
+          <Input addonBefore={<Icon type="lock" style={{ fontSize: 13 }} />} addonAfter={<Button type="primary" disabled={this.state.disabled} onClick={this.getMsgCode}>获取短信验证码</Button>} placeholder="请输入短信验证码" />
         </div>
         <div className={styles.mb10}>
           <Input prefix={<Icon type="safety" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />

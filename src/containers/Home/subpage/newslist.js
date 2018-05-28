@@ -7,9 +7,13 @@
  */
 import React from 'react';
 import { Link } from 'dva/router';
+import { connect } from 'dva';
 import { Card, Row, Col } from 'antd';
 import styles from './style.less';
 
+@connect(state => ({
+  home_news: state.home_news,
+}))
 class NewsList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -24,12 +28,17 @@ class NewsList extends React.PureComponent {
     };
   }
   componentWillMount() {
-    const myFetchOptions = {
-      method: 'GET',
-    };
-    fetch(`http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=${this.props.type}&count=${this.props.count}`, myFetchOptions)
-      .then(response => response.json())
-      .then(json => this.onPaginationdata(json));
+    this.props.dispatch({
+      type: 'home_news/getNews',
+      typeProps: this.props.type,
+      count: this.props.count,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.home_news.status === 'ok') {
+      this.onPaginationdata(nextProps.home_news.news);
+    }
   }
   onLoadMore=() => {
     this.setState({
