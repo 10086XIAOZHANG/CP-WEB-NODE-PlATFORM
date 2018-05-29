@@ -6,6 +6,8 @@
  */
 
 import { queryCurrent } from '../services/user';
+import { store } from '../common/local.storage';
+import Config from '../common/config';
 
 export default {
   namespace: 'user',
@@ -14,8 +16,8 @@ export default {
   },
 
   effects: {
-    *fetchCurrent({ payload }, { call, put }) {
-      const response = yield call(queryCurrent, payload);
+    *fetchCurrent(_, { call, put }) {
+      const response = yield call(queryCurrent, store.get(Config.defaultProps.USER_ID));
       yield put({
         type: 'saveCurrentUser',
         payload: response,
@@ -24,10 +26,10 @@ export default {
   },
 
   reducers: {
-    saveCurrentUser(state, action) {
+    saveCurrentUser(state, { payload }) {
       return {
         ...state,
-        currentUser: action.payload[0],
+        currentUser: payload,
       };
     },
   },

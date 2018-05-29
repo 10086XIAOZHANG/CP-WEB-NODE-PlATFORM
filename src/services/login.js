@@ -6,22 +6,21 @@
  */
 
 import { store } from '../common/local.storage';
-import Config from '../common/config';
 import request from '../utils/request';
 
 // 用户登录
 export async function signIn(params) {
-  return request('/api/users/find', {
+  console.log('用户登录', params);
+  return request('/login/', {
     method: 'POST',
     body: {
       username: params.username,
-      pwd: params.pwd,
-    },
-    headers: {
-      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
+      password: params.pwd,
     },
   });
 }
+
+
 // 用户退出了
 export async function signOut() {
   // 清除TOKEN，模拟退出

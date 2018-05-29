@@ -8,8 +8,6 @@ import React from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import { Form } from 'antd';
-import Config from '../../common/config';
-import { store } from '../../common/local.storage';
 import HomeContainerLogin from '../../containers/HomeContainerLogin';
 
 @connect(state => ({
@@ -27,13 +25,11 @@ class HomeLogin extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     // 登录成功
     if (nextProps.login.status === 'ok') {
-      const userInfo = nextProps.login.info[0];
-      // 模拟登录成功用户Token，2个小时超时哦
-      store.set(Config.defaultProps.USER_TOKEN, (new Date()).getTime());
-      store.set(Config.defaultProps.USER_ID, userInfo); // 存储登录信息
       this.props.dispatch(routerRedux.push('/'));
+      this.props.dispatch({
+        type: 'user/fetchCurrent',
+      });
     }
-    console.log('登陆失败', nextProps.login.status);
     // 登录失败
     if (nextProps.login.status === 'error') {
       this.props.dispatch({

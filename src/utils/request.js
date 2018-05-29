@@ -48,7 +48,6 @@ export default function request(sUrl, options, isAbsolute = false) {
         'Content-Type': 'application/json',
         ...newOptions.headers,
       };
-      console.log('只是序列化的body', JSON.stringify(newOptions.body));
       newOptions.body = JSON.stringify(newOptions.body);
     }
   }

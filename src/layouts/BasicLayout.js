@@ -9,11 +9,11 @@ import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
-import { Link, Route, Redirect, Switch } from 'dva/router';
+import { Link, Route, Redirect, Switch, routerRedux } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import Debounce from 'lodash-decorators/debounce';
-import Store from 'store';
+import { store } from '../common/local.storage';
 import Config from '../common/config';
 import styles from './BasicLayout.less';
 import FooterCell from '../components/BasicLayout/Footer';
@@ -31,11 +31,13 @@ class BasicLayout extends React.PureComponent {
   }
   componentDidMount() {
     // 获取用户信息
-    if (Store.get(Config.defaultProps.USER_ID)) {
+    if (store.get(Config.defaultProps.USER_ID)) {
+      console.log('进入fetchCurerntnt1');
       this.props.dispatch({
         type: 'user/fetchCurrent',
-        payload: Store.get(Config.defaultProps.USER_ID),
       });
+    } else {
+      this.props.dispatch(routerRedux.push('/main/login'));
     }
   }
   componentWillUnmount() {
@@ -148,6 +150,7 @@ class BasicLayout extends React.PureComponent {
 }
 
 export default connect(state => ({
+  user: state.user,
   currentUser: state.user.currentUser,
   fetchingNotices: state.global.fetchingNotices,
   notices: state.global.notices,

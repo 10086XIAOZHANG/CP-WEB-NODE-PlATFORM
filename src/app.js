@@ -19,6 +19,7 @@ import './rollbar';
 import './index.less';
 import router from './router';
 
+// const proxy = require('http-proxy-middleware');
 // 1. 创建应用，返回 dva 实例
 const app = dva({
   history: browserHistory(),
@@ -30,8 +31,8 @@ const app = dva({
 });
 
 // 2. 配置 hooks 或者注册插件
-// app.use();
-
+// 访问需要跨域的api资源
+// app.use('/api', proxy({ target: 'http://localhost:80', changeOrigin: true }));
 // 3. 注册 model
 app.model(require('./models/global').default);
 

@@ -10,13 +10,9 @@ import request from '../utils/request';
 import { store } from '../common/local.storage';
 import Config from '../common/config';
 
-export async function queryCurrent(params) {
-  return request('/api/users/find', {
-    method: 'POST',
-    body: {
-      username: params.username,
-      pwd: params.pwd,
-    },
+export async function queryCurrent(id) {
+  return request(`/users/${id}/`, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
     },

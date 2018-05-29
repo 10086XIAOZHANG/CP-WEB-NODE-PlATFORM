@@ -11,8 +11,6 @@ import { connect } from 'dva';
 import { routerRedux, Link } from 'dva/router';
 import { fromJS } from 'immutable';
 import { Form, Input, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
-import Config from '../../common/config';
-import { store } from '../../common/local.storage';
 import styles from './Login.less';
 
 const FormItem = Form.Item;
@@ -68,8 +66,6 @@ export default class Login extends PureComponent {
   componentWillReceiveProps(nextProps) {
     // 登录成功
     if (nextProps.login.status === 'ok') {
-      const userInfo = nextProps.login.info[0];
-      store.set(Config.defaultProps.USER_ID, userInfo); // 存储登录信息
       this.props.dispatch(routerRedux.push('/'));
     }
 
