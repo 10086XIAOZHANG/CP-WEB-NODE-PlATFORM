@@ -37,7 +37,10 @@ class NewsList extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.home_news.status === 'ok') {
-      this.onPaginationdata(nextProps.home_news.news);
+      this.onPaginationdata(nextProps.home_news.news.slice(2));
+      this.setState({
+        news: nextProps.home_news.news,
+      });
     }
   }
   onLoadMore=() => {
