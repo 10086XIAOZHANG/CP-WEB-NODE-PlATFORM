@@ -7,68 +7,67 @@
  */
 
 import React from 'react';
-import { Button, Icon, Card } from 'antd';
+import { Button, Icon, Card, Pagination, Avatar } from 'antd';
 import styles from './style.less';
 
 class BlogContainerListCell extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      blogs: [{
-        uname: '坚持到底',
-        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
-        title: '不使用插件实现文章浏览数统计',
-        content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
-        classType: '.NET',
-        scanNum: 12,
-        colNum: 4,
-        msgNum: 3,
-        public_date: '2018-03-03',
-      },
-      {
-        uname: '隔壁的老王',
-        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
-        title: '不使用插件实现文章浏览数统计',
-        content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
-        classType: '.NET',
-        scanNum: 12,
-        colNum: 4,
-        msgNum: 3,
-        public_date: '2018-04-03',
-      },
-      {
-        uname: '老曾头',
-        uimg: 'http://192.168.1.105:8085/bloglist/test.jpg',
-        title: '不使用插件实现文章浏览数统计',
-        content: '在Typecho主题的functions.php 文件中,提供了三个系统方法：themeConfig 用于配置主题themeInit 在初始化皮肤函数时调用themeFields 后台编辑文章时，为主题增加一个自动绑定的输入框(最新开发版添',
-        classType: '.NET',
-        scanNum: 12,
-        colNum: 4,
-        msgNum: 3,
-        public_date: '2018-05-31',
-      },
-      ],
+      blogs: this.props.acticle_data && this.props.acticle_data.results ?
+        this.props.acticle_data.results : [],
+      total: this.props.acticle_data.count,
+      current: 1,
+      // next: this.props.acticle_data.next,
+      // previous: this.props.acticle_data.previous,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      blogs: nextProps.acticle_data.results,
+      total: nextProps.acticle_data.count,
+      // next: nextProps.next,
+      // previous: nextProps.previous,
+    });
+    console.log('nextProps.acticle_data.count', nextProps.acticle_data.count);
+  }
+  onChange=(page, pageSize) => {
+    this.setState({
+      current: page,
+    });
+    this.props.changeState(page, pageSize);
+  }
+  getItemRender=(current, type, originalElement) => {
+    console.log(current);
+    if (type === 'prev') {
+      return <a>上一页</a>;
+    } else if (type === 'next') {
+      return <a>下一页</a>;
+    }
+    return originalElement;
   }
   render() {
     const { blogs } = this.state;
-    const newsList = blogs.length
+    const newsList = blogs && blogs.length
       ? blogs.map((newsItem, index) => (
         <li key={index} className={styles.blogsitem}>
           <div className={styles.cf}>
             <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
-              <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`} style={{ backgroundImage: `url(${newsItem.uimg})` }} />
+              <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`} >
+                <Avatar size="large" src={this.props.avatar || require('../../../assets/login/avatar/default_avatar.jpg')} />
+              </div>
               <div className={styles.fl}>
                 <span className={styles['pd5-r']}>{newsItem.uname}
-                </span><span>{newsItem.public_date}</span>
+                </span><span>{newsItem.add_time}</span>
               </div>
             </div>
-            <h2 className={styles.mb10}>{newsItem.title}</h2>
+            <h2 className={styles.mb10}>{newsItem.acticle_name}</h2>
             <p>{newsItem.content}</p>
             <div>
               <ul className={styles['list-inline']}>
-                <li> <Button type="danger" size="small" ghost>{newsItem.classType}</Button> · <span><Icon type="eye-o" />{newsItem.scanNum}</span></li>
-                <li><span style={{ paddingRight: 5 }}><Icon type="message" />{newsItem.msgNum}</span>    <span><Icon type="heart" />{newsItem.colNum}</span></li>
+                <li> <Button type="danger" size="small" ghost>{newsItem.acticle_sn}</Button> · <span><Icon type="eye-o" />{newsItem.click_num}</span></li>
+                <li><span style={{ paddingRight: 5 }}><Icon type="message" />{newsItem.comment_num}</span>    <span><Icon type="heart" />{newsItem.fav_num}</span></li>
               </ul>
             </div>
           </div>
@@ -81,6 +80,16 @@ class BlogContainerListCell extends React.PureComponent {
           <ul>
             {newsList}
           </ul>
+          <div style={{ textAlign: 'center' }}>
+            <Pagination
+              current={this.state.current}
+              defaultCurrent={1}
+              total={this.state.total}
+              onChange={this.onChange}
+              pageSize={2}
+              itemRender={this.getItemRender}
+            />
+          </div>
         </Card>
       </div>
     );

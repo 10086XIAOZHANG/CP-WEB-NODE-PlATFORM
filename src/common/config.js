@@ -11,6 +11,7 @@ Config.defaultProps = {
   api: 'http://www.jimck.cn:8000',
   K3_DB_ADDRESS: 'K3_DB_ADDRESS',
   resource_server: 'http://192.168.1.109:8085',
+  USER_AVATAR: 'USER_AVATAR',
   ACCT_ID: 'ACCT_ID',
   SESSION_KEY: 'SESSION_KEY',
   USER_TOKEN: 'USER_TOKEN',

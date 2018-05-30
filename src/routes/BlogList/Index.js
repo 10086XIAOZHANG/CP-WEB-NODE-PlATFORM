@@ -17,6 +17,7 @@ class BlogList extends React.PureComponent {
     super(props);
     this.state = {
       carousel_data: '',
+      acticle_data: '',
     };
   }
 
@@ -25,6 +26,14 @@ class BlogList extends React.PureComponent {
     this.props.dispatch({
       type: 'blog_list/getBlogCarousels',
     });
+    this.props.dispatch({
+      type: 'blog_list/getBlogActicleLists',
+      params: {
+        page_index: 1,
+        page_size: 2,
+        ordering: '-click_num',
+      },
+    });
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.blog_list.carousel_status === 'ok') {
@@ -32,11 +41,31 @@ class BlogList extends React.PureComponent {
         carousel_data: nextProps.blog_list.carousels,
       });
     }
+    if (nextProps.blog_list.acticle_list_status === 'ok') {
+      console.log(' acticle_data: nextProps.blog_list.acticleList,', nextProps.blog_list.acticleList);
+      this.setState({
+        acticle_data: nextProps.blog_list.acticleList,
+      });
+    }
+  }
+  changeState=(page, pageSize) => {
+    this.props.dispatch({
+      type: 'blog_list/getBlogActicleLists',
+      params: {
+        page_index: page,
+        page_size: pageSize,
+        ordering: '-click_num',
+      },
+    });
   }
   render() {
     return (
       <div>
-        <BlogContainerList carousel_data={this.state.carousel_data} />
+        <BlogContainerList
+          changeState={this.changeState}
+          carousel_data={this.state.carousel_data}
+          acticle_data={this.state.acticle_data}
+        />
       </div>
     );
   }
