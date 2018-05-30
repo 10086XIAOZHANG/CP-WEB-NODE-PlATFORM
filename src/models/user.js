@@ -5,7 +5,7 @@
  *  功  能:
  */
 
-import { queryCurrent } from '../services/user';
+import { queryCurrent, queryMsgCode, registerIn } from '../services/user';
 import { store } from '../common/local.storage';
 import Config from '../common/config';
 
@@ -13,6 +13,7 @@ export default {
   namespace: 'user',
   state: {
     currentUser: {},
+    status: '',
   },
 
   effects: {
@@ -23,6 +24,27 @@ export default {
         payload: response,
       });
     },
+    *fetchMsgCode({ mobile }, { call }) {
+      yield call(queryMsgCode, mobile);
+    },
+    *registerSubmit({ payload }, { call, put }) {
+      yield put({
+        type: 'login/changeSubmitting',
+        payload: true,
+      });
+      const response = yield call(registerIn, payload);
+      store.set(Config.defaultProps.USER_TOKEN, response.token);
+      store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
+      store.set(Config.defaultProps.USER_ID, response.user_id);
+      yield put({
+        type: 'changeLoginStatus',
+        payload: response,
+      });
+      yield put({
+        type: 'login/changeSubmitting',
+        payload: false,
+      });
+    },
   },
 
   reducers: {
@@ -30,6 +52,13 @@ export default {
       return {
         ...state,
         currentUser: payload,
+        status: payload ? 'ok' : 'error',
+      };
+    },
+    changeLoginStatus(state, { payload }) {
+      return {
+        ...state,
+        status: payload && payload.token ? 'ok' : 'error',
       };
     },
   },

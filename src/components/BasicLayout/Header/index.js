@@ -91,7 +91,7 @@ class Header extends React.PureComponent {
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
-          {this.state.status && this.state.status === 'ok' && this.props.currentUser && this.props.currentUser.avatar && this.props.currentUser.avatar !== '' ? (
+          {this.state.status && this.state.status === 'ok' && this.props.currentUser ? (
             <Row>
               <Col span={10}>
                 <Input.Search
@@ -104,8 +104,8 @@ class Header extends React.PureComponent {
                 <Dropdown overlay={menu} placement="bottomCenter">
                   <div className={styles['header-right']}>
                     <div className={styles['user-inf']}>
-                      <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar} />
-                      {this.props.currentUser.name}
+                      <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar || require('../../../assets/login/avatar/default_avatar.jpg')} />
+                      {this.props.currentUser.name || this.props.currentUser.mobile}
                     </div>
                   </div>
                 </Dropdown>

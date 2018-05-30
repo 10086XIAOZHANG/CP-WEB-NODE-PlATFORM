@@ -134,8 +134,8 @@ class BlogLayout extends React.PureComponent {
             <Sider className={`${styles['bg-show']} ${styles['fix-position']}`} style={{ backgroundImage: `url(${require('../assets/blog/bg.jpg')})`, height: document.body.clientHeight }}>
               <div className={styles.qg}>
                 <Avatar size="large" src={currentUser.avatar} />
-                <p>{currentUser.username}</p>
-                <p>{currentUser.username}的个人博客</p>
+                <p>{currentUser.username || currentUser.mobile}</p>
+                <p>{currentUser.username || currentUser.mobile}的个人博客</p>
                 <span><Icon type="github" /></span>
               </div>
             </Sider>

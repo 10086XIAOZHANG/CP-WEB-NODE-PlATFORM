@@ -12,6 +12,7 @@ import HomeHeader from '../../../components/BasicLayout/Header';
 @connect(state => ({
   home: state.home,
   login: state.login,
+  user: state.user,
 }))
 class PCHeader extends React.PureComponent {
   constructor(props) {
@@ -21,8 +22,10 @@ class PCHeader extends React.PureComponent {
     };
   }
   componentWillReceiveProps(nextProps) {
+    const status = nextProps.login.status || nextProps.user.status;
+    console.log(' nextProps.login.status || nextProps.user.status', nextProps.user.status);
     this.setState({
-      status: nextProps.login.status,
+      status,
     });
   }
   onMenuClick = ({ key }) => {

@@ -18,3 +18,20 @@ export async function queryCurrent(id) {
     },
   });
 }
+
+export async function queryMsgCode() {
+  return request('/code/', {
+    method: 'POST',
+  });
+}
+
+export async function registerIn(params) {
+  return request('/users/', {
+    method: 'POST',
+    body: {
+      username: params.username,
+      password: params.password,
+      code: params.code,
+    },
+  });
+}
