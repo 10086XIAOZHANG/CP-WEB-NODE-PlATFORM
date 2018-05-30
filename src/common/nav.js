@@ -78,7 +78,7 @@ export const getNavData = app => [
           {
             name: '主页',
             path: 'index',
-            component: dynamicWrapper(app, [], () => import('../routes/BlogList/Index')),
+            component: dynamicWrapper(app, ['blog_list'], () => import('../routes/BlogList/Index')),
           },
           {
             name: '写博',

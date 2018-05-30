@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { Carousel, Row, Col } from 'antd';
-import Config from '../../../common/config';
+import { Link } from 'dva/router';
 import styles from './style.less';
 
 class BlogContainerCarouselCell extends React.PureComponent {
@@ -24,65 +24,50 @@ class BlogContainerCarouselCell extends React.PureComponent {
       slidesToShow: 1,
       autoplay: true,
     };
+    const carouselFirst = this.props.carousel_data.length > 0 ?
+      this.props.carousel_data.filter((item) => {
+        return item.index === 1;
+      }) : '';
+    const carouselSecend = this.props.carousel_data.length > 0 ?
+      this.props.carousel_data.filter((item) => {
+        return item.index === 2;
+      }) : '';
+    const carouselThird = this.props.carousel_data.length > 0 ?
+      this.props.carousel_data.filter((item) => {
+        return item.index === 3;
+      }) : '';
+    const carouselFour = this.props.carousel_data.length > 0 ?
+      this.props.carousel_data.filter((item) => {
+        return item.index === 4;
+      }) : '';
+    const carouselCell = ((carousel) => {
+      return (
+        <div className={styles.fillview}>
+          <div className={styles.leftContainer}>
+            <Link to={{ pathname: 'blog/acticle_detail', state: { article_id: carousel[0].article.id } }}><img alt="" className={styles.fillview} src={carousel[0].image} /></Link>
+          </div>
+          <div className={styles.rightContainer}>
+            <div className={styles.h160}>
+              <Link to={{ pathname: 'blog/acticle_detail', state: { article_id: carousel[1].article.id } }}><img alt="" className={`${styles.fillview} ${styles.h160}`} src={carousel[1].image} /></Link>
+            </div>
+            <div className={styles.h160}>
+              <Link to={{ pathname: 'blog/acticle_detail', state: { article_id: carousel[2].article.id } }}><img alt="" className={`${styles.fillview} ${styles.h160}`} src={carousel[2].image} /></Link>
+            </div>
+          </div>
+        </div>);
+    });
     return (
       <div>
         <Row>
           <Col span={24} className={styles['blog-carouselcontainer']}>
             <div className={styles.carousel}>
-              <Carousel {...settings}>
-                <div className={styles.fillview}>
-                  <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1.jpg`} />
-                  </div>
-                  <div className={styles.rightContainer}>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1_1.jpg`} />
-                    </div>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_1_2.jpg`} />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.fillview}>
-                  <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2.jpg`} />
-                  </div>
-                  <div className={styles.rightContainer}>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2_1.jpg`} />
-                    </div>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_2_2.jpg`} />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.fillview}>
-                  <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3.jpg`} />
-                  </div>
-                  <div className={styles.rightContainer}>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3_1.jpg`} />
-                    </div>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_3_2.jpg`} />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.fillview}>
-                  <div className={styles.leftContainer}>
-                    <img alt="" className={styles.fillview} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4.jpg`} />
-                  </div>
-                  <div className={styles.rightContainer}>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4_1.jpg`} />
-                    </div>
-                    <div className={styles.h160}>
-                      <img alt="" className={`${styles.fillview} ${styles.h160}`} src={`${Config.defaultProps.resource_server}/ContainerCarousel/images/carousel_4_2.jpg`} />
-                    </div>
-                  </div>
-                </div>
-              </Carousel>
+              {this.props.carousel_data.length > 0 ?
+                <Carousel {...settings}>
+                  {carouselCell(carouselFirst)}
+                  {carouselCell(carouselSecend)}
+                  {carouselCell(carouselThird)}
+                  {carouselCell(carouselFour)}
+                </Carousel> : ''}
             </div>
           </Col>
         </Row>

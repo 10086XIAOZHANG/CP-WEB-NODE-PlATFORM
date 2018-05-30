@@ -18,7 +18,7 @@ class BlogContainerList extends React.PureComponent {
   render() {
     return (
       <div>
-        <BlogContainerCarouselCell />
+        <BlogContainerCarouselCell carousel_data={this.props.carousel_data} />
         <div style={{ height: 20 }} />
         <BlogContainerListCell />
       </div>

@@ -6,18 +6,37 @@
  */
 
 import React from 'react';
+import { connect } from 'dva';
 import BlogContainerList from '../../containers/BlogContainerList';
 
+@connect(state => ({
+  blog_list: state.blog_list,
+}))
 class BlogList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      carousel_data: '',
     };
+  }
+
+  componentWillMount() {
+    console.log('进入blog_list/getBlogCarousels componentWillMount');
+    this.props.dispatch({
+      type: 'blog_list/getBlogCarousels',
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.blog_list.carousel_status === 'ok') {
+      this.setState({
+        carousel_data: nextProps.blog_list.carousels,
+      });
+    }
   }
   render() {
     return (
       <div>
-        <BlogContainerList />
+        <BlogContainerList carousel_data={this.state.carousel_data} />
       </div>
     );
   }
