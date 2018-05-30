@@ -44,6 +44,12 @@ class BlogContainerEditorCell extends React.PureComponent {
   onChange=(checkedValues) => {
     console.log('checked = ', checkedValues);
   }
+  onEditorChange=(content) => {
+    console.log(content);
+    this.setState({
+      content,
+    });
+  }
   getIcons=() => {
     const icons = [
       'source | undo redo | bold italic underline strikethrough fontborder emphasis | ',
@@ -64,12 +70,6 @@ class BlogContainerEditorCell extends React.PureComponent {
       },
     };
   }
-  handleChange=(content) => {
-    console.log(content);
-    this.setState({
-      content,
-    });
-  }
   receiveMarkdown=(content) => {
     console.log('recieved markdown content in', content);
   }
@@ -82,7 +82,7 @@ class BlogContainerEditorCell extends React.PureComponent {
           icons={icons}
           value={this.state.content}
           defaultValue=""
-          onChange={this.handleChange}
+          onChange={this.onEditorChange}
           plugins={plugins}
         />
         <div className={styles['blog-setting']}>
