@@ -7,6 +7,7 @@
 import React from 'react';
 import { Input, Icon, Form, Button } from 'antd';
 import { Link } from 'dva/router';
+import { Config } from '../../../common/config';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -59,9 +60,9 @@ class Login extends React.PureComponent {
           <div className={styles['other-platform-login']}>
             <p>第三方平台登录</p>
             <div>
-              <Link to="/qq"><img alt="qq" src={require('../../../assets/login/icon/qq.svg')} /></Link>
-              <Link to="/weibo"><img alt="微博" src={require('../../../assets/login/icon/weibo.svg')} /></Link>
-              <Link to="/weixin"><img alt="微信" src={require('../../../assets/login/icon/weixin.svg')} /></Link>
+              <a src={`${Config.defaultProps.api}/login/qq/`}><img alt="qq" src={require('../../../assets/login/icon/qq.svg')} /></a>
+              <a src={`${Config.defaultProps.api}/login/weixin/`}><img alt="微博" src={require('../../../assets/login/icon/weibo.svg')} /></a>
+              <a src={`${Config.defaultProps.api}/login/weibo/`}><img alt="微信" src={require('../../../assets/login/icon/weixin.svg')} /></a>
             </div>
           </div>
         </div>

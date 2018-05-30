@@ -26,7 +26,7 @@ export default {
       const response = yield call(signIn, payload);
       store.set(Config.defaultProps.USER_TOKEN, response.token);
       store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
-      store.set(Config.defaultProps.USER_ID, 1);
+      store.set(Config.defaultProps.USER_ID, response.user_id);
       yield put({
         type: 'changeLoginStatus',
         payload: response,

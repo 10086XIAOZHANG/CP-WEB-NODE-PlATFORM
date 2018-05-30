@@ -12,6 +12,7 @@ import { routerRedux, Link } from 'dva/router';
 import { fromJS } from 'immutable';
 import { Form, Input, Button, Icon, Layout, Row, Col, Dropdown, Menu } from 'antd';
 import styles from './Login.less';
+import Config from '../../common/config';
 
 const FormItem = Form.Item;
 const { Header, Footer } = Layout;
@@ -178,9 +179,9 @@ export default class Login extends PureComponent {
                 <div className={styles['other-platform-login']}>
                   <p>第三方平台登录</p>
                   <div>
-                    <Link to="/qq"><img alt="qq" src={require('../../assets/login/icon/qq.svg')} /></Link>
-                    <Link to="/weibo"><img alt="微博" src={require('../../assets/login/icon/weibo.svg')} /></Link>
-                    <Link to="/weixin"><img alt="微信" src={require('../../assets/login/icon/weixin.svg')} /></Link>
+                    <a alt="qq" src={`${Config.defaultProps.api}/login/qq/`}><img alt="qq" src={require('../../assets/login/icon/qq.svg')} /></a>
+                    <a alt="微博" src={`${Config.defaultProps.api}/login/weibo/`}><img alt="微博" src={require('../../assets/login/icon/weibo.svg')} /></a>
+                    <a alt="微信" src={`${Config.defaultProps.api}/login/weixin/`}><img alt="微信" src={require('../../assets/login/icon/weixin.svg')} /></a>
                   </div>
                 </div>
               </div>
