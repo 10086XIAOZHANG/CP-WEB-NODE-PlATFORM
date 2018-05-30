@@ -7,7 +7,7 @@
 import React from 'react';
 import { Input, Icon, Form, Button } from 'antd';
 import { Link } from 'dva/router';
-import { Config } from '../../../common/config';
+import Config from '../../../common/config';
 import styles from './style.less';
 
 const FormItem = Form.Item;

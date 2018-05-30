@@ -131,7 +131,7 @@ class BlogLayout extends React.PureComponent {
           </Sider>
           {
             this.state.shrinked ? '' :
-            <Sider className={`${styles['bg-show']} ${styles['fix-position']}`} style={{ backgroundImage: `url(${Config.defaultProps.resource_server}/blog/${currentUser.username}/myblogbg.jpg)`, height: document.body.clientHeight }}>
+            <Sider className={`${styles['bg-show']} ${styles['fix-position']}`} style={{ backgroundImage: `url(${require('../assets/blog/bg.jpg')})`, height: document.body.clientHeight }}>
               <div className={styles.qg}>
                 <Avatar size="large" src={currentUser.avatar} />
                 <p>{currentUser.username}</p>
