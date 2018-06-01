@@ -15,7 +15,6 @@ export async function queryCurrent(params) {
     method: 'POST',
     body: {
       username: params.username,
-      pwd: params.pwd,
     },
     headers: {
       Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,

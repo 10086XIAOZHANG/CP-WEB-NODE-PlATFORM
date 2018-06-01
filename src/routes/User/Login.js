@@ -68,8 +68,9 @@ export default class Login extends PureComponent {
   componentWillReceiveProps(nextProps) {
     // 登录成功
     if (nextProps.login.status === 'ok') {
-      const userInfo = nextProps.login.info[0];
-      store.set(Config.defaultProps.USER_ID, userInfo); // 存储登录信息
+      store.set(Config.defaultProps.USER_NAME, nextProps.login.username);
+      store.set(Config.defaultProps.USER_TOKEN, nextProps.login.info.token);
+      store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
       this.props.dispatch(routerRedux.push('/'));
     }
 

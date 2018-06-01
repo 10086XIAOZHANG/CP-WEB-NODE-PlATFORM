@@ -8,7 +8,7 @@ import ScreenConfig from './screen.config';
 
 const Config = {};
 Config.defaultProps = {
-  api: 'http://192.168.1.109:3000',
+  api: 'http://localhost:8000',
   K3_DB_ADDRESS: 'K3_DB_ADDRESS',
   resource_server: 'http://192.168.1.109:8085',
   ACCT_ID: 'ACCT_ID',
@@ -16,6 +16,7 @@ Config.defaultProps = {
   USER_TOKEN: 'USER_TOKEN',
   USER_TOKEN_TIMEOUT: 'USER_TOKEN_TIMEOUT',
   USER_ID: 'USER_ID',
+  USER_NAME: 'USER_NAME',
   LEFT_MENU_WIDTH: 'LEFT_MENU_WIDTH',
   LEFT_MENU_IMG_WIDTH: 'LEFT_MENU_IMG_WIDTH',
 };

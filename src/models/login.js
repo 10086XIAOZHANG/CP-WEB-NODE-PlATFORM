@@ -6,9 +6,6 @@
  */
 
 import { routerRedux } from 'dva/router';
-import { store } from '../common/local.storage';
-import Config from '../common/config';
-import { auth } from '../services/auth';
 import { signIn, signOut } from '../services/login';
 
 export default {
@@ -25,12 +22,10 @@ export default {
         payload: true,
       });
       console.log('返回的是response', payload);
-      const token = yield call(auth, payload);
-      store.set(Config.defaultProps.USER_TOKEN, token.token);
-      store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
       const response = yield call(signIn, payload);
       yield put({
         type: 'changeLoginStatus',
+        username: payload.username,
         payload: response,
       });
       yield put({
@@ -57,12 +52,13 @@ export default {
         status: payload,
       };
     },
-    changeLoginStatus(state, { payload }) {
+    changeLoginStatus(state, { payload, username }) {
       try {
         return {
           ...state,
-          status: typeof payload !== 'string' ? (payload.length > 0 ? 'ok' : 'error') : '',
+          status: typeof payload !== 'string' ? (payload ? 'ok' : 'error') : '',
           info: payload,
+          username,
         };
       } catch (err) {
         console.log(err);
