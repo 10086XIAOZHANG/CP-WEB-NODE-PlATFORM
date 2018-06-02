@@ -18,6 +18,13 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
       contentsDate: this.props.contentsDate,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.contentsDate && nextProps.contentsDate.length > 0) {
+      this.setState({
+        contentsDate: [...nextProps.contentsDate],
+      });
+    }
+  }
   onChange=(page, pageSize) => {
     this.setState({
       current: page,
@@ -50,12 +57,12 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
             <Card style={{ width: '100%' }}>
               <div className={styles.cf}>
                 <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
-                  <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.uimg} /></div>
-                  <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.uname}</span><span>{newsItem.public_date}</span></div>
+                  <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.user.avatar} /></div>
+                  <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.user.name}</span><span>{newsItem.add_time}</span></div>
                   <div className={styles.fr}><a onClick={this.resHandle} /></div>
                 </div>
-                <p>{newsItem.content}</p>
-                <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 {newsItem.approval_num}</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
+                <p>{newsItem.message}</p>
+                <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 5</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
               </div>
             </Card>
           </li>) : ''

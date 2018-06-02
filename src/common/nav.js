@@ -103,7 +103,7 @@ export const getNavData = app => [
           {
             name: '留言',
             path: 'leaveMsg',
-            component: dynamicWrapper(app, [], () => import('../routes/BlogLeaveMsg/Index')),
+            component: dynamicWrapper(app, ['blog_leave_msg'], () => import('../routes/BlogLeaveMsg/Index')),
           },
           {
             name: '留言',

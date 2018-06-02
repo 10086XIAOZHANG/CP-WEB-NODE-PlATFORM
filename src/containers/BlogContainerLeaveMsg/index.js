@@ -5,39 +5,36 @@
  *  功  能:
  */
 import React from 'react';
+import { Form } from 'antd';
+import { connect } from 'dva';
 import BlogContainerLeaveMsgCell from '../../components/BlogLayout/BlogContainerLeaveMsgCell';
 import LeaveMsgCommentEditorCell from '../../components/BlogLayout/LeaveMsgCommentEditorCell';
-import Config from '../../common/config';
 
 import styles from './style.less';
 
+@connect(state => ({
+  blog_leave_msg: state.blog_leave_msg,
+}))
+@Form.create()
 class BlogContainerLeaveMsg extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      contentsData: [
-        {
-          uimg: `${Config.defaultProps.resource_server}/login/avatar.png`,
-          uname: '张三1',
-          content: '这网站不错',
-          approval_num: 1,
-          public_date: '2018/1/2 07:32:23',
-        },
-        {
-          uimg: `${Config.defaultProps.resource_server}/login/avatar.png`,
-          uname: '张三2',
-          content: '这网站不错y',
-          approval_num: 4,
-          public_date: '2018/4/2 07:32:23',
-        },
-        {
-          uimg: `${Config.defaultProps.resource_server}/login/avatar.png`,
-          uname: '张三3',
-          content: '这网站不错哟 07:32:23',
-          approval_num: 5,
-          public_date: '2018/5/12 07:32:23',
-        }],
+      contentsData: [],
     };
+  }
+  componentWillMount() {
+    this.props.dispatch({
+      type: 'blog_leave_msg/queryUserLeavingMessage',
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.blog_leave_msg.blog_leave_msg_status === 'ok') {
+      console.log(nextProps.blog_leave_msg.leavingMessagesList, 'nextProps.blog_leave_msg.leavingMessagesList');
+      this.setState({
+        contentsData: [...nextProps.blog_leave_msg.leavingMessagesList],
+      });
+    }
   }
   onChange=(page, pageSize) => {
     console.log(page, pageSize);
@@ -45,23 +42,25 @@ class BlogContainerLeaveMsg extends React.PureComponent {
   onResHandle=() => {
 
   }
-  onPublicMsg=(context, publicDate) => {
-    const newMsg = {
-      uimg: `${Config.defaultProps.resource_server}/login/avatar.png`,
-      uname: '张三3',
-      content: context,
-      approval_num: 5,
-      public_date: publicDate,
-    };
-    this.state.contentsData.unshift(newMsg);
-    this.setState({
-      contentsData: [...this.state.contentsData],
-    });
+  onPublicMsg=(file) => {
+    this.props.form.validateFields({ force: true },
+      (err, values) => {
+        if (!err) {
+          const params = values;
+          params.file = file;
+          console.log('file', file);
+          this.props.dispatch({
+            type: 'blog_leave_msg/publicMsg',
+            params,
+          });
+        }
+      }
+    );
   }
   render() {
     return (
       <div className={styles['blogleave-msg']}>
-        <LeaveMsgCommentEditorCell onPublicMsg={this.onPublicMsg} />
+        <LeaveMsgCommentEditorCell onPublicMsg={this.onPublicMsg} {...this.props} />
         <BlogContainerLeaveMsgCell
           total={this.state.contentsData.length}
           pageSize={3}
