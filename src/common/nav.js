@@ -66,7 +66,7 @@ export const getNavData = app => [
     ],
   },
   {
-    component: dynamicWrapper(app, ['blog'], () => import('../layouts/BlogLayout')),
+    component: dynamicWrapper(app, ['blog', 'blog_list'], () => import('../layouts/BlogLayout')),
     path: '/blog',
     layout: 'BlogLayout',
     children: [
@@ -78,7 +78,7 @@ export const getNavData = app => [
           {
             name: '主页',
             path: 'index',
-            component: dynamicWrapper(app, ['blog_list'], () => import('../routes/BlogList/Index')),
+            component: dynamicWrapper(app, [], () => import('../routes/BlogList/Index')),
           },
           {
             name: '写博',
@@ -106,7 +106,7 @@ export const getNavData = app => [
             component: dynamicWrapper(app, ['blog_leave_msg'], () => import('../routes/BlogLeaveMsg/Index')),
           },
           {
-            name: '留言',
+            name: '关于',
             path: 'abouts',
             component: dynamicWrapper(app, [], () => import('../routes/BlogAbouts/Index')),
           },

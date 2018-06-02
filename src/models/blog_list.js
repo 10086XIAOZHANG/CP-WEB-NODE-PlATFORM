@@ -7,6 +7,7 @@
 
 import { queryBlogCarousels } from '../services/blog/carouse/list';
 import { queryBlogActicles } from '../services/blog/acticle/list';
+import { publishActicles } from '../services/blog/acticle/add';
 
 export default {
   namespace: 'blog_list',
@@ -14,9 +15,18 @@ export default {
   state: {
     carousel_status: undefined,
     acticle_list_status: undefined,
+    article_publish_status: undefined,
   },
 
   effects: {
+    *publicActicle({ params }, { put, call }) {
+      console.log('onPublicActicle1');
+      const response = yield call(publishActicles, params);
+      yield put({
+        type: 'changePublishActiclesStatus',
+        payload: response,
+      });
+    },
     *getBlogCarousels(_, { put, call }) {
       const response = yield call(queryBlogCarousels);
       yield put({
@@ -46,6 +56,12 @@ export default {
         ...state,
         acticleList: payload,
         acticle_list_status: payload && payload.results.length > 0 ? 'ok' : 'error',
+      };
+    },
+    changePublishActiclesStatus(state, { payload }) {
+      return {
+        ...state,
+        article_publish_status: payload ? 'ok' : 'error',
       };
     },
   },

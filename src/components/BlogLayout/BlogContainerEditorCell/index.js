@@ -6,7 +6,7 @@
  *  功  能:
  */
 import React from 'react';
-import { Collapse, Radio, Checkbox, Row, Col, Button } from 'antd';
+import { Collapse, Radio, Checkbox, Row, Col, Button, Input } from 'antd';
 import Editor from 'react-umeditor';
 import styles from './styles.less';
 
@@ -14,7 +14,9 @@ class BlogContainerEditorCell extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      // content: '',
+      tagList: [],
+      typeList: [],
+      content: '',
       blogs: {
         data: {
           siteClass: [{
@@ -41,14 +43,33 @@ class BlogContainerEditorCell extends React.PureComponent {
       },
     };
   }
-  onChange=(checkedValues) => {
+  onCheckboxChange=(checkedValues) => {
     console.log('checked = ', checkedValues);
+    this.setState({
+      typeList: [...checkedValues],
+    });
   }
   onEditorChange=(content) => {
     console.log(content);
     this.setState({
       content,
     });
+  }
+  onRadioChange=(e) => {
+    const result = this.state.tagList.some((item) => {
+      return item.value === e.target.value;
+    });
+    if (!result) {
+      const tag = { name: e.target.name, value: e.target.value };
+
+      this.state.tagList.push(tag);
+    }
+    console.log(this.state.tagList, e.target);
+  }
+  onPublicActicle=() => {
+    this.props.onPublicActicle(this.state.typeList,
+      this.titleInput.input.value,
+      this.state.content);
   }
   getIcons=() => {
     const icons = [
@@ -86,24 +107,31 @@ class BlogContainerEditorCell extends React.PureComponent {
           plugins={plugins}
         />
         <div className={styles['blog-setting']}>
-          <Collapse bordered={false} defaultActiveKey={['1', '2', '3']}>
-            <Collapse.Panel header="网站分类" key={1}>
+          <Collapse bordered={false} defaultActiveKey={['1', '2', '3', '4']}>
+            <Collapse.Panel header="文章信息" key={1}>
+              <Input ref={(input) => { this.titleInput = input; }} placeholder="输入文章标题" />
+            </Collapse.Panel>
+            <Collapse.Panel header="网站分类" key={2}>
               {this.state.blogs.data.siteClass.length >= 0 ?
                     this.state.blogs.data.siteClass.map(item => (
                       <div className={styles['mb-5']}>
                         <span>{item.title}：</span>
-                        <Radio.Group name="radiogroup" defaultValue={1}>
-                          {item.subClass.map((subItem, subIndex) => (
-                            <Radio value={subIndex}>{subItem}</Radio>
+                        <Radio.Group
+                          name={item.title}
+                          defaultValue={1}
+                          onChange={this.onRadioChange}
+                        >
+                          {item.subClass.map(subItem => (
+                            <Radio value={subItem}>{subItem}</Radio>
                       ))}
                         </Radio.Group>
                       </div>
                   )) : ''
                   }
             </Collapse.Panel>
-            <Collapse.Panel header="发布选项" key="2">
+            <Collapse.Panel header="发布选项" key="3">
               {this.state.blogs.data.publicItem !== null ? (
-                <Checkbox.Group onChange={this.onChange}>
+                <Checkbox.Group onChange={this.onCheckboxChange}>
                   <Row>
                     {this.state.blogs.data.publicItem.subClass.map(item => (
                       <Col span={8}><Checkbox value={item}>{item}</Checkbox></Col>
@@ -113,8 +141,8 @@ class BlogContainerEditorCell extends React.PureComponent {
               ) : ''
               }
             </Collapse.Panel>
-            <Collapse.Panel header="高级选项" key="3">
-              <div style={{ float: 'right', marginBottom: 10 }}><Button type="primary" style={{ marginLeft: 5 }}>存为草稿</Button><Button type="primary" style={{ marginLeft: 5 }}>置顶</Button><Button type="primary" style={{ marginLeft: 5 }}>发布</Button><Button style={{ marginLeft: 5 }}>取消</Button></div>
+            <Collapse.Panel header="高级选项" key="4">
+              <div style={{ float: 'right', marginBottom: 10 }}><Button type="primary" style={{ marginLeft: 5 }}>存为草稿</Button><Button type="primary" style={{ marginLeft: 5 }}>置顶</Button><Button type="primary" style={{ marginLeft: 5 }} onClick={this.onPublicActicle}>发布</Button><Button style={{ marginLeft: 5 }}>取消</Button></div>
             </Collapse.Panel>
           </Collapse>
         </div>
