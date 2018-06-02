@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import { connect } from 'dva';
+import { withRouter } from 'dva/router';
 import BlogContainerEditorCell from '../../components/BlogLayout/BlogContainerEditorCell';
 
 @connect(state => ({
@@ -40,6 +41,7 @@ class BlogContainerEditor extends React.PureComponent {
           acticleType: typeList.join(','),
         },
       });
+      this.props.history.push('/blog/index');
     }
   }
   render() {
@@ -51,4 +53,4 @@ class BlogContainerEditor extends React.PureComponent {
   }
 }
 
-export default BlogContainerEditor;
+export default withRouter(BlogContainerEditor);

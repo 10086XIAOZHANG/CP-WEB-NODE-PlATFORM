@@ -18,3 +18,12 @@ export async function queryBlogActicles(params) {
     },
   });
 }
+export async function queryBlogActicleDetails(id) {
+  return request(`/blogActicle/${id}/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
+    },
+  });
+}
+

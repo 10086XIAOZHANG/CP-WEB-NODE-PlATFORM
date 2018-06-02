@@ -110,6 +110,11 @@ export const getNavData = app => [
             path: 'abouts',
             component: dynamicWrapper(app, [], () => import('../routes/BlogAbouts/Index')),
           },
+          {
+            name: '关于',
+            path: 'acticle_detail',
+            component: dynamicWrapper(app, [], () => import('../routes/BlogActicleDetail/Index')),
+          },
         ],
       },
     ],

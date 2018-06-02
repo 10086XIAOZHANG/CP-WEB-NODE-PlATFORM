@@ -20,6 +20,7 @@ export default {
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent, store.get(Config.defaultProps.USER_ID));
       store.set(Config.defaultProps.USER_AVATAR, response.avatar);
+      store.set(Config.defaultProps.USER_INFO, response);
       yield put({
         type: 'saveCurrentUser',
         payload: response,

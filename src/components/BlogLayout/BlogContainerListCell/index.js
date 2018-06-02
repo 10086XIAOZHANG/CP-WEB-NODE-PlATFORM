@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Link } from 'dva/router';
 import { Button, Icon, Card, Pagination, Avatar } from 'antd';
 import styles from './style.less';
 
@@ -62,8 +63,8 @@ class BlogContainerListCell extends React.PureComponent {
                 </span><span>{newsItem.add_time}</span>
               </div>
             </div>
-            <h2 className={styles.mb10}>{newsItem.acticle_name}</h2>
-            <p>{newsItem.content}</p>
+            <Link className={styles['acticle-detail-link']} to={{ pathname: '/blog/acticle_detail', state: { acticle_id: newsItem.id } }}><h3 className={styles.mb10}>{newsItem.acticle_name}</h3></Link>
+            <p>{newsItem.acticle_content}</p>
             <div>
               <ul className={styles['list-inline']}>
                 <li> <Button type="danger" size="small" ghost>{newsItem.acticle_sn}</Button> · <span><Icon type="eye-o" />{newsItem.click_num}</span></li>

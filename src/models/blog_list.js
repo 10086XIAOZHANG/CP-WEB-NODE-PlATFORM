@@ -6,7 +6,7 @@
  */
 
 import { queryBlogCarousels } from '../services/blog/carouse/list';
-import { queryBlogActicles } from '../services/blog/acticle/list';
+import { queryBlogActicles, queryBlogActicleDetails } from '../services/blog/acticle/list';
 import { publishActicles } from '../services/blog/acticle/add';
 
 export default {
@@ -41,6 +41,13 @@ export default {
         payload: response,
       });
     },
+    *getBlogActicleDetails({ id }, { put, call }) {
+      const response = yield call(queryBlogActicleDetails, id);
+      yield put({
+        type: 'changeBlogActicleDetailsStatus',
+        payload: response,
+      });
+    },
   },
 
   reducers: {
@@ -62,6 +69,13 @@ export default {
       return {
         ...state,
         article_publish_status: payload ? 'ok' : 'error',
+      };
+    },
+    changeBlogActicleDetailsStatus(state, { payload }) {
+      return {
+        ...state,
+        article_detail_data: payload,
+        article_details_status: payload ? 'ok' : 'error',
       };
     },
   },
