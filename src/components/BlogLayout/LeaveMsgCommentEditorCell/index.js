@@ -20,6 +20,8 @@ class LeaveMsgCommentEditorCell extends React.PureComponent {
   onPublicMsg=() => {
     if (this.file.input.files && this.file.input.files.length > 0) {
       this.props.onPublicMsg(this.file.input.files[0]);
+    } else {
+      this.props.onPublicMsg(null);
     }
   }
   publicMsg=() => {
@@ -75,6 +77,7 @@ class LeaveMsgCommentEditorCell extends React.PureComponent {
             >
               {getFieldDecorator('file', {
                 rules: [{ required: false }],
+                initialValue: '',
               })(
                 <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} />
               )}

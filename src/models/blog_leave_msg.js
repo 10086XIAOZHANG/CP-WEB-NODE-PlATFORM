@@ -30,14 +30,27 @@ export default {
         payload: response,
       });
     },
+    *changeBlogLeaveMsgStatus({ status }, { put }) {
+      yield put({
+        type: 'changeAfterBlogLeaveMsgStatus',
+        payload: status,
+      });
+    },
   },
 
   reducers: {
+    changeAfterBlogLeaveMsgStatus(state, { payload }) {
+      return {
+        ...state,
+        blog_leave_msg_public_status: payload,
+        blog_leave_msg_status: payload,
+      };
+    },
     changeUserLeavingMessagePublicStatus(state, { payload }) {
       return {
         ...state,
         leavingMessages: payload,
-        blog_leave_msg_public_status: payload.length > 0 ? 'ok' : 'error',
+        blog_leave_msg_public_status: payload ? 'ok' : 'error',
       };
     },
     changeUserLeavingMessageStatus(state, { payload }) {

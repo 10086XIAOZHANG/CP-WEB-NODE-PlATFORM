@@ -34,6 +34,23 @@ class BlogContainerLeaveMsg extends React.PureComponent {
       this.setState({
         contentsData: [...nextProps.blog_leave_msg.leavingMessagesList],
       });
+      this.props.dispatch({
+        type: 'blog_leave_msg/changeBlogLeaveMsgStatus',
+        payload: 'error',
+      });
+    }
+    if (nextProps.blog_leave_msg.blog_leave_msg_public_status === 'ok') {
+      this.props.dispatch({
+        type: 'global/changeSuccessMessage',
+        payload: '留言成功',
+      });
+      this.props.dispatch({
+        type: 'blog_leave_msg/queryUserLeavingMessage',
+      });
+      this.props.dispatch({
+        type: 'blog_leave_msg/changeBlogLeaveMsgStatus',
+        payload: 'error',
+      });
     }
   }
   onChange=(page, pageSize) => {
@@ -48,7 +65,7 @@ class BlogContainerLeaveMsg extends React.PureComponent {
         if (!err) {
           const params = values;
           params.file = file;
-          console.log('file', file);
+          console.log('file', file, params);
           this.props.dispatch({
             type: 'blog_leave_msg/publicMsg',
             params,

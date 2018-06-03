@@ -11,16 +11,25 @@ import Config from '../../../common/config';
 
 export async function publicLeaveMsg(params) {
   console.log('params.file,', params.file);
-  return request('/userLeavingMessage/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarysxPg3IcmYAtBUapX',
-      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
-    },
-    body: {
+  let obj = {};
+  if (params.file) {
+    obj = {
       message: params.message,
       subject: params.subject,
       file: params.file,
+    };
+  } else {
+    obj = {
+      message: params.message,
+      subject: params.subject,
+    };
+  }
+
+  return request('/userLeavingMessage/', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
     },
+    body: { ...obj },
   });
 }

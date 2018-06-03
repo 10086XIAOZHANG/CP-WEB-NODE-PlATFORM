@@ -58,10 +58,11 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
               <div className={styles.cf}>
                 <div className={`${styles.cf} ${styles['avatar-msg']} ${styles.mb10}`}>
                   <div className={`${styles.avatar} ${styles.fl} ${styles.mg15}`}><Avatar size="large" src={newsItem.user.avatar} /></div>
-                  <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.user.name}</span><span>{newsItem.add_time}</span></div>
+                  <div className={styles.fl}><span className={styles['pd5-r']}>{newsItem.user.name}</span><span>{newsItem.subject}</span></div>
                   <div className={styles.fr}><a onClick={this.resHandle} /></div>
                 </div>
                 <p>{newsItem.message}</p>
+                <div style={{ float: 'left' }}>{newsItem.add_time}</div>
                 <div style={{ float: 'right' }}><div style={{ display: 'inline' }}><Tag color="magenta">点赞👍 5</Tag></div><div style={{ display: 'inline' }}><Link to="jb">举报</Link></div></div>
               </div>
             </Card>
