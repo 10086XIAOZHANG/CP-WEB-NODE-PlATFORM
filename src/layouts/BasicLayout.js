@@ -20,7 +20,7 @@ import FooterCell from '../components/BasicLayout/Footer';
 import PCHeader from '../containers/Home/subpage/header';
 
 const { SubMenu } = Menu;
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 class BasicLayout extends React.PureComponent {
   constructor(props) {
@@ -136,7 +136,6 @@ class BasicLayout extends React.PureComponent {
           </div>
           <FooterCell />
         </Content>
-        <Footer><FooterCell /></Footer>
       </Layout>
     );
     return (

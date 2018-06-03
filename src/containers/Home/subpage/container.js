@@ -5,9 +5,13 @@
  *  功  能:
  */
 import React from 'react';
-import { Row, Col, Icon, BackTop, Tabs, Card, Tag } from 'antd';
-import PCNewsList from './newslist';
+import { Row, Col, Icon, BackTop, Tabs, Carousel } from 'antd';
+import PCNewsImageBlock from '../../../components/BasicLayout/PCNewsImageBlock';
+import PCNewsBlock from '../../../components/BasicLayout/PCNewsBlock';
+import PCProduct from '../../../components/BasicLayout/PCProduct';
 import styles from './style.less';
+
+const { TabPane } = Tabs;
 
 class PCNewsContainer extends React.PureComponent {
   constructor(props) {
@@ -16,49 +20,52 @@ class PCNewsContainer extends React.PureComponent {
     };
   }
   render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      autoplay: true,
+    };
     return (
-      <div>
-        <Row style={{ marginTop: 20 }}>
+      <div style={{ marginTop: 10 }}>
+        <Row>
           <Col span={2} />
-          <Col span={13} className={styles['news-contents']}>
-            <Tabs className={styles['tabs-news']} tabBarStyle={{ backgroundColor: '#fff', marginBottom: 12 }}>
-              <Tabs.TabPane tab="头条新闻" key="1">
-                <PCNewsList count="22" type="top" width="100%" bordered="false" />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="国际" key="2">
-                <PCNewsList count="22" type="guoji" width="100%" bordered="false" />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="科技" key="3">
-                <PCNewsList count="22" type="keji" width="100%" bordered="false" />
-              </Tabs.TabPane>
-            </Tabs>
+          <Col span={20}>
+            <div style={{ clear: 'both' }} />
+            <div style={{ width: 400, float: 'left', backgroundColor: '#fff' }}>
+              <Carousel {...settings} style={{ float: 'left' }}>
+                <div><img alt="" src={require('../../../assets/home/carousel_1.jpg')} /></div>
+                <div><img alt="" src={require('../../../assets/home/carousel_2.jpg')} /></div>
+                <div><img alt="" src={require('../../../assets/home/carousel_3.jpg')} /></div>
+                <div><img alt="" src={require('../../../assets/home/carousel_4.jpg')} /></div>
+              </Carousel>
+              <PCNewsImageBlock count={6} type="guoji" width="400px" cartTitle="国际头条" imageWidth="100px" />
+            </div>
+            <div style={{ float: 'left', width: 450, backgroundColor: '#fff', marginLeft: 10 }}>
+              <Tabs>
+                <TabPane tab="头条新闻" key="1">
+                  <PCNewsBlock count={22} type="top" width="100%" bordered="false" />
+                </TabPane>
+                <TabPane tab="国际" key="2">
+                  <PCNewsBlock count={22} type="guoji" width="100%" bordered="false" />
+                </TabPane>
+              </Tabs>
+            </div>
+            <div style={{ backgroundColor: '#fff', marginLeft: 'auto', marginRight: 'auto' }}>
+              <Tabs style={{ paddingLeft: 10 }}>
+                <TabPane tab="ReactNews 产品" key="1">
+                  <PCProduct />
+                </TabPane>
+              </Tabs>
+            </div>
+            <div style={{ clear: 'both' }} />
+            <div>
+              <PCNewsImageBlock count={8} type="guonei" width="100%" cartTitle="国内新闻" imageWidth="132px" />
+              <PCNewsImageBlock count={16} type="yule" width="100%" cartTitle="娱乐新闻" imageWidth="132px" />
+            </div>
           </Col>
-          <Col span={6}>
-            <Card extra={<Icon type="schedule" />} title="站点推荐" className={styles.recommend}>
-              <div className={styles['recommend-image']}>
-                <img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-              </div>
-            </Card>
-            <Card extra={<Icon type="schedule" />} title="热门文章" className={styles.hot}>
-              <div className={styles['recommend-image']}>
-                <PCNewsList count="4" type="keji" width="100%" bordered="false" />
-              </div>
-            </Card>
-            <Card title="标签" noHovering className="tags">
-              <div className={styles['tags-content']}>
-                <Tag color="orange" style={{ fontSize: 11 }}>主题(2)</Tag>
-                <Tag color="orange" style={{ fontSize: 17 }}>周杰伦</Tag>
-                <Tag color="green" style={{ fontSize: 31 }}>alibaba(3)</Tag>
-                <Tag color="#ffeedd" style={{ fontSize: 12 }}>Cloud</Tag>
-                <br />
-                <Tag color="cyan">邓紫琪</Tag><Tag color="pink">谷歌(2)</Tag>
-                <Tag color="purple">刘强东</Tag>
-                <Tag color="#c3f2ce">html</Tag>
-                <Tag color="#c212ce">大数据</Tag>
-
-              </div>
-            </Card>
-          </Col>
+          <Col span={2} />
         </Row>
         <BackTop className={styles.backtop}>
           <div className={styles['ant-back-top-inner']}><Icon type="to-top" style={{ size: 32, fontSize: 24 }} />回到顶部</div>

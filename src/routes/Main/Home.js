@@ -26,7 +26,7 @@ export default class KdMainControl extends PureComponent {
   }
   render() {
     return (
-      <div>
+      <div >
         <PCContainer />
       </div>
     );
