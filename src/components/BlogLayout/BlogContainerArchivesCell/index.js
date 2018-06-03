@@ -7,6 +7,7 @@
  */
 import React from 'react';
 import moment from 'moment';
+import { Link } from 'dva/router';
 import { Card } from 'antd';
 import styles from './style.less';
 
@@ -56,10 +57,12 @@ class BlogContainerArchivesCell extends React.PureComponent {
               <ul className={styles.arcitem}>
                 {newsItem.msg.length >= 0
                   ? newsItem.msg.map((msgItem, i) => (
-                    <li key={i} >
-                      <span style={{ paddingRight: 8 }}>{moment(msgItem.add_time).format('DD')}</span>
-                      <a><span>{msgItem.acticle_name}</span></a>
-                    </li>
+                    <Link className={styles['acticle-archives-link']} to={{ pathname: '/blog/acticle_detail', state: { acticle_id: msgItem.id } }}>
+                      <li key={i} >
+                        <span style={{ paddingRight: 8 }}>{moment(msgItem.add_time).format('DD')}</span>
+                        <a><span>{msgItem.acticle_name}</span></a>
+                      </li>
+                    </Link>
                   ))
                   : ''
                 }
