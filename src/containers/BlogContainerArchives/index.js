@@ -16,7 +16,7 @@ class BlogContainerArchives extends React.PureComponent {
   render() {
     return (
       <div>
-        <BlogContainerArchivesCell />
+        <BlogContainerArchivesCell archives_data={this.props.archives_data} />
       </div>
     );
   }

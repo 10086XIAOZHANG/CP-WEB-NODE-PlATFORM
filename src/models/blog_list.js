@@ -41,6 +41,13 @@ export default {
         payload: response,
       });
     },
+    *getBlogArchives({ params }, { put, call }) {
+      const response = yield call(queryBlogActicles, params);
+      yield put({
+        type: 'changeBlogArchivesStatus',
+        payload: response,
+      });
+    },
     *getBlogActicleDetails({ id }, { put, call }) {
       const response = yield call(queryBlogActicleDetails, id);
       yield put({
@@ -76,6 +83,13 @@ export default {
         ...state,
         article_detail_data: payload,
         article_details_status: payload ? 'ok' : 'error',
+      };
+    },
+    changeBlogArchivesStatus(state, { payload }) {
+      return {
+        ...state,
+        archives_data: payload,
+        archives_status: payload && payload.results.length > 0 ? 'ok' : 'error',
       };
     },
   },

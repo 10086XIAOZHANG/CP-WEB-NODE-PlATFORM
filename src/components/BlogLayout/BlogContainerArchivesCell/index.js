@@ -6,44 +6,44 @@
  *  功  能:
  */
 import React from 'react';
+import moment from 'moment';
 import { Card } from 'antd';
 import styles from './style.less';
 
 class BlogContainerArchivesCell extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.solutionsData = [];
+    this.solutionData = [];
     this.state = {
-      archives: [{
-        plusmonth: '2017-6',
-        msg: [{
-          plusday: '05',
-          title: '不使用插件实现文章浏览数统计',
-          url: '',
-        }],
-      },
-      {
-        plusmonth: '2017-7',
-        msg: [{
-          plusday: '14',
-          title: '不使用插件实现文章浏览数统计',
-          url: '',
-        },
-        {
-          plusday: '15',
-          title: '不使用插件实现文章浏览数统计',
-          url: '',
-        }],
-      },
-      {
-        plusmonth: '2017-8',
-        msg: [{
-          plusday: '31',
-          title: '不使用插件实现文章浏览数统计',
-          url: '',
-        }],
-      },
-      ],
+      archives: [],
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      archives: nextProps.archives_data.results,
+    });
+    const result = nextProps.archives_data.results.reduce(this.onAppendCurrent);
+    console.log('result', result);
+    this.solutionData.push(result);
+    this.solutionsData.push({ plusmonth: moment(result.add_time).format('YYYY年MM月'), msg: [...this.solutionData] });
+    this.setState({
+      archives: [...this.solutionsData],
+    });
+  }
+  onAppendCurrent = (previousValue, currentValue) => {
+    if (previousValue && currentValue && previousValue.add_time && currentValue.add_time) {
+      const timePrevious = moment(previousValue.add_time).format('YYYY年MM月');
+      const timeCurrent = moment(currentValue.add_time).format('YYYY年MM月');
+      if (timePrevious === timeCurrent) {
+        this.solutionData.push(previousValue);
+        return currentValue;
+      } else {
+        this.solutionsData.push({ plusmonth: timePrevious, msg: [...this.solutionData] });
+        this.solutionData.length = 0;
+        return currentValue;
+      }
+    }
   }
   render() {
     const { archives } = this.state;
@@ -57,8 +57,8 @@ class BlogContainerArchivesCell extends React.PureComponent {
                 {newsItem.msg.length >= 0
                   ? newsItem.msg.map((msgItem, i) => (
                     <li key={i} >
-                      <span style={{ paddingRight: 8 }}>{msgItem.plusday}</span>
-                      <a><span>{msgItem.title}</span></a>
+                      <span style={{ paddingRight: 8 }}>{moment(msgItem.add_time).format('DD')}</span>
+                      <a><span>{msgItem.acticle_name}</span></a>
                     </li>
                   ))
                   : ''
