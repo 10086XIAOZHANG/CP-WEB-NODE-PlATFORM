@@ -8,7 +8,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'dva/router';
-import { Card } from 'antd';
+import { Card, Spin } from 'antd';
 import styles from './style.less';
 
 class BlogContainerArchivesCell extends React.PureComponent {
@@ -71,7 +71,7 @@ class BlogContainerArchivesCell extends React.PureComponent {
           </div>
         </li>
       ))
-      : '您的沙发为空，快快去书写我的博';
+      : <Spin size="large" />;
     return (
       <div className={styles.archiveslist}>
         <h1>归档</h1>

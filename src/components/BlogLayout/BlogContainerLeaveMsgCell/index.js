@@ -6,7 +6,7 @@
  *  功  能:
  */
 import React from 'react';
-import { Pagination, Card, Avatar, Tag } from 'antd';
+import { Pagination, Card, Avatar, Tag, Spin } from 'antd';
 import { Link } from 'dva/router';
 import styles from './style.less';
 
@@ -68,7 +68,7 @@ class BlogContainerLeaveMsgCell extends React.PureComponent {
             </Card>
           </li>) : ''
       ))
-      : '当前暂无评价，小Cp等你来哦';
+      : <Spin size="large" />;
     return (
       <div className={styles['blogleave-msg-pag']}>
         <div className={styles.bq}>现有共有评价   {this.props.total}   条</div>
