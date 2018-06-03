@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import BlogContainerList from '../../containers/BlogContainerList';
 
 @connect(state => ({
+  blog: state.blog,
   blog_list: state.blog_list,
 }))
 class BlogList extends React.PureComponent {
@@ -18,6 +19,7 @@ class BlogList extends React.PureComponent {
     this.state = {
       carousel_data: '',
       acticle_data: '',
+      search_text: '',
     };
   }
 
@@ -46,6 +48,25 @@ class BlogList extends React.PureComponent {
       this.setState({
         acticle_data: nextProps.blog_list.acticleList,
       });
+    }
+    if (nextProps.blog.blog_acticle_search_status === 'ok') {
+      this.setState({
+        search_text: nextProps.blog.blogActicleSearchText,
+      });
+      setTimeout(() => {
+        this.props.dispatch({
+          type: 'blog_list/getBlogActicleLists',
+          params: {
+            page_index: 1,
+            page_size: 2,
+            ordering: '-click_num',
+            search: this.state.search_text,
+          },
+        });
+      }, 0);
+    }
+    if (nextProps.blog.blog_acticle_search_status === 'error') {
+      this.changeState(1, 2);
     }
   }
   changeState=(page, pageSize) => {

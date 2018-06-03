@@ -33,6 +33,12 @@ class BlogLayout extends React.PureComponent {
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
   }
+  onBlogActicleSearch=(value) => {
+    this.props.dispatch({
+      type: 'blog/changeBlogActicleSearch',
+      searchText: value,
+    });
+  }
   getPageTitle() { // 获取页面标题
     const { location, getRouteData } = this.props;
     const { pathname } = location;
@@ -158,7 +164,7 @@ class BlogLayout extends React.PureComponent {
                     <Input.Search
                       placeholder="搜索"
                       style={{ width: 200 }}
-                      onSearch={value => console.log(value)}
+                      onSearch={this.onBlogActicleSearch}
                     />
                   </Col>
                   <Col span={3}>
@@ -209,6 +215,7 @@ class BlogLayout extends React.PureComponent {
 }
 
 export default connect(state => ({
+  blog: state.blog,
   currentUser: state.user.currentUser,
   fetchingNotices: state.global.fetchingNotices,
   notices: state.global.notices,
