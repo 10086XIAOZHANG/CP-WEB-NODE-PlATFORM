@@ -42,6 +42,11 @@ export const getNavData = app => [
             path: 'register',
             component: dynamicWrapper(app, [], () => import('../routes/Register/Index')),
           },
+          {
+            name: '新闻详情',
+            path: 'newsDetail',
+            component: dynamicWrapper(app, [], () => import('../routes/NewsDetail/Index')),
+          },
         ],
       },
     ],
@@ -111,7 +116,7 @@ export const getNavData = app => [
             component: dynamicWrapper(app, [], () => import('../routes/BlogAbouts/Index')),
           },
           {
-            name: '关于',
+            name: '博客详情',
             path: 'acticle_detail',
             component: dynamicWrapper(app, [], () => import('../routes/BlogActicleDetail/Index')),
           },

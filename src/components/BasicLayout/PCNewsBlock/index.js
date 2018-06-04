@@ -29,7 +29,7 @@ class PCNewsBlock extends React.PureComponent {
     const newsList = news.length
       ? news.map((newsItem, index) => (
         <li key={index}>
-          <Link to={`details/${newsItem.uniquekey}`} target="_blank">
+          <Link to={{ pathname: '/main/newsDetail', state: { news_uniquekey: newsItem.uniquekey } }} >
             {newsItem.title}
           </Link>
         </li>

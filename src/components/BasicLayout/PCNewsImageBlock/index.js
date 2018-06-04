@@ -40,13 +40,13 @@ class PCNewsImageBlock extends React.PureComponent {
     const newsList = news.length
       ? news.map((newsItem, index) => (
         <div key={index} className={styles.imageblock}>
-          <Link to={`details/${newsItem.uniquekey}`} target="_blank">
+          <Link to={{ pathname: '/main/newsDetail', state: { news_uniquekey: newsItem.uniquekey } }} >
             <div className={styles['custom-image']}>
               <img alt="" style={styleImage} src={newsItem.thumbnail_pic_s} />
             </div>
             <div className={styles['custom-card']}>
               <h3 style={styeH3}>{newsItem.title}</h3>
-              <p>{newsItem.author_name}</p>
+              <p style={styeH3}>{newsItem.author_name}</p>
             </div>
           </Link>
         </div>

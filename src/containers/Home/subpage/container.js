@@ -61,8 +61,8 @@ class PCNewsContainer extends React.PureComponent {
             </div>
             <div style={{ clear: 'both' }} />
             <div>
-              <PCNewsImageBlock count={8} type="guonei" width="100%" cartTitle="国内新闻" imageWidth="132px" />
-              <PCNewsImageBlock count={16} type="yule" width="100%" cartTitle="娱乐新闻" imageWidth="132px" />
+              <PCNewsImageBlock count={8} type="guonei" width="100%" cartTitle="国内新闻" imageWidth="122px" />
+              <PCNewsImageBlock count={16} type="yule" width="100%" cartTitle="娱乐新闻" imageWidth="122px" />
             </div>
           </Col>
           <Col span={2} />
