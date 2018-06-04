@@ -8,6 +8,7 @@ import { Row, Col, Spin } from 'antd';
 import React from 'react';
 import { withRouter } from 'dva/router';
 import PCNewsImageBlock from '../../components/BasicLayout/PCNewsImageBlock';
+import styles from './Index.less';
 
 class NewsDetail extends React.PureComponent {
   constructor() {
@@ -35,7 +36,7 @@ class NewsDetail extends React.PureComponent {
         <Row>
           <Col span={2} />
           <Col span={14}>
-            {this.state.newsItem ? <div className="articleContainer" dangerouslySetInnerHTML={this.createMarkup()} /> : <Spin size="large" />}
+            {this.state.newsItem ? <div className={styles.articleContainer} dangerouslySetInnerHTML={this.createMarkup()} /> : <Spin size="large" />}
           </Col>
           <Col span={6}>
             <div style={{ marginLeft: 10 }}>
