@@ -11,6 +11,7 @@ import { LocaleProvider } from 'antd';
 
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
+import { Cookies } from 'js-cookie';
 import cloneDeep from 'lodash/cloneDeep';
 import { store } from './common/local.storage';
 import LoadingBar from './components/Bases/LoadingBar';
@@ -53,7 +54,7 @@ function getLayout(navData, path) {
 function requireAuth(Layout, props, passProps) {
   // 模拟token失效时间
   const tokenTimeout = store.get(Config.defaultProps.USER_TOKEN_TIMEOUT);
-  const token = store.get(Config.defaultProps.USER_TOKEN);
+  const token = store.get(Config.defaultProps.USER_TOKEN) || Cookies.get('token');
   const current = (new Date()).getTime();
   if (token && current - tokenTimeout < 7200000) {
     return <Layout {...props} {...passProps} />;
