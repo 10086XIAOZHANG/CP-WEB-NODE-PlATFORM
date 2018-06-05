@@ -4,7 +4,6 @@
  *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
  *  功  能:
  */
-import Cookies from 'js-cookie';
 import { queryCurrent, queryMsgCode, registerIn } from '../services/user';
 import { store } from '../common/local.storage';
 import Config from '../common/config';
@@ -18,7 +17,7 @@ export default {
 
   effects: {
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent, store.get(Config.defaultProps.USER_ID) || Cookies.get('id'));
+      const response = yield call(queryCurrent, store.get(Config.defaultProps.USER_ID));
       store.set(Config.defaultProps.USER_AVATAR, response.avatar);
       store.set(Config.defaultProps.USER_INFO, response);
       yield put({
