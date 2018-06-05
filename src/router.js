@@ -11,7 +11,7 @@ import { LocaleProvider } from 'antd';
 
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
-import { Cookies } from 'js-cookie';
+import Cookies from 'js-cookie';
 import cloneDeep from 'lodash/cloneDeep';
 import { store } from './common/local.storage';
 import LoadingBar from './components/Bases/LoadingBar';

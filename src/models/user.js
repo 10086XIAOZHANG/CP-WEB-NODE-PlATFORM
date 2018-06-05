@@ -4,7 +4,7 @@
  *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
  *  功  能:
  */
-import { Cookies } from 'js-cookie';
+import Cookies from 'js-cookie';
 import { queryCurrent, queryMsgCode, registerIn } from '../services/user';
 import { store } from '../common/local.storage';
 import Config from '../common/config';

@@ -9,7 +9,7 @@ import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
-import { Cookies } from 'js-cookie';
+import Cookies from 'js-cookie';
 import { Link, Route, Redirect, Switch, routerRedux } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
