@@ -53,6 +53,7 @@ function getLayout(navData, path) {
 // 登录验证
 function requireAuth(Layout, props, passProps) {
   // 模拟token失效时间
+  console.log(Cookies.get('token') && Cookies.get('id'));
   if (Cookies.get('token') && Cookies.get('id')) {
     store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
     store.set(Config.defaultProps.USER_TOKEN, Cookies.get('token'));
