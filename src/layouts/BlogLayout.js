@@ -83,7 +83,7 @@ class BlogLayout extends React.PureComponent {
     const { getRouteData, currentUser } = this.props;
     const layout = (
       <div className={this.state.shrinked ? `${styles['blog-home']} ${styles['blog-home-shrinked']}` : styles['blog-home']} style={{ height: '100%' }}>
-        <Layout className="ant-layout-has-sider" style={{ height: '100%' }}>
+        <Layout className={styles['ant-layout-has-sider']} style={{ height: '100%' }}>
           <Sider
             trigger={null}
             collapsible
