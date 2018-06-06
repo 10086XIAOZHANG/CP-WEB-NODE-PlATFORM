@@ -44,7 +44,7 @@ class Header extends React.PureComponent {
   render() {
     const menu = (
       <Menu theme="dark" className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
-        <Menu.Item disabled key="user"><Icon type="user" />个人中心</Menu.Item>
+        <Menu.Item disabled key="user"><Link to="/personal/userinfo"><Icon type="user" />个人中心</Link></Menu.Item>
         <Menu.Item disabled key="setting"><Icon type="setting" />设置</Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>

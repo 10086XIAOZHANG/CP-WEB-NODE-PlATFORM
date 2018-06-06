@@ -51,6 +51,14 @@ export default function request(sUrl, options, isAbsolute = false) {
       newOptions.body = JSON.stringify(newOptions.body);
     }
   }
+  if (newOptions.method === 'PATCH') {
+    newOptions.headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...newOptions.headers,
+    };
+    newOptions.body = JSON.stringify(newOptions.body);
+  }
 
   return fetch(url, newOptions)
     .then(checkStatus)

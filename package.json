@@ -43,6 +43,7 @@
     "prop-types": "^15.6.1",
     "qs": "^6.5.0",
     "react": "^16.0.0",
+    "react-avatar-editor": "^11.0.3",
     "react-container-query": "^0.9.1",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.0.0",

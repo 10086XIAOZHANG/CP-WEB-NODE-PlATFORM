@@ -15,6 +15,7 @@ class Footer extends React.PureComponent {
     return (
       <div className={styles['login-footer-layout']} >
         <Row>
+          <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}> Jimck · CP聚合博客 · 琼ICP备18001935号 · Theme By Jimck</span></div></Col>
           <Col span={10} offset={7} ><div className={styles['color-write']} ><span className={styles['text-center']}>© 2018 CP聚合博客.  All rights reserved</span></div></Col>
         </Row>
       </div>

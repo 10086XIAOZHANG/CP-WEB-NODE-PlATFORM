@@ -71,6 +71,25 @@ export const getNavData = app => [
     ],
   },
   {
+    component: dynamicWrapper(app, ['personal_centered'], () => import('../layouts/PersonalLayout')),
+    path: '/personal',
+    layout: 'PersonalLayout',
+    children: [
+      {
+        name: '用户',
+        icon: 'personal',
+        path: 'personal',
+        children: [
+          {
+            name: '用户信息',
+            path: 'userinfo',
+            component: dynamicWrapper(app, [], () => import('../routes/PersonalCentered/Index')),
+          },
+        ],
+      },
+    ],
+  },
+  {
     component: dynamicWrapper(app, ['blog', 'blog_list'], () => import('../layouts/BlogLayout')),
     path: '/blog',
     layout: 'BlogLayout',

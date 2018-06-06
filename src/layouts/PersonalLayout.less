@@ -1,0 +1,215 @@
+/**
+ *创建时间:  2018/6/6
+ *  作  者：Jimck_Zhang
+ *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
+ *  功  能:
+ */
+
+/**
+ *创建时间:  2018/6/6
+ *  作  者：Jimck_Zhang
+ *  邮  箱：XIAOZHANG10086XIAOZHANG@live.com
+ *  功  能:
+ */
+.personer-center-container {
+  background-color: #fff;
+  margin: 10px;
+  min-height: 650px;
+  .user-navigate {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 10px;
+    background-image: -webkit-image-set(url('../assets/personal/personer_nvg.jpg') 2x);
+    height: 220px;
+    width: 200px;
+    .user-name {
+      margin-bottom: 5px;
+      color: #222;
+      font-size: 16px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      a:hover {
+        color: #ff6428;
+        outline: 0 none;
+        text-decoration: none;
+      }
+    }
+  }
+  .ant-tabs-nav-container {
+    width: 200px;
+    .ant-tabs-tab {
+      text-align: center;
+    }
+  }
+  .personal-menu {
+    .tab-name {
+      text-align: center;
+    }
+  }
+  .personer-container {
+    padding: 0 0 0 35px;
+  }
+}
+.basic-layout {
+  min-width: 1356px;
+  height: 100vh;
+  .basic-header {
+    min-width: 1356px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    z-index: 10;
+    padding: 0;
+    .header-home-link {
+      display: inline-block;
+      height: 80px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      color: #949494;
+      font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 80px;
+      &:focus {
+        text-decoration: none;
+      }
+      .header-home-title {
+        padding-left: 16px;
+      }
+    }
+    .header-input-search {
+      width: 200px;
+      margin: auto 0;
+      margin-right: 40px;
+      top: -5px;
+      height: 30px;
+      input {
+        background-color: #65c6fb;
+      }
+    }
+    .header-right {
+      float: right;
+      line-height: 80px;
+      height: 80px;
+      display: block;
+      z-index: 2;
+      background: #fff;
+      color: #fff;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+      .user-org {
+        color: #333;
+        display: inline-table;
+      }
+      .user-inf {
+        width: 100px;
+        padding: 0 10px;
+        text-align: center;
+        color: #004dbd;
+      }
+      .avatar {
+        background: rgba(255, 255, 255, .85);
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+    }
+  }
+  .basic-sider {
+    min-height: 100vh;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+    flex: 0 0 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
+    width: 180px !important;
+    margin-top: 40px;
+    overflow: hidden;
+    :global {
+      .ant-layout-sider-trigger {
+        width: 180px !important;
+      }
+    }
+    &.collapsed {
+      flex: 0 0 80px !important;
+      max-width: 80px !important;
+      min-width: 80px !important;
+      width: 80px !important;
+      :global {
+        .ant-layout-sider-trigger {
+          width: 80px !important;
+        }
+        .ant-menu-submenu {
+          width: 200px;
+        }
+      }
+    }
+    .basic-menu {
+      padding-bottom: 80px;
+      width: 200px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      &.collapsed {
+        width: 100px;
+        :global {
+          .ant-menu-submenu {
+            width: 100px;
+          }
+        }
+      }
+      .basic-menu-item {
+        padding-left: 68px !important;
+      }
+    }
+  }
+  .basic-content {
+    width: 100%;
+    margin-top: 40px;
+    padding: 12px 20px 40px 20px;
+    overflow-y: scroll;
+    min-height: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  }
+  .basic-footer {
+    position: fixed;
+    height: 30px;
+    left: 0;
+    line-height: 30px;
+    padding: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .tab-content {
+    padding-left: 100px;
+    background-color: #23aefa;
+    .ant-tabs-bar {
+      border-bottom: none;
+      margin-bottom: 1px;
+    }
+  }
+}
+.platform-help {
+  color: #333;
+  display: inline-table;
+  margin-right: 60px;
+}
+.split-line {
+  display: inline-table;
+  margin: auto 14px;
+  color: #9c9999;
+}
