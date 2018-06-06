@@ -28,6 +28,7 @@
     "g-cloud": "^1.0.2-beta",
     "g2": "^2.3.13",
     "g2-plugin-slider": "^1.2.1",
+    "highlight.js": "^9.12.0",
     "immutable": "^3.8.2",
     "install": "^0.11.0",
     "js-cookie": "^2.2.0",
@@ -35,6 +36,7 @@
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.4.1",
     "lodash.clonedeep": "^4.5.0",
+    "marked": "^0.4.0",
     "moment": "^2.19.1",
     "npm": "^6.0.1",
     "numeral": "^2.0.6",
@@ -47,6 +49,7 @@
     "react-fittext": "^1.0.0",
     "react-umeditor": "^1.0.0-rc12",
     "redux-persist": "^4.10.2",
+    "simplemde": "^1.11.2",
     "store": "^2.0.12"
   },
   "devDependencies": {

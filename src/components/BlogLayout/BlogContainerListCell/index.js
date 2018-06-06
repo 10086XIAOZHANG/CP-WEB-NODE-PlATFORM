@@ -64,7 +64,7 @@ class BlogContainerListCell extends React.PureComponent {
               </div>
             </div>
             <Link className={styles['acticle-detail-link']} to={{ pathname: '/blog/acticle_detail', state: { acticle_id: newsItem.id } }}><h3 className={styles.mb10}>{newsItem.acticle_name}</h3></Link>
-            <p>{newsItem.acticle_content}</p>
+            <div dangerouslySetInnerHTML={{ __html: newsItem.acticle_content.substr(0, 100) }} />
             <div>
               <ul className={styles['list-inline']}>
                 <li> <Button type="danger" size="small" ghost>{newsItem.acticle_sn}</Button> · <span><Icon type="eye-o" />{newsItem.click_num}</span></li>
