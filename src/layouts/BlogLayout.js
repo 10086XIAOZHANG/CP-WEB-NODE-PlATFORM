@@ -83,7 +83,7 @@ class BlogLayout extends React.PureComponent {
     const { getRouteData, currentUser } = this.props;
     const layout = (
       <div className={this.state.shrinked ? `${styles['blog-home']} ${styles['blog-home-shrinked']}` : styles['blog-home']} style={{ height: '100%' }}>
-        <Layout className={styles['ant-layout-has-sider']} style={{ height: '100%' }}>
+        <Layout className="ant-layout-has-sider" style={{ height: '100%' }}>
           <Sider
             trigger={null}
             collapsible
@@ -207,7 +207,7 @@ class BlogLayout extends React.PureComponent {
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <ContainerQuery query={Config.screenConfig.SCREEN_QUERY}>
-          {params => <div className={classNames(params)} style={{ height: '100%', background: 'rgba(105, 86, 128, 0.47)' }}>{layout}</div>}
+          {params => <div className={classNames(params)} style={{ height: '100%', background: 'rgba(237, 234, 241, 0.47)' }}>{layout}</div>}
         </ContainerQuery>
       </DocumentTitle>
     );
