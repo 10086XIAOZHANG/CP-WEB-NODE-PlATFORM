@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Link } from 'dva/router';
-import { Button, Icon, Card, Pagination, Avatar } from 'antd';
+import { Button, Icon, Card, Pagination, Avatar, Spin } from 'antd';
 import styles from './style.less';
 
 class BlogContainerListCell extends React.PureComponent {
@@ -74,7 +74,7 @@ class BlogContainerListCell extends React.PureComponent {
           </div>
         </li>
       ))
-      : '您的沙发为空，快快去书写我的博';
+      : <Spin size="large" />;
     return (
       <div className={styles.bloglist}>
         <Card>
