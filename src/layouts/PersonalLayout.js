@@ -11,7 +11,7 @@ import { connect } from 'dva';
 import DocumentTitle from 'react-document-title';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
-import { Switch, Redirect, Route } from 'dva/router';
+import { Switch, Redirect, Route, Link } from 'dva/router';
 // import Cookies from 'js-cookie';
 import Debounce from 'lodash-decorators/debounce';
 import { store } from '../common/local.storage';
@@ -109,9 +109,10 @@ class PersonalLayout extends React.PureComponent {
                 </div>
               </div>
               <Tabs tabPosition="left" size="large" className={styles['personal-menu']} style={{ textAlign: 'center' }} tabBarStyle={{ width: 200, textAlign: 'center', backgroundColor: 'f9f9f9' }}>
-                <TabPane tab={<div className={styles['tab-name']}>我的信息</div>} key="1" />
-                <TabPane tab={<div className={styles['tab-name']}>我的收藏</div>} key="2" />
-                <TabPane tab={<div className={styles['tab-name']}>我的评价</div>} key="3" />
+                <TabPane tab={<Link to="/personal/userinfo"><div className={styles['tab-name']}>我的信息</div></Link>} key="1" />
+                <TabPane tab={<Link to="/personal/avatarEditor"><div className={styles['tab-name']}>我的头像</div></Link>} key="2" />
+                <TabPane tab={<div className={styles['tab-name']}>我的收藏</div>} key="3" />
+                <TabPane tab={<div className={styles['tab-name']}>我的评价</div>} key="4" />
               </Tabs>
             </div>
             <div style={{ float: 'left', minWidth: document.body.clientWidth - 350 || window.screen.width - 350 }} className={styles['personer-container']}>

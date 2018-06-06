@@ -74,3 +74,30 @@ export function messageWarning(payload, duration = 3) {
     });
   });
 }
+
+export function loadImg(file) {
+  const reader = new FileReader();
+
+  let imgFile;
+
+
+  reader.onload = function (e) {
+    imgFile = e.target.result;
+    console.log(imgFile);
+    return imgFile;
+  };
+
+
+  reader.readAsDataURL(file);
+}
+
+export function getBase64Image(img) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, img.width, img.height);
+  const dataURL = canvas.toDataURL('image/png');
+  return dataURL; // return dataURL.replace("data:image/png;base64,", "");
+}
+

@@ -85,6 +85,11 @@ export const getNavData = app => [
             path: 'userinfo',
             component: dynamicWrapper(app, [], () => import('../routes/PersonalCentered/Index')),
           },
+          {
+            name: '用户头像',
+            path: 'avatarEditor',
+            component: dynamicWrapper(app, [], () => import('../routes/AvatarEditors/Index')),
+          },
         ],
       },
     ],

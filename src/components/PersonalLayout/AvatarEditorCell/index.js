@@ -5,15 +5,27 @@
  *  功  能:
  */
 import React from 'react';
-import { Slider } from 'antd';
+import { Slider, Input, Icon } from 'antd';
 import AvatarEditor from 'react-avatar-editor';
+// import { getBase64Image } from '../../../utils/utils';
 
 class AvatarEditorCell extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      originImg: this.props.avatar,
       scale: 0,
     };
+  }
+  onAvatarUpload=() => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imgFile = e.target.result;
+      this.setState({
+        originImg: imgFile,
+      });
+    };
+    reader.readAsDataURL(this.file.input.files[0]);
   }
   handleScale =(value) => {
     this.setState({
@@ -24,7 +36,7 @@ class AvatarEditorCell extends React.PureComponent {
     return (
       <div>
         <AvatarEditor
-          image={this.state.originImg}
+          image={this.props.avatar || this.state.originImg}
           width={200}
           height={200}
           border={50}
@@ -39,8 +51,9 @@ class AvatarEditorCell extends React.PureComponent {
           max={2}
           step={0.01}
           value={this.state.scale}
-          style={{ width: 280, margin: '10px auto' }}
+          style={{ width: 290 }}
         />
+        <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} onChange={this.onAvatarUpload} />
       </div>
     );
   }
