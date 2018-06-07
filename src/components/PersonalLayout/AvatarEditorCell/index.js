@@ -5,8 +5,9 @@
  *  功  能:
  */
 import React from 'react';
-import { Slider, Input, Icon } from 'antd';
+import { Slider, Input, Icon, Button } from 'antd';
 import AvatarEditor from 'react-avatar-editor';
+import styles from './style.less';
 // import { getBase64Image } from '../../../utils/utils';
 
 class AvatarEditorCell extends React.PureComponent {
@@ -14,7 +15,7 @@ class AvatarEditorCell extends React.PureComponent {
     super(props);
     this.state = {
       originImg: this.props.avatar,
-      scale: 0,
+      scale: 1,
     };
   }
   onAvatarUpload=() => {
@@ -32,20 +33,30 @@ class AvatarEditorCell extends React.PureComponent {
       scale: value,
     });
   }
+  completeEditorAvatar=() => {
+    if (this.editor) {
+      const canvasScaled = this.editor.getImageScaledToCanvas();
+      canvasScaled.toBlob((file) => {
+        this.props.completeEditorAvatar(file);
+      });
+    }
+  }
   render() {
     return (
-      <div>
+      <div className={styles['avatar-editor-cell']}>
         <AvatarEditor
-          image={this.props.avatar || this.state.originImg}
+          ref={(editor) => { this.editor = editor; }}
+          image={this.state.originImg}
           width={200}
           height={200}
           border={50}
           color={[248, 249, 250, 0.8]}
           borderRadius={200}
           scale={parseFloat(this.state.scale)}
-          style={{ cursor: 'move', margin: '10px 0' }}
+          style={{ cursor: 'move' }}
         />
         <Slider
+          className={styles['avatar-editor-slider']}
           onChange={this.handleScale}
           min={1}
           max={2}
@@ -53,7 +64,12 @@ class AvatarEditorCell extends React.PureComponent {
           value={this.state.scale}
           style={{ width: 290 }}
         />
-        <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} onChange={this.onAvatarUpload} />
+        <div className={styles['avatar-buttom']}>
+          <div className={styles['avatar-upload-input']}>
+            <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} onChange={this.onAvatarUpload} />
+          </div>
+          <Button style={{ float: 'right' }} type="primary" ghost onClick={this.completeEditorAvatar}>确认修改</Button>
+        </div>
       </div>
     );
   }

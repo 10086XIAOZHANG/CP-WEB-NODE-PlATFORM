@@ -91,13 +91,38 @@ export function loadImg(file) {
   reader.readAsDataURL(file);
 }
 
-export function getBase64Image(img) {
-  const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0, img.width, img.height);
+export function getBase64Image(canvasImg) {
+  const canvas = canvasImg;
   const dataURL = canvas.toDataURL('image/png');
   return dataURL; // return dataURL.replace("data:image/png;base64,", "");
 }
+export function base64ToBlob(urlData) {
+  const arr = urlData.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1] || 'image/png';
+  // 去掉url的头，并转化为byte
+  const bytes = window.atob(arr[1]);
+  // 处理异常,将ascii码小于0的转换为大于0
+  const ab = new ArrayBuffer(bytes.length);
+  // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
+  const ia = new Uint8Array(ab);
 
+  for (let i = 0; i < bytes.length; i += 1) {
+    ia[i] = bytes.charCodeAt(i);
+  }
+
+  return new Blob([ab], {
+    type: mime,
+  });
+}
+export function dataURLtoFile(dataurl, filename) {
+  const arr = dataurl.split(',');
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const u8arr = new Uint8Array(n);
+
+  while (n -= 1) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}

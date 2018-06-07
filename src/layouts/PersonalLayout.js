@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import { Tabs, Avatar, Layout } from 'antd';
-import moment from 'moment';
 import { connect } from 'dva';
 import DocumentTitle from 'react-document-title';
 import { ContainerQuery } from 'react-container-query';
@@ -29,6 +28,7 @@ class PersonalLayout extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      currentUser: null,
     };
   }
   componentDidMount() {
@@ -46,35 +46,22 @@ class PersonalLayout extends React.PureComponent {
     // }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.personal_centered.partial_user_status === 'ok') {
+    if (nextProps.personal_centered.partial_avatar_status === 'ok') {
+      this.setState({
+        currentUser: nextProps.personal_centered.currentUser,
+      });
       this.props.dispatch({
         type: 'global/changeSuccessMessage',
         payload: '修改成功',
       });
       this.props.dispatch({
-        type: 'personal_centered/changePartialStatus',
+        type: 'personal_centered/changeAvatarStatus',
         status: 'error',
       });
     }
   }
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
-  }
-  onUserInfoSubmit=() => {
-    console.log('这是个人修改信息1');
-    this.props.form.validateFields({ force: true },
-      (err, values) => {
-        const newVal = values;
-        newVal.birthday = moment(values.birthday).format('YYYY-MM-DD');
-        console.log('这是个人修改信息', newVal);
-        if (!err) {
-          this.props.dispatch({
-            type: 'personal_centered/changePartialUserInfo',
-            params: newVal,
-          });
-        }
-      }
-    );
   }
   getPageTitle() { // 获取页面标题
     const { location, getRouteData } = this.props;
@@ -95,10 +82,10 @@ class PersonalLayout extends React.PureComponent {
   }
   render() {
     const { getRouteData } = this.props;
-    const userinfo = store.get(Config.defaultProps.USER_INFO);
+    const userinfo = this.state.currentUser || store.get(Config.defaultProps.USER_INFO);
     const layout = (
       <Layout className={styles['basic-layout']}>
-        <Header className={styles['basic-header']}><PCHeader currentUser={store.get(Config.defaultProps.USER_INFO)} status="ok" /></Header>
+        <Header className={styles['basic-header']}><PCHeader currentUser={this.state.currentUser || store.get(Config.defaultProps.USER_INFO)} status="ok" /></Header>
         <Content style={{ marginTop: 56 }} className={styles['basic-content']}>
           <div className={styles['personer-center-container']}>
             <div style={{ float: 'left' }}>

@@ -44,16 +44,21 @@ export default function request(sUrl, options, isAbsolute = false) {
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!isAbsolute) {
-      newOptions.headers = {
-        'Content-Type': 'application/json',
-        ...newOptions.headers,
-      };
-      newOptions.body = JSON.stringify(newOptions.body);
+      if (newOptions.method === 'PUT') {
+        newOptions.headers = {
+          ...newOptions.headers,
+        };
+      } else {
+        newOptions.headers = {
+          'Content-Type': 'application/json',
+          ...newOptions.headers,
+        };
+      }
+      if (newOptions.method !== 'PUT') { newOptions.body = JSON.stringify(newOptions.body); }
     }
   }
   if (newOptions.method === 'PATCH') {
     newOptions.headers = {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
       ...newOptions.headers,
     };
