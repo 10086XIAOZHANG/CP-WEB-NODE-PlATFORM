@@ -91,7 +91,7 @@ class PersonalLayout extends React.PureComponent {
             <div style={{ float: 'left' }}>
               <div className={styles['user-navigate']}>
                 <div style={{ display: 'inline-block' }}>
-                  <Avatar size="large" src={userinfo.avatar} />
+                  <Avatar style={{ height: 100, width: 100 }} size="large" src={userinfo.avatar} />
                   <div className={styles['user-name']}><a href="/main/personerCenter">{userinfo.name}</a></div>
                 </div>
               </div>
