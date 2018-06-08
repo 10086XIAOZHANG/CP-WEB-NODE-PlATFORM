@@ -19,7 +19,7 @@ import PCHeader from '../containers/Home/subpage/header';
 import Config from '../common/config';
 import styles from './PersonalLayout.less';
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 const { TabPane } = Tabs;
 @connect(state => ({
   personal_centered: state.personal_centered,
@@ -122,8 +122,8 @@ class PersonalLayout extends React.PureComponent {
               </div>
             </div>
           </div>
-          <FooterCell />
         </Content>
+        <Footer style={{ background: 'rgb(245, 247, 248)' }}><FooterCell /></Footer>
       </Layout>
     );
     return (

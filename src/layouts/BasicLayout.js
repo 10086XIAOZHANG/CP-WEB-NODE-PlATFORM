@@ -21,7 +21,7 @@ import FooterCell from '../components/BasicLayout/Footer';
 import PCHeader from '../containers/Home/subpage/header';
 
 const { SubMenu } = Menu;
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 class BasicLayout extends React.PureComponent {
   constructor(props) {
@@ -138,8 +138,8 @@ class BasicLayout extends React.PureComponent {
               <Redirect exact from="/" to="/main/Home" />
             </Switch>
           </div>
-          <FooterCell />
         </Content>
+        <Footer style={{ background: 'rgb(240, 242, 245)' }}><FooterCell /></Footer>
       </Layout>
     );
     return (
