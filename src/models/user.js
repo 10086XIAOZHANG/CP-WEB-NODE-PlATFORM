@@ -13,7 +13,7 @@ export default {
   namespace: 'user',
   state: {
     currentUser: {},
-    status: '',
+    status: undefined,
   },
 
   effects: {
