@@ -27,9 +27,10 @@ function checkStatus(response) {
  *
  * @param  {string} url       The URL we want to request
  * @param  {object} [options] The options we want to pass to "fetch"
+ * @param  {boolean} isUpload 是否上传文件
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(sUrl, options, isAbsolute = false) {
+export default function request(sUrl, options, isAbsolute = false, isUpload = false) {
   let url;
   if (!isAbsolute) {
     url = Config.defaultProps.api + sUrl;
@@ -44,25 +45,25 @@ export default function request(sUrl, options, isAbsolute = false) {
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!isAbsolute) {
-      if (newOptions.method === 'PUT') {
-        newOptions.headers = {
-          ...newOptions.headers,
-        };
-      } else {
-        newOptions.headers = {
-          'Content-Type': 'application/json',
-          ...newOptions.headers,
-        };
-      }
-      if (newOptions.method !== 'PUT') { newOptions.body = JSON.stringify(newOptions.body); }
+      newOptions.headers = {
+        'Content-Type': 'application/json',
+        ...newOptions.headers,
+      };
+      newOptions.body = JSON.stringify(newOptions.body);
     }
   }
   if (newOptions.method === 'PATCH') {
-    newOptions.headers = {
-      'Content-Type': 'application/json',
-      ...newOptions.headers,
-    };
-    newOptions.body = JSON.stringify(newOptions.body);
+    if (!isUpload) {
+      newOptions.headers = {
+        'Content-Type': 'application/json',
+        ...newOptions.headers,
+      };
+      newOptions.body = JSON.stringify(newOptions.body);
+    } else if (isUpload) {
+      newOptions.headers = {
+        ...newOptions.headers,
+      };
+    }
   }
 
   return fetch(url, newOptions)

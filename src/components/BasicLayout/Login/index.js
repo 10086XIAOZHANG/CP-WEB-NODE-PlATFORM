@@ -28,7 +28,7 @@ class Login extends React.PureComponent {
         <div className={styles['login-container']}>
           <h1 className={styles.mb10}>登录</h1>
           <p className={styles.mb10}>欢迎回来</p>
-          <Form style={{ marginBottom: '10px' }} >
+          <Form style={{ marginBottom: '10px' }} hideRequiredMark>
             <div>
               <FormItem
                 hasFeedback

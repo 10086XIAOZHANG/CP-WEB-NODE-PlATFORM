@@ -19,9 +19,12 @@ export async function queryCurrent(id) {
   });
 }
 
-export async function queryMsgCode() {
+export async function queryMsgCode(phoneNumber) {
   return request('/code/', {
     method: 'POST',
+    body: {
+      mobile: phoneNumber,
+    },
   });
 }
 

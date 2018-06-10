@@ -10,22 +10,23 @@ import { Link } from 'dva/router';
 import styles from './style.less';
 
 const FormItem = Form.Item;
+@Form.create()
 class Register extends React.PureComponent {
+  static intervalId;
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
       disabled: false,
       confirmDirty: false,
     };
-    this.intervalId = null;
     this.time = 60;
     this.target = null;
+    this.sendCaptStatus = false;
   }
 
   componentWillUnmount() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+    if (Register.intervalId) {
+      clearInterval(Register.intervalId);
     }
   }
   getculCount=() => {
@@ -36,6 +37,7 @@ class Register extends React.PureComponent {
       this.setState({
         disabled: false,
       });
+      this.sendCaptStatus = false;
     } else {
       this.target.getElementsByTagName('span')[0].innerHTML = `${this.time}秒后重新获取验证码`;
       this.time -= 1;
@@ -44,15 +46,14 @@ class Register extends React.PureComponent {
       });
     }
   }
-  getMsgCode=(e) => {
+  sendMsgCode=(e) => {
     this.target = e.target;
-    this.intervalId = setInterval(this.getculCount, 1000);
-    this.props.getMsgCode(this.state.username);
-  }
-  changeHandle=(e) => {
-    this.setState({
-      username: e.target.value,
-    });
+    if (!this.sendCaptStatus && this.phoneInput.input.value !== '') {
+      this.props.sendCapt(this.phoneInput.input.value);
+      this.sendCaptStatus = true;
+    }
+    console.log(this.sendCaptStatus, this.phoneInput.input.value);
+    Register.intervalId = setInterval(this.getculCount, 1000);
   }
   checkConfirm = (rule, value, callback) => {
     if (value && this.state.confirmDirty) {
@@ -81,8 +82,9 @@ class Register extends React.PureComponent {
             <FormItem>
               {getFieldDecorator('username', {
                 rules: [{ required: true, message: '请输入电话号码!' }],
+                initialValue: '',
               })(
-                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} value={this.state.username} onChange={this.changeHandle} placeholder="输入手机号" />
+                <Input ref={(phoneInput) => { this.phoneInput = phoneInput; }} prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="输入手机号" />
               )}
             </FormItem>
           </div>
@@ -91,7 +93,7 @@ class Register extends React.PureComponent {
               {getFieldDecorator('code', {
                 rules: [{ required: true, message: '请输入验证码!' }],
               })(
-                <Input addonBefore={<Icon type="lock" style={{ fontSize: 13 }} />} addonAfter={<Button type="primary" disabled={this.state.disabled} onClick={this.getMsgCode}>获取短信验证码</Button>} placeholder="请输入短信验证码" />
+                <Input addonBefore={<Icon type="lock" style={{ fontSize: 13 }} />} addonAfter={<Button type="primary" disabled={this.state.disabled} onClick={this.sendMsgCode}>获取短信验证码</Button>} placeholder="请输入短信验证码" />
               )}
             </FormItem>
           </div>
@@ -110,7 +112,7 @@ class Register extends React.PureComponent {
               )}
             </FormItem>
           </div>
-          <div cclassName={styles.mb10}>
+          <div className={styles.mb10}>
             <FormItem
               hasFeedback
             >

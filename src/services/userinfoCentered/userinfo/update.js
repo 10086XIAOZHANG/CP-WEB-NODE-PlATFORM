@@ -8,9 +8,9 @@
 import request from '../../../utils/request';
 import Config from '../../../common/config';
 import { store } from '../../../common/local.storage';
-// import { base64ToBlob } from '../../../utils/utils';
 
 export async function fetchPartialUserInfo(params) {
+  console.log('修改用户数据', params);
   return request(`/users/${store.get(Config.defaultProps.USER_ID)}/`, {
     method: 'PATCH',
     headers: {
@@ -27,19 +27,19 @@ export async function fetchPartialUserInfo(params) {
 }
 
 export async function updateAvatar(params) {
-  const user = store.get(Config.defaultProps.USER_INFO);
+  // const user = store.get(Config.defaultProps.USER_INFO);
   console.log('blob', params.avatar);
   const data = new FormData();
-  data.append('name', user.name);
-  data.append('gender', user.gender);
-  data.append('birthday', user.birthday);
-  data.append('email', user.email);
-  data.append('mobile', user.email);
+  // data.append('name', user.name);
+  // data.append('gender', user.gender);
+  // data.append('birthday', user.birthday);
+  // data.append('email', user.email);
+  // data.append('mobile', user.email);
   data.append('avatar', new File([params.avatar], 'avatar.png', { type: 'image/png' }));
 
   console.log(data);
   return request(`/users/${store.get(Config.defaultProps.USER_ID)}/`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       // processData: false,
       // contentType: false,
@@ -47,5 +47,5 @@ export async function updateAvatar(params) {
       Authorization: `Bearer ${store.get(Config.defaultProps.USER_TOKEN)}`,
     },
     body: data,
-  });
+  }, false, true);
 }

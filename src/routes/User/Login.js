@@ -80,7 +80,7 @@ export default class Login extends PureComponent {
   }
 
   componentWillUnmount() {
-    clearInterval(this.time);
+    if (this.time) clearInterval(this.time);
   }
   isNull= (str) => {
     if (str === '') return true;

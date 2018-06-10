@@ -5,7 +5,7 @@
  *  功  能:
  */
 import Cookies from 'js-cookie';
-import { queryCurrent, queryMsgCode, registerIn } from '../services/user';
+import { queryCurrent, registerIn, queryMsgCode } from '../services/user';
 import { store } from '../common/local.storage';
 import Config from '../common/config';
 
@@ -26,14 +26,27 @@ export default {
         payload: response,
       });
     },
-    *fetchMsgCode({ mobile }, { call }) {
-      yield call(queryMsgCode, mobile);
+    *fetchMsgCode({ phoneNumber }, { put, call }) {
+      const response = yield call(queryMsgCode, phoneNumber);
+      yield put({
+        type: 'saveSendCaptStatus',
+        payload: response,
+      });
+      console.log(phoneNumber);
+    },
+    *changeStatus({ status }, { put }) {
+      yield put({
+        type: 'changeStatus',
+        status,
+      });
+    },
+    *changeCaptStatus({ status }, { put }) {
+      yield put({
+        type: 'changeSendCaptStatus',
+        status,
+      });
     },
     *registerSubmit({ payload }, { call, put }) {
-      yield put({
-        type: 'login/changeSubmitting',
-        payload: true,
-      });
       const response = yield call(registerIn, payload);
       store.set(Config.defaultProps.USER_TOKEN, response.token);
       store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
@@ -42,14 +55,28 @@ export default {
         type: 'changeLoginStatus',
         payload: response,
       });
-      yield put({
-        type: 'login/changeSubmitting',
-        payload: false,
-      });
     },
   },
 
   reducers: {
+    saveSendCaptStatus(state, { payload }) {
+      return {
+        ...state,
+        captStatus: payload ? 'ok' : 'error',
+      };
+    },
+    changeStatus(state, { status }) {
+      return {
+        ...state,
+        status,
+      };
+    },
+    changeSendCaptStatus(state, { status }) {
+      return {
+        ...state,
+        captStatus: status,
+      };
+    },
     saveCurrentUser(state, { payload }) {
       return {
         ...state,
