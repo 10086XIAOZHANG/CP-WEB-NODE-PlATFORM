@@ -52,6 +52,10 @@ export default {
       store.set(Config.defaultProps.USER_TOKEN_TIMEOUT, (new Date().getTime()));
       store.set(Config.defaultProps.USER_ID, response.user_id);
       yield put({
+        type: 'saveCurrentUser',
+        payload: response,
+      });
+      yield put({
         type: 'changeLoginStatus',
         payload: response,
       });

@@ -19,6 +19,7 @@ class PCHeader extends React.PureComponent {
     super(props);
     this.state = {
       status: this.props.status,
+      currentUser: this.props.currentUser,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -26,7 +27,11 @@ class PCHeader extends React.PureComponent {
     console.log(' nextProps.login.status || nextProps.user.status', nextProps.user.status);
     this.setState({
       status,
+      currentUser: nextProps.user.currentUser,
     });
+    setTimeout(() => {
+      console.log('currentUser', this.state.currentUser);
+    }, 0);
   }
   onMenuClick = ({ key }) => {
     if (key === 'logout') {
@@ -42,7 +47,7 @@ class PCHeader extends React.PureComponent {
     return (
       <HomeHeader
         status={this.state.status}
-        currentUser={this.props.currentUser}
+        currentUser={this.state.currentUser}
         onMenuClick={this.onMenuClick}
         onTitleMenuClick={this.onTitleMenuClick}
       />
