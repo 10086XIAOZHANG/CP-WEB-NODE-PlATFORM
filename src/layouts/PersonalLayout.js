@@ -92,7 +92,7 @@ class PersonalLayout extends React.PureComponent {
               <div className={styles['user-navigate']}>
                 <div style={{ display: 'inline-block' }}>
                   <Avatar style={{ height: 100, width: 100 }} size="large" src={userinfo ? userinfo.avatar || require('../assets/login/avatar/default_avatar.jpg') : require('../assets/login/avatar/default_avatar.jpg')} />
-                  <div className={styles['user-name']}><a href="/main/personerCenter">{userinfo.name}</a></div>
+                  <div className={styles['user-name']}><a href="/main/personerCenter">{userinfo ? userinfo.name : 'xx'}</a></div>
                 </div>
               </div>
               <Tabs tabPosition="left" size="large" className={styles['personal-menu']} style={{ textAlign: 'center' }} tabBarStyle={{ width: 200, textAlign: 'center', backgroundColor: 'f9f9f9' }}>
