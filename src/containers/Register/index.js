@@ -30,6 +30,10 @@ class Register extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     // 登录成功
     if (nextProps.user.status === 'ok') {
+      this.props.dispatch({
+        type: 'login/registerChangeSubmitting',
+        payload: true,
+      });
       this.props.dispatch(routerRedux.replace('/main/Home'));
     }
     if (nextProps.user.captStatus === 'ok') {

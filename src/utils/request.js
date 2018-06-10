@@ -5,21 +5,20 @@
  *  功  能:
  */
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import { Modal } from 'antd';
 import Config from '../common/config';
-
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: response.statusText,
+  response.text().then((result) => {
+    Modal.warning({
+      title: '提示',
+      content: `${result}`,
+    });
   });
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
+  return response;
 }
 
 /**
@@ -68,20 +67,22 @@ export default function request(sUrl, options, isAbsolute = false, isUpload = fa
 
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then((response) => { return response.json(); })
+    .then((response) => {
+      return response.json();
+    })
     .catch((error) => {
-      if (error.code) {
-        notification.error({
-          message: error.name,
-          description: error.message,
-        });
-      }
-      if ('stack' in error && 'message' in error) {
-        notification.error({
-          message: `请求错误: ${url}`,
-          description: error.message,
-        });
-      }
+      // if (error.code) {
+      //   notification.error({
+      //     message: error.name,
+      //     description: error.message,
+      //   });
+      // }
+      // if ('stack' in error && 'message' in error) {
+      //   notification.error({
+      //     message: `请求错误: ${url}`,
+      //     description: error.message,
+      //   });
+      // }
       return error;
     });
 }

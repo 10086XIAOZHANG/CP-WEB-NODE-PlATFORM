@@ -18,6 +18,12 @@ export default {
   },
 
   effects: {
+    *registerChangeSubmitting({ payload }, { put }) {
+      yield put({
+        type: 'changeSubmitting',
+        payload,
+      });
+    },
     *accountSubmit({ payload }, { call, put }) {
       yield put({
         type: 'changeSubmitting',
