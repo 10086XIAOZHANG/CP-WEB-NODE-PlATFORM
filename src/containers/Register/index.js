@@ -28,6 +28,7 @@ class Register extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('测试输入调整', nextProps);
     // 登录成功
     if (nextProps.user.status === 'ok') {
       this.props.dispatch({

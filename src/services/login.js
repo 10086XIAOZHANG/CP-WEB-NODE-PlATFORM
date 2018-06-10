@@ -25,6 +25,7 @@ export async function signIn(params) {
 export async function signOut() {
   // 清除TOKEN，模拟退出
   store.clearAll();
+  window.location.reload();
   return 'logout';
 }
 
