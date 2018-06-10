@@ -21,6 +21,10 @@ export default {
         type: 'changePartialPartialAvatar',
         payload: response,
       });
+      yield put({
+        type: 'user/saveCurrentUser',
+        payload: response,
+      });
     },
     *changePartialUserInfo({ params }, { put, call }) {
       const response = yield call(fetchPartialUserInfo, params);
