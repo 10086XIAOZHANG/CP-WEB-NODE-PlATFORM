@@ -23,7 +23,7 @@ export default {
       maxWidth: 1199,
     },
     'screen-xl': {
-      minWidth: 1200,
+      minWidth: 1356,
     },
   },
 };

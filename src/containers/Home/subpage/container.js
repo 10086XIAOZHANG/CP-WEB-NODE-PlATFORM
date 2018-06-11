@@ -32,7 +32,6 @@ class PCNewsContainer extends React.PureComponent {
         <Row>
           <Col span={2} />
           <Col span={20}>
-            <div style={{ clear: 'both' }} />
             <div style={{ width: 400, float: 'left', backgroundColor: '#fff' }}>
               <Carousel {...settings} style={{ float: 'left' }}>
                 <div><img alt="" src={require('../../../assets/home/carousel_1.jpg')} /></div>
