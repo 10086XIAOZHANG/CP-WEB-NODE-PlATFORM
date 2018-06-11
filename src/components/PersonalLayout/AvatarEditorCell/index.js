@@ -43,32 +43,35 @@ class AvatarEditorCell extends React.PureComponent {
   }
   render() {
     return (
-      <div className={styles['avatar-editor-cell']}>
-        <AvatarEditor
-          ref={(editor) => { this.editor = editor; }}
-          image={this.state.originImg}
-          width={200}
-          height={200}
-          border={50}
-          color={[248, 249, 250, 0.8]}
-          borderRadius={200}
-          scale={parseFloat(this.state.scale)}
-          style={{ cursor: 'move' }}
-        />
-        <Slider
-          className={styles['avatar-editor-slider']}
-          onChange={this.handleScale}
-          min={1}
-          max={2}
-          step={0.01}
-          value={this.state.scale}
-          style={{ width: 290 }}
-        />
-        <div className={styles['avatar-buttom']}>
-          <div className={styles['avatar-upload-input']}>
-            <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} onChange={this.onAvatarUpload} />
+      <div>
+        <h6 className={styles['form-title']}>头像设置</h6>
+        <div className={styles['avatar-editor-cell']}>
+          <AvatarEditor
+            ref={(editor) => { this.editor = editor; }}
+            image={this.state.originImg}
+            width={200}
+            height={200}
+            border={50}
+            color={[248, 249, 250, 0.8]}
+            borderRadius={200}
+            scale={parseFloat(this.state.scale)}
+            style={{ cursor: 'move' }}
+          />
+          <Slider
+            className={styles['avatar-editor-slider']}
+            onChange={this.handleScale}
+            min={1}
+            max={2}
+            step={0.01}
+            value={this.state.scale}
+            style={{ width: 290 }}
+          />
+          <div className={styles['avatar-buttom']}>
+            <div className={styles['avatar-upload-input']}>
+              <Input type="file" prefix={<Icon type="upload" />} ref={(input) => { this.file = input; }} onChange={this.onAvatarUpload} />
+            </div>
+            <Button style={{ float: 'right' }} type="primary" ghost onClick={this.completeEditorAvatar}>确认修改</Button>
           </div>
-          <Button style={{ float: 'right' }} type="primary" ghost onClick={this.completeEditorAvatar}>确认修改</Button>
         </div>
       </div>
     );

@@ -52,14 +52,14 @@ class PCNewsContainer extends React.PureComponent {
               </Tabs>
             </div>
             <div style={{ backgroundColor: '#fff', marginLeft: 'auto', marginRight: 'auto' }}>
-              <Tabs style={{ paddingLeft: 10 }}>
+              <Tabs style={{ paddingLeft: 10, paddingRight: 10 }}>
                 <TabPane tab="ReactNews 产品" key="1">
                   <PCProduct />
                 </TabPane>
               </Tabs>
             </div>
             <div style={{ clear: 'both' }} />
-            <div>
+            <div style={{ marginTop: 10 }}>
               <PCNewsImageBlock count={8} type="guonei" width="100%" cartTitle="国内新闻" imageWidth="122px" />
               <PCNewsImageBlock count={16} type="yule" width="100%" cartTitle="娱乐新闻" imageWidth="122px" />
             </div>
