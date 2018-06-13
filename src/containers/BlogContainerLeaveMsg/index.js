@@ -26,6 +26,9 @@ class BlogContainerLeaveMsg extends React.PureComponent {
   componentWillMount() {
     this.props.dispatch({
       type: 'blog_leave_msg/queryUserLeavingMessage',
+      params: {
+        ordering: '-add_time',
+      },
     });
   }
   componentWillReceiveProps(nextProps) {

@@ -23,8 +23,8 @@ export default {
         payload: response,
       });
     },
-    *queryUserLeavingMessage(_, { put, call }) {
-      const response = yield call(queryUserLeavingMessage);
+    *queryUserLeavingMessage({ params }, { put, call }) {
+      const response = yield call(queryUserLeavingMessage, params);
       yield put({
         type: 'changeUserLeavingMessageStatus',
         payload: response,
