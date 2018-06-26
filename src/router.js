@@ -37,9 +37,13 @@ function getRouteData(navData, path) {
 }
 
 function getLayout(navData, path) {
-  if (!navData.some(item => item.layout === path) ||
-    !(navData.filter(item => item.layout === path)[0].children)) {
-    return null;
+  if (!navData.some((item) => {
+    return item.layout === 'AppDownloadLayout';
+  })) {
+    if (!navData.some(item => item.layout === path) ||
+      !(navData.filter(item => item.layout === path)[0].children)) {
+      return null;
+    }
   }
   const route = navData.filter(item => item.layout === path)[0];
   return {
@@ -73,6 +77,7 @@ function RouterConfig({ history, app }) {
   const BasicLayout = getLayout(navData, 'BasicLayout').component;
   const PersonalLayout = getLayout(navData, 'PersonalLayout').component;
   const BlogLayout = getLayout(navData, 'BlogLayout').component;
+  const AppDownloadLayout = getLayout(navData, 'AppDownloadLayout').component;
   const passProps = {
     app,
     navData: navData.filter((item) => {
@@ -86,6 +91,7 @@ function RouterConfig({ history, app }) {
     <LocaleProvider locale={zhCN}>
       <Router history={history}>
         <Switch>
+          <Route path="/appDown" render={props => <AppDownloadLayout {...props} {...passProps} />} />
           <Route path="/user" render={props => <UserLayout {...props} {...passProps} />} />
           <Route path="/blog" render={props => requireAuth(BlogLayout, props, passProps)} />
           <Route path="/personal" render={props => requireAuth(PersonalLayout, props, passProps)} />

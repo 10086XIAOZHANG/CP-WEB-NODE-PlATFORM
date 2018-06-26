@@ -59,7 +59,7 @@ class Header extends React.PureComponent {
             <img src={require('../../../assets/bases/logo_main.png')} alt="" />
           </a>
         </Col>
-        <Col span={13}>
+        <Col span={11}>
           <Menu mode="horizontal" className={styles['header-menu']} onClick={this.onTitleMenuClick} selectedKeys={[this.state.current]}>
             <Menu.Item key="top">
               <Icon type="home" />首页
@@ -87,50 +87,55 @@ class Header extends React.PureComponent {
           </Menu>
         </Col>
         <Col
-          span={8}
+          span={10}
           className={ClassNames(styles['header-border'],
           styles.h65, styles['header-button'], styles['white-bg'])}
         >
-          {this.state.status && this.state.status === 'ok' && this.props.currentUser ? (
-            <Row>
-              <Col span={10}>
-                <Input.Search
-                  placeholder="请输入搜索内容"
-                  style={{ width: '100%' }}
-                  onSearch={value => console.log(value)}
-                />
-              </Col>
-              <Col span={7}>
-                <Dropdown overlay={menu} placement="bottomCenter">
-                  <div className={styles['header-right']}>
-                    <div className={styles['user-inf']}>
-                      <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar || require('../../../assets/login/avatar/default_avatar.jpg')} />
-                      {this.props.currentUser.name || this.props.currentUser.mobile}
+          <Col span={5}>
+            <Link to="/appDown"><Button icon="download" > APP 下载</Button></Link>
+          </Col>
+          <Col span={19}>
+            {this.state.status && this.state.status === 'ok' && this.props.currentUser ? (
+              <Row>
+                <Col span={10}>
+                  <Input.Search
+                    placeholder="请输入搜索内容"
+                    style={{ width: '100%' }}
+                    onSearch={value => console.log(value)}
+                  />
+                </Col>
+                <Col span={7}>
+                  <Dropdown overlay={menu} placement="bottomCenter">
+                    <div className={styles['header-right']}>
+                      <div className={styles['user-inf']}>
+                        <Avatar size="large" className={styles.avatar} src={this.props.currentUser.avatar || require('../../../assets/login/avatar/default_avatar.jpg')} />
+                        {this.props.currentUser.name || this.props.currentUser.mobile}
+                      </div>
                     </div>
-                  </div>
-                </Dropdown>
-              </Col>
-              <Col span={5}>
-                <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']} /><Link to="/help"><Button icon="question-circle-o"> 帮助</Button></Link></span></div>
-              </Col>
-            </Row>
-          ) :
-            <Row>
-              <Col span={10}>
-                <Input.Search
-                  placeholder="请输入搜索内容"
-                  style={{ width: '100%' }}
-                  onSearch={value => console.log(value)}
-                />
-              </Col>
-              <Col span={5} offset={1}>
-                <Link to="/main/login"><Button icon="solution" > 登录</Button></Link>
-              </Col>
-              <Col span={5}>
-                <Link to="/main/register"><Button icon="exception"> 注册</Button></Link>
-              </Col>
-            </Row>
-          }
+                  </Dropdown>
+                </Col>
+                <Col span={5}>
+                  <div className={styles['header-right']}><span className={styles['platform-help']}><span className={styles['split-line']} /><Link to="/help"><Button icon="question-circle-o"> 帮助</Button></Link></span></div>
+                </Col>
+              </Row>
+            ) :
+              <Row>
+                <Col span={10}>
+                  <Input.Search
+                    placeholder="请输入搜索内容"
+                    style={{ width: '100%' }}
+                    onSearch={value => console.log(value)}
+                  />
+                </Col>
+                <Col span={5} offset={1}>
+                  <Link to="/main/login"><Button icon="solution" > 登录</Button></Link>
+                </Col>
+                <Col span={5}>
+                  <Link to="/main/register"><Button icon="exception"> 注册</Button></Link>
+                </Col>
+              </Row>
+            }
+          </Col>
         </Col>
       </Row>
     );

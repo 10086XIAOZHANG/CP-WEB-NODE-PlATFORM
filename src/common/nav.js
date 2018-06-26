@@ -52,6 +52,11 @@ export const getNavData = app => [
     ],
   },
   {
+    component: dynamicWrapper(app, [], () => import('../layouts/AppDownloadLayout')),
+    path: '/appDown',
+    layout: 'AppDownloadLayout',
+  },
+  {
     component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     path: '/user',
     layout: 'UserLayout',
