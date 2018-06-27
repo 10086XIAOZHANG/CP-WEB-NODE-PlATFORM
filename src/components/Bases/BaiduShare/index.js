@@ -15,7 +15,7 @@ class BaiduShare extends React.PureComponent {
   }
   componentDidMount= function () {
     const script = document.createElement('script');
-    script.src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion=408841';
+    script.src = `http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=${~(-new Date() / 36e5)}`;
     document.body.appendChild(script);
     window._bd_share_config = {
       common: {

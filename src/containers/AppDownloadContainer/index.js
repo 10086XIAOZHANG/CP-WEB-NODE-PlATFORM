@@ -16,7 +16,13 @@ class AppDownloadContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      isToggle: false,
     };
+  }
+  onMneuShow=() => {
+    this.setState({
+      isToggle: !this.state.isToggle,
+    });
   }
   downLoadAndroidApp=() => {
     window.location.href = 'http://www.jimck.cn:8000/media/message/files/app-release.apk';
@@ -58,21 +64,21 @@ class AppDownloadContainer extends React.PureComponent {
             </div>
 
 
-            <nav className={styles['pull-left']} style={{ position: 'absolute', left: 320, top: 12 }}>
+            <nav className={this.state.isToggle ? 'show' : ''} style={!this.state.isToggle ? { position: 'absolute', left: 320, top: 12 } : {}}>
               <ul className="list-unstyled">
                 <li className="animated wow fadeInLeft" data-wow-delay="0s"><a href="/">首页</a></li>
                 <li className="animated wow fadeInLeft" data-wow-delay="0s"><a href="/blog">博客</a></li>
               </ul>
             </nav>
 
-            <span className={styles.burger_icon}>menu</span>
+            <span onClick={this.onMneuShow} className={`${styles.burger_icon} ${this.state.isToggle ? 'active' : ''}`}>菜单</span>
           </div>
         </header>
 
 
         <section className={styles.hero} id="hero">
           <div className="container" style={{ maxWidth: 1130 }}>
-            <div className="caption">
+            <div className={styles.caption}>
               <h1 className="text-uppercase  animated wow fadeInLeft">CP聚合博客 APP.</h1>
               <p className="text-lowercase  animated wow fadeInLeft">基于React Native支持Android和iOS双平台.</p>
 
@@ -94,7 +100,7 @@ class AppDownloadContainer extends React.PureComponent {
             <div className="row">
               <div className="col-md-6 text-center animated wow fadeInLeft">
                 <div className="iphone">
-                  <img src={require('../../assets/appdownpage/main_show_img.PNG')} alt="" titl="" />
+                  <img src={require('../../assets/appdownpage/main_show_img.png')} alt="" titl="" />
                 </div>
               </div>
               <div className="col-md-6 animated wow fadeInRight">
@@ -122,9 +128,9 @@ class AppDownloadContainer extends React.PureComponent {
 
                   <a href="#" className={styles.app_store_btn} id="play_video" data-video="http://www.youtube.com/embed/Bm3NV3gGB2w?autoplay=1&showinfo=0">
                     <i className={styles.play_icon} />
-                    <span>About Video</span>
+                    <span>视频观看</span>
                   </a>
-                  <a href="#hero" className={styles.app_link}>Get the app</a>
+                  <a href="#hero" className={styles.app_link}>App 下载</a>
                 </div>
               </div>
             </div>
