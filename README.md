@@ -305,3 +305,5 @@ React15.3 中新加了一个类PureComponent，前身是 PureRenderMixin ，和 
 PureComponent 真正起作用的，只是在一些纯展示组件上，复杂组件用了也没关系，反正 shallowEqual 那一关就过不了，不过记得 props 和 state 不能使用同一个引用哦。
 
 ##### npm start 启动 "start": "roadhog server",
+
+####博客地址：[https://www.cnblogs.com/fuGuy/](https://www.cnblogs.com/fuGuy/)
