@@ -35,6 +35,7 @@ class PCNewsImageBlock extends React.PureComponent {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      fontSize: 16,
     };
     const { news } = this.state;
     const newsList = news.length
