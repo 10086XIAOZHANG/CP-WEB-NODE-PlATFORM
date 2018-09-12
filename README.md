@@ -5,8 +5,8 @@
   npm start
 
 CP 聚合博客
-
-
+## 技术栈
+技术栈：react + dva2 + redux + react-router + redux-sage
 ## 特性
 
 - :gem: **优雅美观**：基于 Ant Design 体系精心设计
