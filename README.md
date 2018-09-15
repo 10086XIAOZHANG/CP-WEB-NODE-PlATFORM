@@ -22,7 +22,7 @@ CP 聚合博客
 ## 使用
 
 ```bash
-$ cd Kingdee.K3.SCM.WMS.WebEnd
+$ cd 项目根目录
 $ npm install
 $ npm start         # 访问 http://localhost:8888
 ```
