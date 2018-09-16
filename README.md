@@ -1,7 +1,8 @@
 ### CP-WEB-SOURCE-PlATFORM
-
-
-
+###### 部分界面图
+![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E7%99%BB%E5%BD%95.gif)
+![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E9%A6%96%E9%A1%B5.gif)
+![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E5%8D%9A%E5%AE%A2.gif)
 ### 安装 dva-cli 用于初始化项目：
   npm install -g dva-cli
   
