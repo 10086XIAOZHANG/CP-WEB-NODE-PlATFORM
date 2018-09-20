@@ -28,7 +28,7 @@ CP 聚合博客
 ## 使用
 
 ```bash
-$ cd 项目根目录
+$ cd CP-WEB-SOURCE-PlATFORM
 $ npm install
 $ npm start         # 访问 http://localhost:8888
 ```
