@@ -114,7 +114,7 @@ class App extends PureComponent {
 }
 ```
 
-会发现，无论怎么点 delete 按钮， li 都不会变少，因为 items 用的是一个引用， shallowEqual 的结果为 true 。改正：
+会发现，无论怎么点 delete 按钮， li 都不会变少，因为 items 用的是一个引用， shallowEqual 的结果为 true 。改正：(You will find that no matter how you click the delete button, li will not be less, because items uses a reference and the result of shallowEqual is true . correct:)
 
 ```javascript
 handleClick = () => {
@@ -124,13 +124,13 @@ handleClick = () => {
 }
 ```
 
-这样每次改变都会产生一个新的数组，也就可以 render 了。这里有一个矛盾的地方，如果没有 items.pop(); 操作，每次 items 数据并没有变，但还是 render 了，这不就很操蛋么？呵呵，数据都不变，你 setState 干嘛？
+这样每次改变都会产生一个新的数组，也就可以 render 了。这里有一个矛盾的地方，如果没有 items.pop(); 操作，每次 items 数据并没有变，但还是 render 了，这不就很操蛋么？呵呵，数据都不变，你 setState 干嘛？(This will create a new array each time you change, and you can render it. There is a contradiction here. If there is no items.pop(); operation, every time the items data has not changed, but it is still rendered, isn't that fucking? Oh, the data is the same, what are you doing with setState?)
 
-#### 不变数据使用一个引用
+#### 不变数据使用一个引用(Invariant data uses a reference)
 
-##### 子组件数据
+##### 子组件数据(Subcomponent data)
 
-上面易变数据不能使用一个引用的案例中有一个点击删除操作，如果我们删除的代码这么写：
+上面易变数据不能使用一个引用的案例中有一个点击删除操作，如果我们删除的代码这么写：(The above variable data can't be used in a reference case where there is a click delete operation, if the code we deleted is written like this:)
 
 ```javascript
 handleClick = () => {
@@ -140,23 +140,23 @@ handleClick = () => {
 }
 ```
 
-items 的引用也是改变的，但如果 items 里面是引用类型数据：
+items 的引用也是改变的，但如果 items 里面是引用类型数据：(The reference to items is also changed, but if items are reference type data:)
 
 ```javascript
 items: [{a: 1}, {a: 2}, {a: 3}]
 ```
 
-这个时候
+这个时候(at this time)
 
 ```javascript
 state.items[0] === nextState.items[0] // false
 ```
 
-子组件里还是re-render了。这样就需要我们保证不变的子组件数据的引用不能改变。这个时候可以使用immutable-js函数库。
+子组件里还是re-render了。这样就需要我们保证不变的子组件数据的引用不能改变。这个时候可以使用immutable-js函数库。(The subcomponent is still re-render. This requires us to ensure that the reference to the unchanged subcomponent data cannot be changed. This time you can use the immutable-js library.)
 
-##### 函数属性
+##### 函数属性(Function attribute)
 
-我们在给组件传一个函数的时候，有时候总喜欢:
+我们在给组件传一个函数的时候，有时候总喜欢:(When we pass a function to a component, we always like it:)
 
 ```javascript
 // 1
@@ -170,7 +170,7 @@ render() {
 }
 ```
 
-由于每次 render 操作 MyInput 组件的 onChange 属性都会返回一个新的函数，由于引用不一样，所以父组件的 render 也会导致 MyInput 组件的 render ，即使没有任何改动，所以需要尽量避免这样的写法，最好这样写：
+由于每次 render 操作 MyInput 组件的 onChange 属性都会返回一个新的函数，由于引用不一样，所以父组件的 render 也会导致 MyInput 组件的 render ，即使没有任何改动，所以需要尽量避免这样的写法，最好这样写：(Since the onChange property of the MyInput component returns a new function each time the render operation is performed, the render of the parent component will also cause the render of the MyInput component, even if there is no change, so it is best to avoid such a way. Write this:)
 
 ```javascript
 // 1,2
@@ -182,9 +182,9 @@ render() {
 }
 ```
 
-##### 空对象、空数组或固定对象
+##### 空对象、空数组或固定对象(Empty object, empty array, or fixed object)
 
-有时候后台返回的数据中，数组长度为0或者对象没有属性会直接给一个 null ，这时候我们需要做一些容错：
+有时候后台返回的数据中，数组长度为0或者对象没有属性会直接给一个 null ，这时候我们需要做一些容错：(Sometimes in the data returned by the background, the length of the array is 0 or the object has no property and will be given a null directly. At this time we need to do some fault tolerance:)
 
 ```javascript
 class App extends PureComponent {
@@ -208,7 +208,7 @@ class App extends PureComponent {
 }
 ```
 
-当某一个子组件调用 store 函数改变了自己的那条属性，触发 render 操作，如果数据是 null 的话 data 属性每次都是一个 {}，{} ==== {} 是 false 的，这样无端的让这几个子组件重新 render 了。{ color: 'red' }也是一样。
+当某一个子组件调用 store 函数改变了自己的那条属性，触发 render 操作，如果数据是 null 的话 data 属性每次都是一个 {}，{} ==== {} 是 false 的，这样无端的让这几个子组件重新 render 了。{ color: 'red' }也是一样。(When a subcomponent calls the store function to change its own property, the render operation is triggered. If the data is null, the data property is a {}, {} ==== {} is false, so unwarranted. Let these subcomponents be re-rendered. { color: 'red' } is the same.)
 
 最好设置一个 defaultValue 为 {},如下：
 
@@ -240,7 +240,7 @@ render() {
 
 ### 与 shouldComponentUpdate 共存
 
-如果 PureComponent 里有 shouldComponentUpdate 函数的话，直接使用 shouldComponentUpdate 的结果作为是否更新的依据，没有 shouldComponentUpdate 函数的话，才会去判断是不是 PureComponent ，是的话再去做 shallowEqual 浅比较。()
+如果 PureComponent 里有 shouldComponentUpdate 函数的话，直接使用 shouldComponentUpdate 的结果作为是否更新的依据，没有 shouldComponentUpdate 函数的话，才会去判断是不是 PureComponent ，是的话再去做 shallowEqual 浅比较。(If there is the shouldComponentUpdate function in PureComponent, use the result of shouldComponentUpdate directly as the basis for updating. If there is no shouldComponentUpdate function, it will judge whether it is PureComponent or not. If yes, do shallowEqual)
 
 ```javascript
 // 这个变量用来控制组件是否需要更新
@@ -256,7 +256,7 @@ if (inst.shouldComponentUpdate) {
 }
 ```
 
-### 老版本兼容写法
+### 老版本兼容写法(Old version compatible)
 
 ```javascript
 import React { PureComponent, Component } from 'react';
@@ -265,7 +265,7 @@ class Foo extends (PureComponent || Component) {
 }
 ```
 
-这样在老版本的 React 里也不会挂掉。
+这样在老版本的 React 里也不会挂掉。(This will not hang in the old version of React.)
 
 ### 使用immutable
 
