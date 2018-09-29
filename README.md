@@ -218,9 +218,9 @@ const style = { color: 'red' };
 <Item style={style} store={this.store} key={k} id={k} data={i || defaultValue} />
 ```
 
-### 复杂状态与简单状态不要共用一个组件
+### 复杂状态与简单状态不要共用一个组件(Do not share a component between a complex state and a simple state)
 
-这点可能和 PureComponent 没多少关系，但做的不好可能会浪费很多性能，比如一个页面上面一部分是一个复杂的列表，下面是一个输入框，抽象代码：
+这点可能和 PureComponent 没多少关系，但做的不好可能会浪费很多性能，比如一个页面上面一部分是一个复杂的列表，下面是一个输入框，抽象代码：(This may not have much to do with PureComponent, but doing badly can waste a lot of performance. For example, the top part of a page is a complex list, below is an input box, abstract code:)
 
 ```javascript
 change = (e) => {
@@ -267,7 +267,7 @@ class Foo extends (PureComponent || Component) {
 
 这样在老版本的 React 里也不会挂掉。(This will not hang in the old version of React.)
 
-### 使用immutable
+### 使用immutable(Use immutable)
 
 React15.3 中新加了一个类PureComponent，前身是 PureRenderMixin ，和 Component 基本一样，只不过会在 render 之前帮组件自动执行一次shallowEqual（浅比较），来决定是否更新组件，浅比较类似于浅复制，只会比较第一层
 当我们使用了 PureComponent 作为组件基类时，如果组件的props或者state没有发生变化，就不应该重新渲染组件，这里说的 “没有发生变化”，不是指语言层面的 === 或者 ==，而是指新的 props 或者 state 不会对组件的渲染结果产生任何的影响，immutable构造了一种特殊的数据结构，把原生的值结合一系列的私有属性，创建成 ImmutableJS 类型，每次改变值，先会通过私有属性的辅助检测，然后改变对应的需要改变的私有属性和真实值，最后生成一个新的值，中间会有很多的优化(React15.3 added a new class PureComponent, formerly PureRenderMixin, which is basically the same as Component, except that it will automatically perform a shallowEqual (light comparison) on the component before the render to decide whether to update the component. Will only compare the first layer When we use PureComponent as the component base class, if the component's props or state has not changed, we should not re-render the component. Here, "no change", not the language level === or ==, It means that the new props or state will not have any effect on the rendering result of the component. Immutable constructs a special data structure, which combines the native value with a series of private properties to create an ImmutableJS type, each time changing the value. First, it will use the auxiliary detection of the private attribute, then change the corresponding private attribute and the real value that need to be changed, and finally generate a new value. There will be many optimizations in the middle.)
@@ -306,7 +306,7 @@ React15.3 中新加了一个类PureComponent，前身是 PureRenderMixin ，和 
   }
   ...
 
-### 总结
+### 总结(summary)
 
 PureComponent 真正起作用的，只是在一些纯展示组件上，复杂组件用了也没关系，反正 shallowEqual 那一关就过不了，不过记得 props 和 state 不能使用同一个引用哦。(PureComponent really works, but on some pure display components, it doesn't matter if the complex components are used. Anyway, the shallowEqual can't pass, but remember that props and state can't use the same reference.)
 
