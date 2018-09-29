@@ -1,31 +1,31 @@
 ### CP-WEB-SOURCE-PlATFORM
-###### 部分界面图
+###### (Part of the interface diagram)部分界面图
 ![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E7%99%BB%E5%BD%95.gif)
 ![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E9%A6%96%E9%A1%B5.gif)
 ![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/%E5%8D%9A%E5%AE%A2.gif)
 ![image](https://github.com/10086XIAOZHANG/blogImgAttr/blob/master/app-%E4%B8%8B%E8%BD%BD%E9%A1%B5.gif)
-### 安装 dva-cli 用于初始化项目：
+### (Install dva-cli to initialize the project)安装 dva-cli 用于初始化项目：
   npm install -g dva-cli
   
-### 启动项目
+### (Startup project)启动项目
   npm start
 
-CP 聚合博客
-## 技术栈
-技术栈：react + dva2 + redux + react-router + redux-sage
-## 特性
+(CP Aggregate Blog)CP 聚合博客
+## (Technology stack)技术栈
+(Technology stack)：react + dva2 + redux + react-router + redux-sage
+## (Characteristic)特性
 
-- :gem: **优雅美观**：基于 Ant Design 体系精心设计
-- :rocket: **最新技术栈**：使用 React/dva/antd 等前端前沿技术开发
-- :1234: **Mock 数据**：实用的本地数据调试方案(这里使用阿里Rap模拟)
+- :gem: **优雅美观**：基于 Ant Design 体系精心设计(**Elegant and beautiful**: Designed based on the Ant Design system)
+- :rocket: **最新技术栈**：使用 React/dva/antd 等前端前沿技术开发(**The latest technology stack**: Developed with front-end technology such as React/dva/antd)
+- :1234: **Mock 数据**：实用的本地数据调试方案(这里使用阿里Rap模拟)(**Mock data**: Practical local data debugging solution (here using Ali Rap simulation))
 
 ## 模板
-- [x] roadhog版本升级2.0
-- [x] 项目搭建
-- [x] 登录
-- [x] 基础布局
-- [ ] 分析页
-## 使用
+- [x] roadhog版本升级2.0(Roadhog version upgrade 2.0)
+- [x] 项目搭建(Project construction)
+- [x] 登录(log in)
+- [x] 基础布局(Basic layout)
+- [ ] 分析页(Analysis page)
+## 使用(use)
 
 ```bash
 $ cd CP-WEB-SOURCE-PlATFORM
@@ -33,16 +33,16 @@ $ npm install
 $ npm start         # 访问 http://localhost:8888
 ```
 
-## 兼容性
+## 兼容性(compatibility)
 
-现代浏览器及 IE11。
+现代浏览器及 IE11(Modern browser and IE11)
 
 
-## dva用法
+## dva用法(Dva usage)
 
 ### dynamic
 
-解决组件动态加载问题的 util 方法，基于 react-async-component 实现。比如：
+解决组件动态加载问题的 util 方法，基于 react-async-component 实现。比如：(A util method that resolves a component's dynamic loading problem, based on the react-async-component implementation. such as:)
 
 ```javascript
 import dynamic from 'dva/dynamic';
@@ -58,9 +58,9 @@ const UserPageComponent = dynamic({
 
 ## react-router 4.0
 
-### exact（boolean类型）
+### exact（boolean类型）(Exact (boolean type))
 
-如果为 true, 则仅在位置完全匹配时才应用。
+如果为 true, 则仅在位置完全匹配时才应用。(If true, it is only applied when the position is exactly matched.)
 
 ```javascript
 path	location.pathname	exact	matches?
@@ -70,13 +70,13 @@ path	location.pathname	exact	matches?
 
 ## React PureComponent
 
-### 为什么使用？
+### 为什么使用？(Why use?)
 
-React15.3中新加了一个 PureComponent 类，顾名思义， pure 是纯的意思， PureComponent 也就是纯组件，取代其前身 PureRenderMixin , PureComponent 是优化 React 应用程序最重要的方法之一，易于实施，只要把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render 操作的次数，从而提高性能，而且可以少写 shouldComponentUpdate 函数，节省了点代码。
+React15.3中新加了一个 PureComponent 类，顾名思义， pure 是纯的意思， PureComponent 也就是纯组件，取代其前身 PureRenderMixin , PureComponent 是优化 React 应用程序最重要的方法之一，易于实施，只要把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render 操作的次数，从而提高性能，而且可以少写 shouldComponentUpdate 函数，节省了点代码。(React15.3 adds a PureComponent class. As the name suggests, pure is pure. PureComponent is a pure component. Instead of its predecessor, PureRenderMixin, PureComponent is one of the most important ways to optimize React applications. It is easy to implement, just inherit the class. Switching from Component to PureComponent reduces the number of unnecessary render operations, which improves performance and saves point code by writing less the shouldComponentUpdate function.)
 
-### 原理
+### 原理(principle)
 
-当组件更新时，如果组件的 props 和 state 都没发生改变， render 方法就不会触发，省去 Virtual DOM 的生成和比对过程，达到提升性能的目的。具体就是 React 自动帮我们做了一层浅比较：
+当组件更新时，如果组件的 props 和 state 都没发生改变， render 方法就不会触发，省去 Virtual DOM 的生成和比对过程，达到提升性能的目的。具体就是 React 自动帮我们做了一层浅比较：(When the component is updated, if the props and state of the component have not changed, the render method will not be triggered, eliminating the need to generate and compare the Virtual DOM to improve performance. Specifically, React automatically did a shallow comparison for us:)
 
 ```javascript
 if (this._compositeType === CompositeTypes.PureClass) {
@@ -85,7 +85,7 @@ if (this._compositeType === CompositeTypes.PureClass) {
 }
 ````
 
-而 shallowEqual 又做了什么呢？会比较 Object.keys(state | props) 的长度是否一致，每一个 key 是否两者都有，并且是否是一个引用，也就是只比较了第一层的值，确实很浅，所以深层的嵌套数据是对比不出来的。
+而 shallowEqual 又做了什么呢？会比较 Object.keys(state | props) 的长度是否一致，每一个 key 是否两者都有，并且是否是一个引用，也就是只比较了第一层的值，确实很浅，所以深层的嵌套数据是对比不出来的。(And what did shallowEqual do? Will compare the length of Object.keys(state | props), whether each key has both, and whether it is a reference, that is, only compare the value of the first layer, it is very shallow, so deep nesting The data is not comparable.)
 
 ### 使用指南
 
@@ -236,11 +236,11 @@ render() {
 }
 ```
 
-表单和列表其实是没有什么关联的，表单的值也可能经常变动，但它的会给列表也带来必然的 diff 操作，这是没必要的，最好是给列表抽出成一个单独的 PureComponent 组件，这样 state.items 不变的话，列表就不会重新 render 了。
+表单和列表其实是没有什么关联的，表单的值也可能经常变动，但它的会给列表也带来必然的 diff 操作，这是没必要的，最好是给列表抽出成一个单独的 PureComponent 组件，这样 state.items 不变的话，列表就不会重新 render 了。(Forms and lists are actually not related, the value of the form may change frequently, but it will bring the necessary diff operation to the list. This is not necessary. It is better to extract the list into a separate PureComponent component. If the state.items is unchanged, the list will not be re-rendered.)
 
 ### 与 shouldComponentUpdate 共存
 
-如果 PureComponent 里有 shouldComponentUpdate 函数的话，直接使用 shouldComponentUpdate 的结果作为是否更新的依据，没有 shouldComponentUpdate 函数的话，才会去判断是不是 PureComponent ，是的话再去做 shallowEqual 浅比较。
+如果 PureComponent 里有 shouldComponentUpdate 函数的话，直接使用 shouldComponentUpdate 的结果作为是否更新的依据，没有 shouldComponentUpdate 函数的话，才会去判断是不是 PureComponent ，是的话再去做 shallowEqual 浅比较。()
 
 ```javascript
 // 这个变量用来控制组件是否需要更新
@@ -270,7 +270,7 @@ class Foo extends (PureComponent || Component) {
 ### 使用immutable
 
 React15.3 中新加了一个类PureComponent，前身是 PureRenderMixin ，和 Component 基本一样，只不过会在 render 之前帮组件自动执行一次shallowEqual（浅比较），来决定是否更新组件，浅比较类似于浅复制，只会比较第一层
-当我们使用了 PureComponent 作为组件基类时，如果组件的props或者state没有发生变化，就不应该重新渲染组件，这里说的 “没有发生变化”，不是指语言层面的 === 或者 ==，而是指新的 props 或者 state 不会对组件的渲染结果产生任何的影响，immutable构造了一种特殊的数据结构，把原生的值结合一系列的私有属性，创建成 ImmutableJS 类型，每次改变值，先会通过私有属性的辅助检测，然后改变对应的需要改变的私有属性和真实值，最后生成一个新的值，中间会有很多的优化
+当我们使用了 PureComponent 作为组件基类时，如果组件的props或者state没有发生变化，就不应该重新渲染组件，这里说的 “没有发生变化”，不是指语言层面的 === 或者 ==，而是指新的 props 或者 state 不会对组件的渲染结果产生任何的影响，immutable构造了一种特殊的数据结构，把原生的值结合一系列的私有属性，创建成 ImmutableJS 类型，每次改变值，先会通过私有属性的辅助检测，然后改变对应的需要改变的私有属性和真实值，最后生成一个新的值，中间会有很多的优化(React15.3 added a new class PureComponent, formerly PureRenderMixin, which is basically the same as Component, except that it will automatically perform a shallowEqual (light comparison) on the component before the render to decide whether to update the component. Will only compare the first layer When we use PureComponent as the component base class, if the component's props or state has not changed, we should not re-render the component. Here, "no change", not the language level === or ==, It means that the new props or state will not have any effect on the rendering result of the component. Immutable constructs a special data structure, which combines the native value with a series of private properties to create an ImmutableJS type, each time changing the value. First, it will use the auxiliary detection of the private attribute, then change the corresponding private attribute and the real value that need to be changed, and finally generate a new value. There will be many optimizations in the middle.)
 
 事例：
   class Sample extends React.PureComponent{
@@ -308,7 +308,7 @@ React15.3 中新加了一个类PureComponent，前身是 PureRenderMixin ，和 
 
 ### 总结
 
-PureComponent 真正起作用的，只是在一些纯展示组件上，复杂组件用了也没关系，反正 shallowEqual 那一关就过不了，不过记得 props 和 state 不能使用同一个引用哦。
+PureComponent 真正起作用的，只是在一些纯展示组件上，复杂组件用了也没关系，反正 shallowEqual 那一关就过不了，不过记得 props 和 state 不能使用同一个引用哦。(PureComponent really works, but on some pure display components, it doesn't matter if the complex components are used. Anyway, the shallowEqual can't pass, but remember that props and state can't use the same reference.)
 
 ##### npm start 启动 "start": "roadhog server",
 ### CP聚合博客服务器端以及xAdmin管理后台——https://github.com/10086XIAOZHANG/CpWebSourcePlatform
