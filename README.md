@@ -87,11 +87,11 @@ if (this._compositeType === CompositeTypes.PureClass) {
 
 而 shallowEqual 又做了什么呢？会比较 Object.keys(state | props) 的长度是否一致，每一个 key 是否两者都有，并且是否是一个引用，也就是只比较了第一层的值，确实很浅，所以深层的嵌套数据是对比不出来的。(And what did shallowEqual do? Will compare the length of Object.keys(state | props), whether each key has both, and whether it is a reference, that is, only compare the value of the first layer, it is very shallow, so deep nesting The data is not comparable.)
 
-### 使用指南
+### 使用指南(user's guidance)
 
-#### 易变数据不能使用一个引用
+#### 易变数据不能使用一个引用(Variable data cannot use a reference)
 
-示例：
+示例(Example)：
 
 ```javascript
 class App extends PureComponent {
