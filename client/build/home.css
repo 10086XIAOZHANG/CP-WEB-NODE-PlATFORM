@@ -1,0 +1,41 @@
+body{margin:0;padding:0;font-family:sans-serif}.home {
+  padding: 20px;
+  background: #e1e1c8;
+  max-height: 9999px;
+}
+.home .title {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.home .btn-container {
+  text-align: center;
+  margin-top: 30px;
+}
+.home .btn-container .action {
+  cursor: pointer;
+  margin-right: 20px;
+}
+.book-list {
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 12px;
+}
+.book-list .book-list-item {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.book-list .book-list-item .name {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  color: #19537d;
+}
+.book-list .book-list-item .detail {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/*# sourceMappingURL=home.css.map*/

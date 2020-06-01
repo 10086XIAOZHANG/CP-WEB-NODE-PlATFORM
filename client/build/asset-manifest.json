@@ -1,0 +1,13 @@
+{
+  "acticle.js": "static/js/acticle.js",
+  "acticle.js.map": "static/js/acticle.js.map",
+  "home.css": "static/css/home.css",
+  "home.css.map": "static/css/home.css.map",
+  "home.js": "static/js/home.js",
+  "home.js.map": "static/js/home.js.map",
+  "other.js": "static/js/other.js",
+  "other.js.map": "static/js/other.js.map",
+  "static/media/parser.mjs": "static/media/parser.aae336a0.mjs",
+  "static/media/printer.mjs": "static/media/printer.5acfd83b.mjs",
+  "static/media/visitor.mjs": "static/media/visitor.6a13d7fa.mjs"
+}
