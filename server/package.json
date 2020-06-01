@@ -1,0 +1,54 @@
+{
+  "name": "koa-graphql-typescript",
+  "version": "1.0.0",
+  "description": "A Koa2 project with ts/graphql",
+  "keywords": [
+    "koa",
+    "typescript",
+    "graphql",
+    "mongodb",
+    "redis",
+    "mysql"
+  ],
+  "main": "index.js",
+  "author": "Cafe",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10086XIAOZHANG/CP-DESIGN-NODE.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run dev",
+    "start:nojwt": "npm run dev:nojwt",
+    "build-server": "tslint --project . && tsc",
+    "dev": "NODE_ENV=development nodemon --config nodemon.json",
+    "dev:nojwt": "NODE_ENV=nojwt nodemon --config nodemon.json",
+    "build": "NODE_ENV=production tsc ./"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "graphql": "^14.3.1",
+    "ioredis": "^4.9.5",
+    "koa": "^2.7.0",
+    "koa-jwt": "^3.5.1",
+    "koa-router": "^7.4.0",
+    "moment": "^2.24.0",
+    "mongodb": "^3.2.6",
+    "mysql2": "^1.6.5",
+    "reflect-metadata": "^0.1.12",
+    "remove": "^0.1.5",
+    "typeorm": "^0.2.17"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.0",
+    "@types/ioredis": "^4.0.11",
+    "@types/koa": "^2.0.48",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.40",
+    "koa-logger": "^3.2.0",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  }
+}
