@@ -32,7 +32,7 @@
     "koa": "^2.7.0",
     "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongodb": "^3.2.6",
     "mysql2": "^1.6.5",
     "reflect-metadata": "^0.1.12",
